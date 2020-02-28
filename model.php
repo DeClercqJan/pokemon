@@ -5,7 +5,7 @@ declare(strict_types=1);
 require_once("functions.php");
 
 // question: return directly or set properties?
-// question: do I want a new call every time to api or do I want to call api once and 'distribute' everything on my own pages? case in point: some of my calls return 20 pokemons, others more or less. Now I've opted to change names to be clear
+// question: do I want a new call every time to api or do I want to call api once and 'distribute' everything on my own pages (maybe using react and state?)? case in point: some of my calls return 20 pokemons, others more or less. Now I've opted to change names to be clear
 
 // to do: abstract class?
 // to do: catch errors
