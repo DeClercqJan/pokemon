@@ -8,6 +8,7 @@ if (isset($_POST)) {
     var_dump_pretty($_POST);
 }
 
+// "had to run but was in the process of setting url-parameters in ahrefs of bootstrap navigation with number. Beware that page 1 is page 0 for API. Also need to catch it and change options dynamically."
 // CHANGE PAGENUMBER TO SET NEXT 20 POKEMON IN CLASS, WHICH YOU THEN GET GET WITH OTHER METHOD
 // $pokemons2 = $pokemons_db->change_default_pokemons_results_page(2);
 // $pokemons2 = $pokemons_db->show_pokemons();
