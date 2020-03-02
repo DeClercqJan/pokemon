@@ -13,7 +13,6 @@ if (isset($_POST)) {
     var_dump_pretty($_POST);
 }
 
-
 // "had to run but was in the process of setting url-parameters in ahrefs of bootstrap navigation with number. Beware that page 1 is page 0 for API. Also need to catch it and change options dynamically."
 // CHANGE PAGENUMBER TO SET NEXT 20 POKEMON IN CLASS, WHICH YOU THEN GET GET WITH OTHER METHOD
 // $pokemons2 = $pokemons_db->change_default_pokemons_results_page(2);
@@ -23,7 +22,7 @@ if (isset($_POST)) {
 // var_dump_pretty($_GET);
 // var_dump($_GET);
 // var_dump($_SERVER);
-var_dump($_SERVER["QUERY_STRING"]);
+var_dump_pretty($_SERVER["QUERY_STRING"]);
 $page_selected = $_SERVER["QUERY_STRING"];
 // EDIT: ZOU OOK MOETEN WERKEN MET GET  
 
@@ -45,68 +44,27 @@ $page_selected = $_SERVER["QUERY_STRING"];
 
 <body>
     <h1>Hello, world!</h1>
-    <nav aria-label="Page navigation example">
-        <?php //  variably display navigation as for now, the search function returns no pages while the default constructor call does  - can probably be done more elegantly"
-        ?>
-        <?php if (!isset($_POST["type"])) { ?>
-            <p>current page is <?php if (isset($current_results_page)) {
-                                    echo $current_results_page;
-                                } ?></p>
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/index.php?results_page=1">1</a></li>
-                <li class="page-item"><a class="page-link" href="/index.php?results_page=2">2</a></li>
-                <li class="page-item"><a class="page-link" href="/index.php?results_page=3">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        <?php } else {
-            // to do when I do styling   
-        } ?>
-        <?php // var_dump_pretty($pokemons_db->show_pokemons_type_list()) 
-        ?>
-        <form action="index.php" method="POST">
-            <!-- <label for="type">Enter type (NEEDS TO BE DROPDOWN)</label></br> -->
-            <!-- <input type="text" name="type" id="type"></input> -->
-            <select id="type" name="type">
-                <?php // 
-                $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
-                foreach ($pokemon_type_list as $pokemon_type) { ?>
-                    <option value=<?php echo $pokemon_type->name; ?>><?php echo $pokemon_type->name; ?></option>
-                    <!-- echo $pokemon_type->name; -->
-                <?php }
-                // $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
-                // var_dump_pretty($pokemon_type_list);
-                // die();
-                // foreach ($pokemon_type_list as $pokemon_type) {
-                //     echo "test";
-                // }
-                ?>
-                <option value=<?php // echo $pokemon_type->name; 
-                                ?>>Volvo</option>
-                <? // }
-                ?>
-            </select>
-            <input type="submit">
-        </form>
-        <?php // just copy-paste the block from above here
-        ?>
-        <?php if (!isset($_POST["type"])) { ?>
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/index.php?1">1</a></li>
-                <li class=" page-item"><a class="page-link" href="/index.php?2">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        <?php } else {
-            // to do when I do styling   
-        } ?>
-        <?php display_pokemons($pokemons, $pokemons_db); ?>
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <?php require("pagination.php"); ?>
+    <form action="index.php" method="POST">
+        <label for="type">Choose type from dropdown</label></br>
+        <!-- <input type="text" name="type" id="type"></input> -->
+        <select id="type" name="type">
+            <?php
+            $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
+            foreach ($pokemon_type_list as $pokemon_type) { ?>
+                <option value=<?php echo $pokemon_type->name; ?>><?php echo $pokemon_type->name; ?></option>
+            <?php }
+            ?>
+        </select>
+        <input type="submit">
+    </form>
+    <?php require("pagination.php"); ?>
+    <?php display_pokemons($pokemons, $pokemons_db); ?>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
