@@ -8,29 +8,12 @@ require_once("model.php");
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-if (isset($_POST["pokemon_per_page"])) {
-    $pokemon_per_page = (int) $_POST["pokemon_per_page"];
-    echo "pokemon_per_page is $pokemon_per_page in if isset";
-    $new_pokemons_results_page = (int) $_GET["results_page"];
-    // var_dump($new_pokemons_results_page);
-    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
-}
-
-=======
->>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
-=======
->>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
 if (isset($_GET["results_page"])) {
     $new_pokemons_results_page = (int) $_GET["results_page"];
     // var_dump($new_pokemons_results_page);
     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
 }
 
-=======
->>>>>>> parent of 9581213... added functional pagination. Do note the error that page 1 in navigation does not correspond with page 0 in api, which should be the case
 // OVERWRITES DEFAULT LIST WITH POKEMON SEARCHED
 if (isset($_POST["type"])) {
     $type = $_POST["type"];
@@ -64,17 +47,3 @@ function display_pokemons($pokemons, $pokemons_db)
 // var_dump($_GET);
 // var_dump($_SERVER);
 var_dump($_SERVER["QUERY_STRING"]);
-<<<<<<< HEAD
-
-$current_results_page = $pokemons_db->get_pokemons_results_page();
-$results_page_all = $pokemons_db->get_pokemons_results_page_all();
-<<<<<<< HEAD
-<<<<<<< HEAD
-$pokemons_total = $pokemons_db->get_pokemons_total();
-$pokemon_per_page = $pokemons_db->get_pokemon_per_page();
-=======
->>>>>>> parent of 9581213... added functional pagination. Do note the error that page 1 in navigation does not correspond with page 0 in api, which should be the case
-=======
->>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
-=======
->>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly

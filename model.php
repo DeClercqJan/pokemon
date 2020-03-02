@@ -9,27 +9,24 @@ require_once("functions.php");
 // to do: abstract class?
 // to do: catch errors
 //to do: typehints and such, private/public ...
-// to do: check if file_get_contents is the best way to proceed compared to PDO, or is that something different? I'm not directly calling database, eh
+// to do: check if file_get_contents is the best way to proceed compared to PDO
 // can probably refactor the db connection into separate, re-usable function
 class Pokemons_DB
 {
     // basic logic: set pokemon array with some methods, then use other method to show it. 
-    // to do: there's also a details method which operates on another level, more specific that may need to move elsewhere
+    // to do: maybe create class or so to clean up stuff so that the "pokemons" array set by type or by default(pages) is the same in form? BEWARE: some of these calls return different data, but name is always one of them
+    // to do: there's also a details method which operates on another level, more specific that may not to move elsewhere
     private $pokemons = [];
-    // this number serves front-end, not api
-    private $pokemons_results_page = 1;
-    private $pokemons_results_page_all = 0;
+    private $pokemons_results_page = 0;
 
     // not really necessary to have this as null, I think - or is it extra security?
     public function connection_pokemons(int $pagenumber = null)
     {
         // yoda rule
         if (null != $pagenumber) {
-            // need to display this user-end
-            $this->pokemons_results_page = $pagenumber;
-            // page 1 for the user however, is page 0 for api-call
-            $pagenumber_new = $pagenumber - 1;
-            $new_pokemons_results_page_call = $pagenumber_new * 20;
+            $new_pokemons_results_page = $pagenumber;
+            $this->pokemons_results_page = $new_pokemons_results_page;
+            $new_pokemons_results_page_call = $new_pokemons_results_page * 20;
         }
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
         $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=20");
@@ -43,7 +40,6 @@ class Pokemons_DB
         // yet the assignment wants to display 20 at a time
         $pokemons = $this->connection_pokemons(0);
         $this->pokemons = $pokemons->results;
-        $this->pokemons_results_page_all = ceil($pokemons->count / 20);
     }
 
     private function __destruct()
@@ -52,29 +48,9 @@ class Pokemons_DB
     }
 
 
-    function get_pokemons_results_page_all()
-    {
-        return $this->pokemons_results_page_all;
-    }
-
     function change_default_pokemons_results_page(int $pagenumber)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        echo "pokemon_per_page is $pokemon_per_page in funcite change default";
-        $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
-=======
         $pokemons = $this->connection_pokemons($pagenumber);
->>>>>>> parent of 9581213... added functional pagination. Do note the error that page 1 in navigation does not correspond with page 0 in api, which should be the case
-=======
-        echo ("functie fchange default pokemon geactiveerd");
-        $pokemons = $this->connection_pokemons($pagenumber);
->>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
-=======
-        echo ("functie fchange default pokemon geactiveerd");
-        $pokemons = $this->connection_pokemons($pagenumber);
->>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
         $this->pokemons = $pokemons->results;
     }
 
@@ -83,12 +59,13 @@ class Pokemons_DB
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
         $type_data = json_decode($type_data_raw);
+        $type_data =
         $pokemons_type_list = $type_data->results;
         return $pokemons_type_list;
     }
 
     // notes: chose to only allow string, while integer works too.
-    // note: can return more than 20 pokemon -> to do? -> try offset and such and maybe then I can always display pagination
+    // note: can return more than 20 pokemon -
     function find_pokemons_by_type(string $type)
     {
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
