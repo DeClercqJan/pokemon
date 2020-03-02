@@ -8,6 +8,14 @@ require_once("model.php");
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
+if (isset($_POST["pokemon_per_page"])) {
+    $pokemon_per_page = (int) $_POST["pokemon_per_page"];
+    echo "pokemon_per_page is $pokemon_per_page in if isset";
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    // var_dump($new_pokemons_results_page);
+    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
+}
+
 if (isset($_GET["results_page"])) {
     $new_pokemons_results_page = (int) $_GET["results_page"];
     // var_dump($new_pokemons_results_page);
@@ -19,6 +27,7 @@ if (isset($_POST["type"])) {
     $type = $_POST["type"];
     $pokemons = $pokemons_db->find_pokemons_by_type($type);
 }
+
 $pokemons = $pokemons_db->show_pokemons();
 
 // onyl declares it, doesn't call it
@@ -50,3 +59,5 @@ var_dump($_SERVER["QUERY_STRING"]);
 
 $current_results_page = $pokemons_db->get_pokemons_results_page();
 $results_page_all = $pokemons_db->get_pokemons_results_page_all();
+$pokemons_total = $pokemons_db->get_pokemons_total();
+$pokemon_per_page = $pokemons_db->get_pokemon_per_page();

@@ -44,9 +44,10 @@ $page_selected = $_SERVER["QUERY_STRING"];
 
 <body>
     <h1>Hello, world!</h1>
+    <?php echo "total pokemons is $pokemons_total. Current page is number $current_results_page of $results_page_all total pages at a ratio of $pokemon_per_page pokemon per page"; ?>
     <?php require("pagination.php"); ?>
     <form action="index.php" method="POST">
-        <label for="type">Choose type from dropdown</label></br>
+        <label for="type">Choose type from dropdown</label>
         <!-- <input type="text" name="type" id="type"></input> -->
         <select id="type" name="type">
             <?php
@@ -58,7 +59,21 @@ $page_selected = $_SERVER["QUERY_STRING"];
         </select>
         <input type="submit">
     </form>
+    <form action="index.php" method="POST">
+        <label for="pokemon_per_page">Choose # pokemon_per_page</label>
+        <select id="pokemon_per_page" name="pokemon_per_page">
+            <?php
+            for ($i = 1; $i < $pokemons_total; $i++) {
+            ?>
+                <option value=<?php echo $i ?>><?php echo $i; ?></option>
+            <?php
+            }
+            ?>
+        </select>
+        <input type="submit">
+    </form>
     <?php require("pagination.php"); ?>
+    </form>
     <?php display_pokemons($pokemons, $pokemons_db); ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
