@@ -16,7 +16,8 @@ if (isset($_POST["type"])) {
 $pokemons = $pokemons_db->show_pokemons();
 
 // onyl declares it, doesn't call it
-function display_pokemons($pokemons, $pokemons_db) {
+function display_pokemons($pokemons, $pokemons_db)
+{
     foreach ($pokemons as $pokemon) {
         echo '<pre>';
         echo $pokemon->name;

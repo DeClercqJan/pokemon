@@ -64,12 +64,19 @@ $page_selected = $_SERVER["QUERY_STRING"];
             <select id="type" name="type">
                 <?php // 
                 $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
+                foreach ($pokemon_type_list as $pokemon_type) { ?>
+                <option value=<?php echo $pokemon_type->name; ?>><?php echo $pokemon_type->name; ?></option>
+                    <!-- echo $pokemon_type->name; -->
+                <?php }
+                // $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
                 // var_dump_pretty($pokemon_type_list);
                 // die();
-                foreach ($pokemon_type_list as $pokemon_type) {
+                // foreach ($pokemon_type_list as $pokemon_type) {
+                //     echo "test";
+                // }
                 ?>
-                    <option value=<?php echo $pokemon_type->name; ?>>Volvo</option>
-                <? }
+                <option value=<?php // echo $pokemon_type->name; ?>>Volvo</option>
+                <? // }
                 ?>
             </select>
             <input type="submit">
