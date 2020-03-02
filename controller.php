@@ -8,6 +8,12 @@ require_once("model.php");
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
+if (isset($_GET["results_page"])) {
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    var_dump($new_pokemons_results_page);
+    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
+}
+
 // OVERWRITES DEFAULT LIST WITH POKEMON SEARCHED
 if (isset($_POST["type"])) {
     $type = $_POST["type"];
@@ -41,3 +47,5 @@ function display_pokemons($pokemons, $pokemons_db)
 // var_dump($_GET);
 // var_dump($_SERVER);
 var_dump($_SERVER["QUERY_STRING"]);
+
+$current_results_page = $pokemons_db->get_pokemons_results_page();

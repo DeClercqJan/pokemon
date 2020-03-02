@@ -48,9 +48,14 @@ class Pokemons_DB
         // TO DO
     }
 
+    function get_pokemons_results_page()
+    {
+        return $this->pokemons_results_page;
+    }
 
     function change_default_pokemons_results_page(int $pagenumber)
     {
+        echo ("functie fchange default pokemon geactiveerd");
         $pokemons = $this->connection_pokemons($pagenumber);
         $this->pokemons = $pokemons->results;
     }

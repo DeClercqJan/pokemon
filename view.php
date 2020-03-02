@@ -6,6 +6,9 @@ require_once("functions.php");
 // note: need to place this above rest of html and put everything in variable to I can echo this in this view
 require_once("controller.php");
 
+if (isset($_GET)) {
+    var_dump_pretty($_GET);
+}
 if (isset($_POST)) {
     var_dump_pretty($_POST);
 }
@@ -46,11 +49,14 @@ $page_selected = $_SERVER["QUERY_STRING"];
         <?php //  variably display navigation as for now, the search function returns no pages while the default constructor call does  - can probably be done more elegantly"
         ?>
         <?php if (!isset($_POST["type"])) { ?>
+            <p>current page is <?php if (isset($current_results_page)) {
+                                    echo $current_results_page;
+                                } ?></p>
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/index.php?0">1</a></li>
-                <li class=" page-item"><a class="page-link" href="/index.php?1">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="/index.php?results_page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="/index.php?results_page=2">2</a></li>
+                <li class="page-item"><a class="page-link" href="/index.php?results_page=3">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
         <?php } else {
@@ -65,7 +71,7 @@ $page_selected = $_SERVER["QUERY_STRING"];
                 <?php // 
                 $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
                 foreach ($pokemon_type_list as $pokemon_type) { ?>
-                <option value=<?php echo $pokemon_type->name; ?>><?php echo $pokemon_type->name; ?></option>
+                    <option value=<?php echo $pokemon_type->name; ?>><?php echo $pokemon_type->name; ?></option>
                     <!-- echo $pokemon_type->name; -->
                 <?php }
                 // $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
@@ -75,7 +81,8 @@ $page_selected = $_SERVER["QUERY_STRING"];
                 //     echo "test";
                 // }
                 ?>
-                <option value=<?php // echo $pokemon_type->name; ?>>Volvo</option>
+                <option value=<?php // echo $pokemon_type->name; 
+                                ?>>Volvo</option>
                 <? // }
                 ?>
             </select>
