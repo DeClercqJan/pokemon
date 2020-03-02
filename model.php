@@ -11,6 +11,7 @@ require_once("functions.php");
 // to do: catch errors
 //to do: typehints and such, private/public ...
 // to do: check if file_get_contents is the best way to proceed compared to PDO
+// can probably refactor the db connection into separate, re-usable function
 class Pokemons_DB
 {
     // basic logic: set pokemon array with some methods, then use other method to show it. 
@@ -35,7 +36,7 @@ class Pokemons_DB
         // TO DO
     }
 
-    
+
     function change_default_pokemons_results_page(int $pagenumber)
     {
         // $current_pokemons_results_page = $this->pokemons_results_page;
@@ -47,6 +48,14 @@ class Pokemons_DB
         $this->pokemons = $pokemons->results;
     }
 
+    function show_pokemons_type_list()
+    {
+        $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
+        $type_data = json_decode($type_data_raw);
+        $pokemons_type_list = $type_data->results;
+        return $pokemons_type_list;
+    }
+
     // notes: chose to only allow string, while integer works too.
     // note: can return more than 20 pokemon -
     function find_pokemons_by_type(string $type)
@@ -56,8 +65,7 @@ class Pokemons_DB
         // needed to reformat this in order to have a uniform pokemons array in this class in order to have re-usable code
         $pokemons = [];
         $pokemons_raw = $all_type_data->pokemon;
-        foreach ($pokemons_raw as $pokemon_raw)
-        {
+        foreach ($pokemons_raw as $pokemon_raw) {
             $pokemon = $pokemon_raw->pokemon;
             array_push($pokemons, $pokemon);
         }

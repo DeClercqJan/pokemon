@@ -3,10 +3,13 @@
 declare(strict_types=1);
 
 require_once("functions.php");
+// note: need to place this above rest of html and put everything in variable to I can echo this in this view
+require_once("controller.php");
 
 if (isset($_POST)) {
     var_dump_pretty($_POST);
 }
+
 
 // "had to run but was in the process of setting url-parameters in ahrefs of bootstrap navigation with number. Beware that page 1 is page 0 for API. Also need to catch it and change options dynamically."
 // CHANGE PAGENUMBER TO SET NEXT 20 POKEMON IN CLASS, WHICH YOU THEN GET GET WITH OTHER METHOD
@@ -40,6 +43,8 @@ $page_selected = $_SERVER["QUERY_STRING"];
 <body>
     <h1>Hello, world!</h1>
     <nav aria-label="Page navigation example">
+        <?php //  variably display navigation as for now, the search function returns no pages while the default constructor call does  - can probably be done more elegantly"
+        ?>
         <?php if (!isset($_POST["type"])) { ?>
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -48,10 +53,25 @@ $page_selected = $_SERVER["QUERY_STRING"];
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
-        <?php } ?>
+        <?php } else {
+            // to do when I do styling   
+        } ?>
+        <?php // var_dump_pretty($pokemons_db->show_pokemons_type_list()) 
+        ?>
         <form action="index.php" method="POST">
-            <label for="type">Enter type (NEEDS TO BE DROPDOWN)</label></br>
-            <input type="text" name="type" id="type"></input>
+            <!-- <label for="type">Enter type (NEEDS TO BE DROPDOWN)</label></br> -->
+            <!-- <input type="text" name="type" id="type"></input> -->
+            <select id="type" name="type">
+                <?php // 
+                $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
+                // var_dump_pretty($pokemon_type_list);
+                // die();
+                foreach ($pokemon_type_list as $pokemon_type) {
+                ?>
+                    <option value=<?php echo $pokemon_type->name; ?>>Volvo</option>
+                <? }
+                ?>
+            </select>
             <input type="submit">
         </form>
         <?php // just copy-paste the block from above here
@@ -64,7 +84,10 @@ $page_selected = $_SERVER["QUERY_STRING"];
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
-        <?php } ?>
+        <?php } else {
+            // to do when I do styling   
+        } ?>
+        <?php display_pokemons($pokemons, $pokemons_db); ?>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -74,7 +97,6 @@ $page_selected = $_SERVER["QUERY_STRING"];
 
 </html>
 <?php
-// note: need to place this above rest of html and put everything in variable to I can echo this in this view
-require_once("controller.php");
+
 
 // what to do with category page? why not index?

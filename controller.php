@@ -14,13 +14,17 @@ if (isset($_POST["type"])) {
     $pokemons = $pokemons_db->find_pokemons_by_type($type);
 }
 $pokemons = $pokemons_db->show_pokemons();
-foreach ($pokemons as $pokemon) {
-    echo '<pre>';
-    echo $pokemon->name;
-    echo '</pre>';
-    $pokemon_details =  $pokemons_db->get_pokemon_details($pokemon->name);
-    $pokemon_sprite = $pokemon_details->sprites->front_default;
-    echo "<img src=" . $pokemon_sprite . ">";
+
+// onyl declares it, doesn't call it
+function display_pokemons($pokemons, $pokemons_db) {
+    foreach ($pokemons as $pokemon) {
+        echo '<pre>';
+        echo $pokemon->name;
+        echo '</pre>';
+        $pokemon_details =  $pokemons_db->get_pokemon_details($pokemon->name);
+        $pokemon_sprite = $pokemon_details->sprites->front_default;
+        echo "<img src=" . $pokemon_sprite . ">";
+    }
 }
 
 // HOW TO GET DETAILS OF SPECIFIC POKEMON; ACCEPTS NAME AND ID NUMBER
