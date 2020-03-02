@@ -47,3 +47,6 @@ function display_pokemons($pokemons, $pokemons_db)
 // var_dump($_GET);
 // var_dump($_SERVER);
 var_dump($_SERVER["QUERY_STRING"]);
+
+$current_results_page = $pokemons_db->get_pokemons_results_page();
+$results_page_all = $pokemons_db->get_pokemons_results_page_all();

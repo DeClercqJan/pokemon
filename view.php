@@ -6,6 +6,9 @@ require_once("functions.php");
 // note: need to place this above rest of html and put everything in variable to I can echo this in this view
 require_once("controller.php");
 
+if (isset($_GET)) {
+    var_dump_pretty($_GET);
+}
 if (isset($_POST)) {
     var_dump_pretty($_POST);
 }
