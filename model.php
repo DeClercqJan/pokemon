@@ -61,11 +61,16 @@ class Pokemons_DB
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         echo "pokemon_per_page is $pokemon_per_page in funcite change default";
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
 =======
         $pokemons = $this->connection_pokemons($pagenumber);
 >>>>>>> parent of 9581213... added functional pagination. Do note the error that page 1 in navigation does not correspond with page 0 in api, which should be the case
+=======
+        echo ("functie fchange default pokemon geactiveerd");
+        $pokemons = $this->connection_pokemons($pagenumber);
+>>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
 =======
         echo ("functie fchange default pokemon geactiveerd");
         $pokemons = $this->connection_pokemons($pagenumber);
