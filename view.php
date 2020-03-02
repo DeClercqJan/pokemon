@@ -86,8 +86,8 @@ $page_selected = $_SERVER["QUERY_STRING"];
         <?php if (!isset($_POST["type"])) { ?>
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="/index.php?0">1</a></li>
-                <li class=" page-item"><a class="page-link" href="/index.php?1">2</a></li>
+                <li class="page-item"><a class="page-link" href="/index.php?1">1</a></li>
+                <li class=" page-item"><a class="page-link" href="/index.php?2">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>

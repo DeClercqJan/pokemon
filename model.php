@@ -20,15 +20,27 @@ class Pokemons_DB
     private $pokemons = [];
     private $pokemons_results_page = 0;
 
+    // not really necessary to have this as null, I think - or is it extra security?
+    public function connection_pokemons(int $pagenumber = null)
+    {
+        // yoda rule
+        if (null != $pagenumber) {
+            $new_pokemons_results_page = $pagenumber;
+            $this->pokemons_results_page = $new_pokemons_results_page;
+            $new_pokemons_results_page_call = $new_pokemons_results_page * 20;
+        }
+        // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
+        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=20");
+        return json_decode($pokemons_json);
+    }
+
     public function __construct()
     {
         // there are 10157 pokemon in the database it appears, which I have set as parameters to get all
         // $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon?offset=0&limit=10157");
         // yet the assignment wants to display 20 at a time
-        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon");
-        $pokemons = json_decode($pokemons_json);
+        $pokemons = $this->connection_pokemons(0);
         $this->pokemons = $pokemons->results;
-        $this->pokemons_results_page = 1;
     }
 
     private function __destruct()
@@ -39,20 +51,17 @@ class Pokemons_DB
 
     function change_default_pokemons_results_page(int $pagenumber)
     {
-        // $current_pokemons_results_page = $this->pokemons_results_page;
-        $new_pokemons_results_page = $pagenumber;
-        $this->pokemons_results_page = $new_pokemons_results_page;
-        $new_pokemons_results_page_call = $new_pokemons_results_page * 20;
-        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=20");
-        $pokemons = json_decode($pokemons_json);
+        $pokemons = $this->connection_pokemons($pagenumber);
         $this->pokemons = $pokemons->results;
     }
 
     function show_pokemons_type_list()
     {
+        // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
         $type_data = json_decode($type_data_raw);
-        $pokemons_type_list = $type_data->results;
+        $type_data =
+            $pokemons_type_list = $type_data->results;
         return $pokemons_type_list;
     }
 
@@ -60,6 +69,7 @@ class Pokemons_DB
     // note: can return more than 20 pokemon -
     function find_pokemons_by_type(string $type)
     {
+        // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
         $all_type_data = json_decode($all_type_data_json);
         // needed to reformat this in order to have a uniform pokemons array in this class in order to have re-usable code
