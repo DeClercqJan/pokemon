@@ -19,18 +19,10 @@ class Pokemons_DB
     // this number serves front-end, not api
     private $pokemons_results_page = 1;
     private $pokemons_results_page_all = 0;
-    private $pokemons_total = 0;
-    private $pokemon_per_page = 0;
 
     // not really necessary to have this as null, I think - or is it extra security?
-    public function connection_pokemons(int $pagenumber = null, int $limit = 20)
+    public function connection_pokemons(int $pagenumber = null)
     {
-        echo "pagenumber input is $pagenumber";
-        // yoda rule
-        // had to create this in order to see if changing page numbers would work - it does - but now I need to trace back my steps and clean up code
-        if (0 == $pagenumber) {
-            $new_pokemons_results_page_call = 0;
-        }
         // yoda rule
         if (null != $pagenumber) {
             // need to display this user-end
@@ -39,14 +31,8 @@ class Pokemons_DB
             $pagenumber_new = $pagenumber - 1;
             $new_pokemons_results_page_call = $pagenumber_new * 20;
         }
-        if (20 !== $limit) {
-            $this->pokemon_per_page;
-        }
-        echo "pagenumber voor de call is $new_pokemons_results_page_call";
-        echo "limit is $limit";
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
-        // $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=20");
-        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=$limit");
+        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=20");
         return json_decode($pokemons_json);
     }
 
@@ -57,9 +43,6 @@ class Pokemons_DB
         // yet the assignment wants to display 20 at a time
         $pokemons = $this->connection_pokemons(0);
         $this->pokemons = $pokemons->results;
-        $this->pokemons_total = $pokemons->count;
-        $this->pokemon_per_page = 20;
-        // maybe need to change this so that it's more dynamic, using properties to calculate it?
         $this->pokemons_results_page_all = ceil($pokemons->count / 20);
     }
 
@@ -74,24 +57,19 @@ class Pokemons_DB
         return $this->pokemons_results_page_all;
     }
 
-    function get_pokemons_total()
+    function change_default_pokemons_results_page(int $pagenumber)
     {
-        return $this->pokemons_total;
-    }
-
-    function get_pokemon_per_page()
-    {
-        return $this->pokemon_per_page;
-    }
-
-    function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page)
-    {
+<<<<<<< HEAD
 <<<<<<< HEAD
         echo "pokemon_per_page is $pokemon_per_page in funcite change default";
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
 =======
         $pokemons = $this->connection_pokemons($pagenumber);
 >>>>>>> parent of 9581213... added functional pagination. Do note the error that page 1 in navigation does not correspond with page 0 in api, which should be the case
+=======
+        echo ("functie fchange default pokemon geactiveerd");
+        $pokemons = $this->connection_pokemons($pagenumber);
+>>>>>>> parent of 2b926aa... managed to change number of displayed pokemon in one very simple use case (but not others). But did this in a messy way and now need to trace back my steps or even revert to earlier commit to rebuild properly
         $this->pokemons = $pokemons->results;
     }
 
