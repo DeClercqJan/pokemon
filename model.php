@@ -10,6 +10,7 @@ require_once("functions.php");
 // to do: abstract class?
 // to do: catch errors
 //to do: typehints and such, private/public ...
+// to do: check if file_get_contents is the best way to proceed compared to PDO
 class Pokemons_DB
 {
     // basic logic: set pokemon array with some methods, then use other method to show it. 
@@ -52,10 +53,15 @@ class Pokemons_DB
     {
         $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
         $all_type_data = json_decode($all_type_data_json);
-        // need to select specific property
-        $pokemons = $all_type_data->pokemon;
+        // needed to reformat this in order to have a uniform pokemons array in this class in order to have re-usable code
+        $pokemons = [];
+        $pokemons_raw = $all_type_data->pokemon;
+        foreach ($pokemons_raw as $pokemon_raw)
+        {
+            $pokemon = $pokemon_raw->pokemon;
+            array_push($pokemons, $pokemon);
+        }
         $this->pokemons = $pokemons;
-        // need to reset pokemons_results page as this does not fit the mould of 20 pokemon per call
         $this->pokemons_results_page = 0;
     }
     function show_pokemons()
