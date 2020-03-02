@@ -68,10 +68,6 @@ class Pokemons_DB
         // TO DO
     }
 
-    function get_pokemons_results_page()
-    {
-        return $this->pokemons_results_page;
-    }
 
     function get_pokemons_results_page_all()
     {
@@ -90,8 +86,12 @@ class Pokemons_DB
 
     function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page)
     {
+<<<<<<< HEAD
         echo "pokemon_per_page is $pokemon_per_page in funcite change default";
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
+=======
+        $pokemons = $this->connection_pokemons($pagenumber);
+>>>>>>> parent of 9581213... added functional pagination. Do note the error that page 1 in navigation does not correspond with page 0 in api, which should be the case
         $this->pokemons = $pokemons->results;
     }
 
