@@ -13,6 +13,13 @@ if (isset($_POST)) {
 if (isset($_SESSION)) {
     var_dump_pretty($_SESSION);
 }
+if (isset($_COOKIE)) {
+    // var_dump_pretty($_COOKIE);
+    if (isset($_COOKIE["favourites"])) {
+        $favourites_old = unserialize($_COOKIE["favourites"]);
+        var_dump($favourites_old);
+    }
+}
 // var_dump_pretty($_SERVER);
 // var_dump_pretty($_SERVER["QUERY_STRING"]);
 $page_selected = $_SERVER["QUERY_STRING"];
@@ -77,9 +84,32 @@ require_once("controller.php");
         </select>
         <input type="submit">
     </form>
+    <?php  // just did this this way in order to be quick. But ths really should not be in the view - maybe some synergie/re-use of (parts of) display_pokemons function
+    if (isset($_COOKIE["favourites"])) {
+        // echo "isset indeed";
+    ?>
+        <h2>Pokemon in favourites</h2>
+    <?php
+        $favourites_old = unserialize($_COOKIE["favourites"]);
+        foreach ($favourites_old as $favourite) {
+            // adapted stuff from display_pokemons function function
+            $pokemon_details =  $pokemons_db->get_pokemon_details($favourite);
+            echo '<pre>';
+            echo $pokemon_details->name;
+            echo '</pre>';
+            $pokemon_sprite = $pokemon_details->sprites->front_default;
+            echo "<img src=" . $pokemon_sprite . ">";
+            // overview page
+            $pokemon_id = $pokemon_details->id;
+            echo "<a href='/overview.php?id=$pokemon_id'>Specifications</a>";
+            // echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+        }
+    }
+    ?>
+    <h2>Pokemon not necessarily in favourites</h2>
+    <?php display_pokemons($pokemons, $pokemons_db); ?>
     <?php require("pagination.php");
     ?>
-    <?php display_pokemons($pokemons, $pokemons_db); ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -91,3 +121,5 @@ require_once("controller.php");
 <?php
 
 // what to do with category page? why not index? I think category is just the 'display', so not really a page based on a
+
+// to do: display favourites pokemons
