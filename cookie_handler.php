@@ -28,3 +28,5 @@ if (isset($_COOKIE["favourites"])) {
     setcookie("favourites", $favourites_new_seralized);
     header("Location: index.php");
 }
+
+// to do/problem: always resets after having added pokemon to favourites ... need to save this

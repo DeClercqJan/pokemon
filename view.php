@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 session_start();
 
-if (isset($_GET)) {
-    var_dump_pretty($_GET);
-}
-if (isset($_POST)) {
-    var_dump_pretty($_POST);
-}
-if (isset($_SESSION)) {
-    var_dump_pretty($_SESSION);
-}
-if (isset($_COOKIE)) {
-    // var_dump_pretty($_COOKIE);
-    if (isset($_COOKIE["favourites"])) {
-        $favourites_old = unserialize($_COOKIE["favourites"]);
-        var_dump($favourites_old);
-    }
-}
+// if (isset($_GET)) {
+//     var_dump_pretty($_GET);
+// }
+// if (isset($_POST)) {
+//     var_dump_pretty($_POST);
+// }
+// if (isset($_SESSION)) {
+//     var_dump_pretty($_SESSION);
+// }
+// if (isset($_COOKIE)) {
+//     // var_dump_pretty($_COOKIE);
+//     if (isset($_COOKIE["favourites"])) {
+//         $favourites_old = unserialize($_COOKIE["favourites"]);
+//         var_dump($favourites_old);
+//     }
+// }
 // var_dump_pretty($_SERVER);
 // var_dump_pretty($_SERVER["QUERY_STRING"]);
 $page_selected = $_SERVER["QUERY_STRING"];
