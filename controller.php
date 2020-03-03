@@ -33,7 +33,8 @@ if ("default_browsing" == $_GET["query_type"] && isset($_GET["pokemon_per_page"]
     $pokemon_per_page = (int) $_GET["pokemon_per_page"];
     $pokemons = $pokemons_db->find_pokemons_by_type($type, $new_pokemons_results_page, $pokemon_per_page);
     $_SESSION["previous_query_type"] =  "search";
-    $_SESSION["type"] = $ype;
+    // this does not appear to work with $type ...
+    $_SESSION["type"] = $_GET["type"];
     $_SESSION["pokemon_per_page"] = $pokemon_per_page;
     $_SESSION["results_page"] = $new_pokemons_results_page;
     // $_SESSION["pokemons"] = $pokemons;
@@ -45,13 +46,27 @@ elseif (isset($_GET["results_page"]) && isset($_SESSION["previous_query_type"]) 
     // taking stuff from session array
     $pokemon_per_page = (int) $_SESSION["pokemon_per_page"];
     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
-    // continue the cycle
+    // continue the cycle - ? is this actually necessary?
     $_SESSION["previous_query_type"] =  "default_browsing";
     $_SESSION["pokemon_per_page"] = $pokemon_per_page;
     $_SESSION["results_page"] = $new_pokemons_results_page;
     // $_SESSION["pokemons"] = $pokemons;
 
-    }
+} elseif (isset($_GET["results_page"]) && isset($_SESSION["previous_query_type"]) && "search" == $_SESSION["previous_query_type"]) {
+    echo "case 4 fires";
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    // taking stuff from session array
+    $type = $_SESSION["type"];
+    $pokemon_per_page = (int) $_SESSION["pokemon_per_page"];
+    $pokemons = $pokemons_db->find_pokemons_by_type($type, $new_pokemons_results_page, $pokemon_per_page);
+    // continue the cycle - ? is this actually necessary?
+    $_SESSION["previous_query_type"] =  "search";
+    $_SESSION["type"] = $_SESSION["type"];
+    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+    $_SESSION["results_page"] = $new_pokemons_results_page;
+    // $_SESSION["pokemons"] = $pokemons;
+}
+
 $pokemons = $pokemons_db->show_pokemons();
 
 // if (isset($_GET["results_page"])) {
