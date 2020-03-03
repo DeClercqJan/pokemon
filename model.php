@@ -89,9 +89,19 @@ class Pokemons_DB
         return $pokemons_type_list;
     }
 
-    function test123()
+    function pokemon_type_results_to_default_results_logic($pokemons, $pokemons_count, $pagenumber, $pokemon_per_page)
     {
-        return "test";
+        echo "in functie pokemon_type_results_to_default_results_logic is pokemons_count $pokemons_count <br>";
+        $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
+        $test = ceil($pokemons_count / $pokemon_per_page);
+        echo "in functie pokemon_type_results_to_default_results_logic is aantal pagina's $test <br>";
+        // $this->pokemons_results_page = 0;
+        echo "in functie pokemon_type_results_to_default_results_logic is pokemon_per_page $pokemon_per_page <br>";
+        echo "in functie pokemon_type_results_to_default_results_logic is pagenumber $pagenumber <br>";
+        $key_start = $pagenumber * $pokemon_per_page;
+        $key_end = $pokemon_per_page;
+        $pokemons2 = array_slice($pokemons, $key_start, $key_end);
+        return $pokemons2;
     }
     // notes: chose to only allow string, while integer works too.
     // note: can return more than 20 pokemon -> to do? -> try offset and such and maybe then I can always display pagination
@@ -109,11 +119,8 @@ class Pokemons_DB
         }
         // need to calculatee the following as it is notreadily available in 
         $pokemons_count = count($pokemons);
-        echo "in functie find pokemons by type is pokemons_count $pokemons_count <br>";
-        $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
-
-        $pokemons2 = test123();
-        // $pokemons2 = pokemon_type_results_to_default_results_logic($pokemons, $pokemons_count, $pagenumber, $pokemon_per_page); 
+        $pokemons2 = $this->pokemon_type_results_to_default_results_logic($pokemons, $pokemons_count, $pagenumber, $pokemon_per_page);
+        var_dump_pretty($pokemons2);
         $this->pokemons = $pokemons2;
         // $this->pokemons_results_page = 0;
         // echo "in functie find pokemons by type is pagenumber $pagenumber <br>";
