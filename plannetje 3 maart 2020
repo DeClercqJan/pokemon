@@ -1,0 +1,11 @@
+plan: eerst alles in dezelfde form steken met zelfde type request: 
+
+dan die flow met die klassen goed krijgen
+
+en dan pas omvormen zodat pagination knoppen erin passen
+
+§mss sessies nodig)
+
+
+
+note:  I'm not able to calculate beforehand the numer of pokemon that an api call will return (will I search fire or rock? or do I just click to the next default call), I will not set options dynamically but offer to display 5, 10, ... 100 

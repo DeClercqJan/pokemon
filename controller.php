@@ -8,14 +8,23 @@ require_once("model.php");
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
-if (isset($_GET["results_page"])) {
-    $new_pokemons_results_page = (int) $_GET["results_page"];
-    // var_dump($new_pokemons_results_page);
-    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
-}
+// if (isset($_GET["results_page"])) {
+//     $new_pokemons_results_page = (int) $_GET["results_page"];
+//     // var_dump($new_pokemons_results_page);
+//     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
+// }
 
-// OVERWRITES DEFAULT LIST WITH POKEMON SEARCHED
-if (isset($_POST["type"])) {
+// vertical styling, instead of nesting, for increased readability + yoda logic
+// TO DO: add page number
+// TO DO: error cases - take into account javascript on the front-end to hide/display suboptions for query_type options
+if ("default_browsing" == $_POST["query_type"] && isset($_POST["pokemon_per_page"]) && isset($_POST["results_page"])) {
+    echo "case 1 fires";
+    // TO DO
+    $new_pokemons_results_page = (int) $_GET["pokemon_per_page"];
+    var_dump($new_pokemons_results_page);
+    //     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
+} elseif ("search" == $_POST["query_type"] && isset($_POST["type"]) && isset($_POST["pokemon_per_page"]) && isset($_POST["results_page"])) {
+    echo "case 2 fires";
     $type = $_POST["type"];
     $pokemons = $pokemons_db->find_pokemons_by_type($type);
 }

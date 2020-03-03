@@ -44,10 +44,17 @@ $page_selected = $_SERVER["QUERY_STRING"];
 
 <body>
     <h1>Hello, world!</h1>
-    <?php require("pagination.php"); ?>
+    <?php // require("pagination.php"); 
+    ?>
+    <!-- to do refactor this over  pagination component etc. -->
     <form action="index.php" method="POST">
-        <label for="type">Choose type from dropdown</label></br>
-        <!-- <input type="text" name="type" id="type"></input> -->
+        <label for="query_type">Choose type query</label>
+        <select id="query_type" name="query_type">
+            <option value="default_browsing">default browsing</option>
+            <option value="search">search</option>
+        </select>
+        <!-- to do: variably display pokemon-type dropdown based on selection of query_type. Javascript? -->
+        <label for="type">Choose type from dropdown</label>
         <select id="type" name="type">
             <?php
             $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
@@ -56,9 +63,26 @@ $page_selected = $_SERVER["QUERY_STRING"];
             <?php }
             ?>
         </select>
+        <!-- note:  I'm not able to calculate beforehand the numer of pokemon that an api call will return (will I search fire or rock? or do I just click to the next default call), I will not set options dynamically but offer to display 5, 10, ... 100  -->
+        <label for="pokemon_per_page">Choose # pokemon_per_page</label>
+        <select id="pokemon_per_page" name="pokemon_per_page">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="20">50</option>
+            <option value="100">50</option>
+        </select>
+        <!-- to do: variably display this on the basis of earlier call that + also change the number of pages that are able to be displayed on teh basis of # pokemon in call and # pokemon/page wanted -->
+        <label for="results_page">Choose pagenumber</label>
+        <select id="results_page" name="results_page">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
         <input type="submit">
     </form>
-    <?php require("pagination.php"); ?>
+    <?php // require("pagination.php"); 
+    ?>
     <?php display_pokemons($pokemons, $pokemons_db); ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
