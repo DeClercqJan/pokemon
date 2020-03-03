@@ -69,8 +69,8 @@ $page_selected = $_SERVER["QUERY_STRING"];
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
-            <option value="20">50</option>
-            <option value="100">50</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
         </select>
         <!-- to do: variably display this on the basis of earlier call that + also change the number of pages that are able to be displayed on teh basis of # pokemon in call and # pokemon/page wanted -->
         <label for="results_page">Choose pagenumber</label>

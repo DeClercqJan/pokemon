@@ -18,12 +18,12 @@ $pokemons_db = new Pokemons_DB;
 // TO DO: add page number
 // TO DO: error cases - take into account javascript on the front-end to hide/display suboptions for query_type options
 if ("default_browsing" == $_POST["query_type"] && isset($_POST["pokemon_per_page"]) && isset($_POST["results_page"])) {
-    echo "case 1 fires";
+    echo "case 1 fires <br>";
     $new_pokemons_results_page = (int) $_POST["results_page"];
     $pokemon_per_page = (int) $_POST["pokemon_per_page"];
     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
 } elseif ("search" == $_POST["query_type"] && isset($_POST["type"]) && isset($_POST["pokemon_per_page"]) && isset($_POST["results_page"])) {
-    echo "case 2 fires";
+    echo "case 2 fires <br>";
     $type = $_POST["type"];
     // $new_pokemons_results_page = (int) $_GET["pokemon_per_page"];
     // $pokemon_per_page = (int) $_POST["pokemon_per_page"];
