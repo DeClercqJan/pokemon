@@ -89,12 +89,14 @@ class Pokemons_DB
         return $pokemons_type_list;
     }
 
+    function test123()
+    {
+        return "test";
+    }
     // notes: chose to only allow string, while integer works too.
     // note: can return more than 20 pokemon -> to do? -> try offset and such and maybe then I can always display pagination
     function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page)
     {
-        echo "in functie find pokemons by type is pagenumber $pagenumber <br>";
-        echo "in functie find pokemons by type is pokemon_per_page $pokemon_per_page <br>";
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
         $all_type_data = json_decode($all_type_data_json);
@@ -105,13 +107,19 @@ class Pokemons_DB
             $pokemon = $pokemon_raw->pokemon;
             array_push($pokemons, $pokemon);
         }
-        $this->pokemons = $pokemons;
-        $this->pokemons_results_page = 0;
         // need to calculatee the following as it is notreadily available in 
         $pokemons_count = count($pokemons);
         echo "in functie find pokemons by type is pokemons_count $pokemons_count <br>";
         $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
+
+        $pokemons2 = test123();
+        // $pokemons2 = pokemon_type_results_to_default_results_logic($pokemons, $pokemons_count, $pagenumber, $pokemon_per_page); 
+        $this->pokemons = $pokemons2;
+        // $this->pokemons_results_page = 0;
+        // echo "in functie find pokemons by type is pagenumber $pagenumber <br>";
+        // echo "in functie find pokemons by type is pokemon_per_page $pokemon_per_page <br>";
     }
+
     function show_pokemons()
     {
         // perhaps it would be better not to call all pokemons in construct but put them here? edit: changed name
