@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 require_once("functions.php");
 
-// question: do I want a new call every time to api or do I want to call api once and 'distribute' everything on my own pages (maybe using react and state?)? case in point: some of my calls return 20 pokemons, others more or less. Now I've opted to change names to be clear
-
 // to do: abstract class?
 // to do: catch errors
 //to do: typehints and such, private/public ...
@@ -89,22 +87,19 @@ class Pokemons_DB
         return $pokemons_type_list;
     }
 
-    function pokemon_type_results_to_default_results_logic($pokemons, $pokemons_count, $pagenumber, $pokemon_per_page)
+    function pokemon_type_results_to_default_results_logic($pokemons, $pagenumber, $pokemon_per_page)
     {
-        echo "in functie pokemon_type_results_to_default_results_logic is pokemons_count $pokemons_count <br>";
+        $pokemons_count = count($pokemons);
         $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
-        $test = ceil($pokemons_count / $pokemon_per_page);
-        echo "in functie pokemon_type_results_to_default_results_logic is aantal pagina's $test <br>";
-        // $this->pokemons_results_page = 0;
-        echo "in functie pokemon_type_results_to_default_results_logic is pokemon_per_page $pokemon_per_page <br>";
-        echo "in functie pokemon_type_results_to_default_results_logic is pagenumber $pagenumber <br>";
-        $key_start = $pagenumber * $pokemon_per_page;
-        $key_end = $pokemon_per_page;
-        $pokemons2 = array_slice($pokemons, $key_start, $key_end);
+        $this->pokemons_results_page = $pagenumber;
+        $pagenumber_new = $pagenumber - 1;
+        $this->pokemon_per_page = $pokemon_per_page;
+        $offset = $pagenumber_new * $pokemon_per_page;
+        $length = $pokemon_per_page;
+        $pokemons2 = array_slice($pokemons, $offset, $length);
         return $pokemons2;
     }
     // notes: chose to only allow string, while integer works too.
-    // note: can return more than 20 pokemon -> to do? -> try offset and such and maybe then I can always display pagination
     function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page)
     {
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
@@ -118,13 +113,8 @@ class Pokemons_DB
             array_push($pokemons, $pokemon);
         }
         // need to calculatee the following as it is notreadily available in 
-        $pokemons_count = count($pokemons);
-        $pokemons2 = $this->pokemon_type_results_to_default_results_logic($pokemons, $pokemons_count, $pagenumber, $pokemon_per_page);
-        var_dump_pretty($pokemons2);
+        $pokemons2 = $this->pokemon_type_results_to_default_results_logic($pokemons, $pagenumber, $pokemon_per_page);
         $this->pokemons = $pokemons2;
-        // $this->pokemons_results_page = 0;
-        // echo "in functie find pokemons by type is pagenumber $pagenumber <br>";
-        // echo "in functie find pokemons by type is pokemon_per_page $pokemon_per_page <br>";
     }
 
     function show_pokemons()
