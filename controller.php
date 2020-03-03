@@ -85,6 +85,8 @@ function display_pokemons($pokemons, $pokemons_db)
         // overview page
         $pokemon_id = $pokemon_details->id;
         echo "<a href='/overview.php?id=$pokemon_id'>Specifications</a>";
+        echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+
     }
 }
 
