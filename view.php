@@ -13,7 +13,8 @@ if (isset($_POST)) {
 if (isset($_SESSION)) {
     var_dump_pretty($_SESSION);
 }
-var_dump_pretty($_SERVER["QUERY_STRING"]);
+// var_dump_pretty($_SERVER);
+// var_dump_pretty($_SERVER["QUERY_STRING"]);
 $page_selected = $_SERVER["QUERY_STRING"];
 // EDIT: ZOU OOK MOETEN WERKEN MET GET  
 

@@ -122,11 +122,13 @@ class Pokemons_DB
         return $this->pokemons;
     }
 
-    // id can be both integer or name of pokemon 
+    // id can be both id-number or name of pokemon 
     function get_pokemon_details($id)
     {
+        // echo "functie pokemon details fires met id = $id";
         $pokemon_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/$id");
         $pokemon = json_decode($pokemon_json);
+        // var_dump($pokemon->name);
         return $pokemon;
     }
 }

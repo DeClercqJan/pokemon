@@ -85,10 +85,23 @@ function display_pokemons($pokemons, $pokemons_db)
         $pokemon_details =  $pokemons_db->get_pokemon_details($pokemon->name);
         $pokemon_sprite = $pokemon_details->sprites->front_default;
         echo "<img src=" . $pokemon_sprite . ">";
+        // overview page
+        $pokemon_id = $pokemon_details->id;
+        echo "<a href='/overview?id=$pokemon_id'>Specifications</a>";
     }
 }
 
-var_dump($_SERVER["QUERY_STRING"]);
-
 $current_results_page = $pokemons_db->get_pokemons_results_page();
 $results_page_all = $pokemons_db->get_pokemons_results_page_all();
+
+// overview thingie. To do: move it to separte file and then integrate it conditionally in view or so
+if ("/overview" == $_SERVER["PATH_INFO"]) {
+    // echo "test";
+    $pokemon_id = (string) $_GET["id"];
+    // echo "pokemon id is $pokemon_id";
+    $pokemon_details = $pokemons_db->get_pokemon_details($pokemon_id);
+    // var_dump_pretty($pokemon_details);
+    $pokemon_name = $pokemon_details->name;
+    // var_dump($pokemon_name);
+    echo "overview echo: $pokemon_name";
+}
