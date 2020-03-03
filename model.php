@@ -21,7 +21,7 @@ class Pokemons_DB
     private $pokemons_results_page_all = 0;
 
     // not really necessary to have this as null, I think - or is it extra security?
-    public function connection_pokemons(int $pagenumber = null)
+    public function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20)
     {
         // yoda rule
         if (null != $pagenumber) {
@@ -31,8 +31,9 @@ class Pokemons_DB
             $pagenumber_new = $pagenumber - 1;
             $new_pokemons_results_page_call = $pagenumber_new * 20;
         }
+        $limit = $pokemon_per_page;
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
-        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=20");
+        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=$limit");
         return json_decode($pokemons_json);
     }
 
@@ -61,10 +62,10 @@ class Pokemons_DB
         return $this->pokemons_results_page_all;
     }
 
-    function change_default_pokemons_results_page(int $pagenumber)
+    function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page)
     {
         echo ("functie fchange default pokemon geactiveerd");
-        $pokemons = $this->connection_pokemons($pagenumber);
+        $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
         $this->pokemons = $pokemons->results;
     }
 
