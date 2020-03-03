@@ -19,6 +19,7 @@ class Pokemons_DB
     // this number serves front-end, not api
     private $pokemons_results_page = 1;
     private $pokemons_results_page_all = 0;
+    private $pokemon_per_page = 0;
 
     // not really necessary to have this as null, I think - or is it extra security?
     public function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20)
@@ -32,6 +33,7 @@ class Pokemons_DB
             $new_pokemons_results_page_call = $pagenumber_new * $pokemon_per_page;
         }
         $limit = $pokemon_per_page;
+        $this->pokemon_per_page = $pokemon_per_page;
         echo "in connectie functie: limit pokemon per page is $limit <br>";
         echo "in connectie functie: new pokemons results page call is $new_pokemons_results_page_call <br>";
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
@@ -64,13 +66,18 @@ class Pokemons_DB
         return $this->pokemons_results_page_all;
     }
 
+    function get_pokemon_per_page()
+    {
+        return $this->pokemon_per_page;
+    }
+
     function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page)
     {
         echo ("functie fchange default pokemon geactiveerd <br>");
         echo ("in functie change default is pagenumber $pagenumber");
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
         $this->pokemons = $pokemons->results;
-        $this->pokemons_results_page_all = ceil($pokemons->count / 20);
+        $this->pokemons_results_page_all = ceil($pokemons->count / $pokemon_per_page);
     }
 
     function show_pokemons_type_list()
@@ -84,8 +91,10 @@ class Pokemons_DB
 
     // notes: chose to only allow string, while integer works too.
     // note: can return more than 20 pokemon -> to do? -> try offset and such and maybe then I can always display pagination
-    function find_pokemons_by_type(string $type)
+    function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page)
     {
+        echo "in functie find pokemons by type is pagenumber $pagenumber <br>";
+        echo "in functie find pokemons by type is pokemon_per_page $pokemon_per_page <br>";
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
         $all_type_data = json_decode($all_type_data_json);
@@ -98,6 +107,10 @@ class Pokemons_DB
         }
         $this->pokemons = $pokemons;
         $this->pokemons_results_page = 0;
+        // need to calculatee the following as it is notreadily available in 
+        $pokemons_count = count($pokemons);
+        echo "in functie find pokemons by type is pokemons_count $pokemons_count <br>";
+        $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
     }
     function show_pokemons()
     {
