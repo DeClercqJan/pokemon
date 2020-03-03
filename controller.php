@@ -10,8 +10,6 @@ require_once("model.php");
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
-echo "test";
-
 // vertical styling, instead of nesting, for increased readability + yoda logic
 // TO DO: add page number
 // TO DO: error cases - take into account javascript on the front-end to hide/display suboptions for query_type options
