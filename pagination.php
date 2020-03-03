@@ -1,10 +1,15 @@
 <?php 
+
+declare(strict_types=1);
+
+session_start();
+
 require_once("functions.php");
 ?>
 <nav aria-label="Page navigation example">
 <?php //  variably display navigation as for now, the search function returns no pages while the default constructor call does  - can probably be done more elegantly"
 ?>
-<?php if (!isset($_POST["type"])) { ?>
+<?php // if (!isset($_POST["type"])) { ?>
     <ul class="pagination">
         <?php
         // yoda rule
@@ -24,6 +29,6 @@ require_once("functions.php");
         }
         ?>
     </ul>
-<?php } else {
+<?php // } else {
     // to do when I do styling   
-} ?>
+// } ?>

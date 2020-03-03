@@ -2,34 +2,63 @@
 
 declare(strict_types=1);
 
+session_start();
+
 require_once("functions.php");
 require_once("model.php");
 
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
+
+
+
+// vertical styling, instead of nesting, for increased readability + yoda logic
+// TO DO: add page number
+// TO DO: error cases - take into account javascript on the front-end to hide/display suboptions for query_type options
+if ("default_browsing" == $_GET["query_type"] && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
+    echo "case 1 fires <br>";
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    $pokemon_per_page = (int) $_GET["pokemon_per_page"];
+    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
+    $_SESSION["previous_query_type"] =  "default_browsing";
+    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+    $_SESSION["results_page"] = $new_pokemons_results_page;
+    // $_SESSION["pokemons"] = $pokemons;
+
+} elseif ("search" == $_GET["query_type"] && isset($_GET["type"]) && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
+    echo "case 2 fires <br>";
+    $type = $_GET["type"];
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    $pokemon_per_page = (int) $_GET["pokemon_per_page"];
+    $pokemons = $pokemons_db->find_pokemons_by_type($type, $new_pokemons_results_page, $pokemon_per_page);
+    $_SESSION["previous_query_type"] =  "search";
+    $_SESSION["type"] = $ype;
+    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+    $_SESSION["results_page"] = $new_pokemons_results_page;
+    // $_SESSION["pokemons"] = $pokemons;
+}
+// to serve pagination component 
+elseif (isset($_GET["results_page"]) && isset($_SESSION["previous_query_type"]) && "default_browsing" == $_SESSION["previous_query_type"]) {
+    echo "case 3 fires";
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    // taking stuff from session array
+    $pokemon_per_page = (int) $_SESSION["pokemon_per_page"];
+    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
+    // continue the cycle
+    $_SESSION["previous_query_type"] =  "default_browsing";
+    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+    $_SESSION["results_page"] = $new_pokemons_results_page;
+    // $_SESSION["pokemons"] = $pokemons;
+
+    }
+$pokemons = $pokemons_db->show_pokemons();
+
 // if (isset($_GET["results_page"])) {
 //     $new_pokemons_results_page = (int) $_GET["results_page"];
 //     // var_dump($new_pokemons_results_page);
 //     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
 // }
-
-// vertical styling, instead of nesting, for increased readability + yoda logic
-// TO DO: add page number
-// TO DO: error cases - take into account javascript on the front-end to hide/display suboptions for query_type options
-if ("default_browsing" == $_POST["query_type"] && isset($_POST["pokemon_per_page"]) && isset($_POST["results_page"])) {
-    echo "case 1 fires <br>";
-    $new_pokemons_results_page = (int) $_POST["results_page"];
-    $pokemon_per_page = (int) $_POST["pokemon_per_page"];
-    $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
-} elseif ("search" == $_POST["query_type"] && isset($_POST["type"]) && isset($_POST["pokemon_per_page"]) && isset($_POST["results_page"])) {
-    echo "case 2 fires <br>";
-    $type = $_POST["type"];
-    $new_pokemons_results_page = (int) $_POST["results_page"];
-    $pokemon_per_page = (int) $_POST["pokemon_per_page"];
-    $pokemons = $pokemons_db->find_pokemons_by_type($type, $new_pokemons_results_page, $pokemon_per_page);
-}
-$pokemons = $pokemons_db->show_pokemons();
 
 // onyl declares it, doesn't call it
 function display_pokemons($pokemons, $pokemons_db)
@@ -44,18 +73,6 @@ function display_pokemons($pokemons, $pokemons_db)
     }
 }
 
-// HOW TO GET DETAILS OF SPECIFIC POKEMON; ACCEPTS NAME AND ID NUMBER
-// $bulbasaur = $pokemons_db->get_pokemon_details("1");
-//var_dump_pretty($bulbasaur);
-
-// CHANGE PAGENUMBER TO SET NEXT 20 POKEMON IN CLASS, WHICH YOU THEN GET GET WITH OTHER METHOD
-// $pokemons2 = $pokemons_db->change_default_pokemons_results_page(2);
-// $pokemons2 = $pokemons_db->show_pokemons();
-// var_dump_pretty($pokemons2);
-// edit: how to link with pagination? maybe use GET-parameters? 
-// var_dump_pretty($_GET);
-// var_dump($_GET);
-// var_dump($_SERVER);
 var_dump($_SERVER["QUERY_STRING"]);
 
 $current_results_page = $pokemons_db->get_pokemons_results_page();

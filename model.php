@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+session_start();
+
 require_once("functions.php");
 
 // to do: abstract class?
@@ -32,8 +34,6 @@ class Pokemons_DB
         }
         $limit = $pokemon_per_page;
         $this->pokemon_per_page = $pokemon_per_page;
-        echo "in connectie functie: limit pokemon per page is $limit <br>";
-        echo "in connectie functie: new pokemons results page call is $new_pokemons_results_page_call <br>";
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
         $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=$limit");
         return json_decode($pokemons_json);
@@ -71,8 +71,6 @@ class Pokemons_DB
 
     function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page)
     {
-        echo ("functie fchange default pokemon geactiveerd <br>");
-        echo ("in functie change default is pagenumber $pagenumber");
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
         $this->pokemons = $pokemons->results;
         $this->pokemons_results_page_all = ceil($pokemons->count / $pokemon_per_page);

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-require_once("functions.php");
-// note: need to place this above rest of html and put everything in variable to I can echo this in this view
-require_once("controller.php");
+session_start();
 
 if (isset($_GET)) {
     var_dump_pretty($_GET);
@@ -12,9 +10,16 @@ if (isset($_GET)) {
 if (isset($_POST)) {
     var_dump_pretty($_POST);
 }
+if (isset($_SESSION)) {
+    var_dump_pretty($_SESSION);
+}
 var_dump_pretty($_SERVER["QUERY_STRING"]);
 $page_selected = $_SERVER["QUERY_STRING"];
 // EDIT: ZOU OOK MOETEN WERKEN MET GET  
+
+require_once("functions.php");
+// note: need to place this above rest of html and put everything in variable to I can echo this in this view
+require_once("controller.php");
 
 ?>
 <!-- starter tempalte https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
@@ -34,10 +39,10 @@ $page_selected = $_SERVER["QUERY_STRING"];
 
 <body>
     <h1>Hello, world!</h1>
-    <?php // require("pagination.php"); 
+    <?php require("pagination.php");
     ?>
     <!-- to do refactor this over  pagination component etc. -->
-    <form action="index.php" method="POST">
+    <form action="index.php" method="GET">
         <label for="query_type">Choose type query</label>
         <select id="query_type" name="query_type">
             <option value="default_browsing">default browsing</option>
@@ -71,7 +76,7 @@ $page_selected = $_SERVER["QUERY_STRING"];
         </select>
         <input type="submit">
     </form>
-    <?php // require("pagination.php"); 
+    <?php require("pagination.php");
     ?>
     <?php display_pokemons($pokemons, $pokemons_db); ?>
     <!-- Optional JavaScript -->
@@ -84,4 +89,4 @@ $page_selected = $_SERVER["QUERY_STRING"];
 </html>
 <?php
 
-// what to do with category page? why not index? I think category is just the 'display', so not really a page based on a category
+// what to do with category page? why not index? I think category is just the 'display', so not really a page based on a
