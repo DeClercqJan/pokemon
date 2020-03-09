@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 session_start();
 
-require_once("functions.php");
 require_once("model.php");
 
 // ALSO SETS DEFAULT LIST OF POKEMON
@@ -84,8 +83,8 @@ function display_pokemons($pokemons, $pokemons_db)
         echo "<img src=" . $pokemon_sprite . ">";
         // overview page
         $pokemon_id = $pokemon_details->id;
-        echo "<a href='/overview.php?id=$pokemon_id'>Specifications</a>";
-        echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+        echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
+        echo "<a href='src/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
 
     }
 }

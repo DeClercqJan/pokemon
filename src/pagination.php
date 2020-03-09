@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 session_start();
 
-require_once("functions.php");
 ?>
 <nav aria-label="Page navigation example">
 <?php //  variably display navigation as for now, the search function returns no pages while the default constructor call does  - can probably be done more elegantly"
