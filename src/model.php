@@ -38,14 +38,68 @@ class Pokemons
     }
 }
 
-// to do: abstract class?
+class Pokemons_DB
+{
+    // basic logic: set pokemon array with some methods, then use other method to show it.
+    // to do: there's also a details method which operates on another level, more specific that may need to move elsewhere
+    private $pokemons = [];
+    // this number serves front-end, not api
+    private $pokemons_results_page = 1;
+    private $pokemons_results_page_all = 0;
+    private $pokemon_per_page = 0;
+
+    // not really necessary to have this as null, I think - or is it extra security?
+    private function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20): object
+    {
+        // yoda rule
+        if (null != $pagenumber) {
+            // need to display this user-end
+            $this->pokemons_results_page = $pagenumber;
+            // page 1 for the user however, is page 0 for api-call
+            $pagenumber_new = $pagenumber - 1;
+            $new_pokemons_results_page_call = $pagenumber_new * $pokemon_per_page;
+        }
+        $limit = $pokemon_per_page;
+        $this->pokemon_per_page = $pokemon_per_page;
+        // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
+        $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=$limit");
+        return json_decode($pokemons_json);
+    }
+
+    // chosen to write public explicitly for clarity
+    public function __construct()
+    {
+        // there are 10157 pokemon in the database it appears, which I have set as parameters to get all
+        // $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon?offset=0&limit=10157");
+        // yet the assignment wants to display 20 at a time
+        $pokemons = $this->connection_pokemons(1);
+
+//
+//        // is this the correct moment to declare this class?
+//        $pokemons_class = new Pokemons();
+//
+//        foreach ($pokemons->results as $pokemon_raw) {
+//            // var_dump($pokemon_raw);
+//            $pokemon = new Pokemon($pokemon_raw);
+//            // var_dump_pretty($pokemon);
+//            $pokemons_class->add_pokemon_to_pokemons_array($pokemon);
+//        }
+
+        // var_dump_pretty($pokemons_class);
+
+        $this->pokemons = $pokemons->results;
+        $float = ceil($pokemons->count / 20);
+        $this->pokemons_results_page_all = (int)$float;
+    }
+}
+/*// to do: abstract class?
 // to do: catch errors
 //to do: typehints and such, private/public ...
 // to do: check if file_get_contents is the best way to proceed compared to PDO, or is that something different? I'm not directly calling database, eh
 // can probably refactor the db connection into separate, re-usable function
 class Pokemons_DB
 {
-    // basic logic: set pokemon array with some methods, then use other method to show it. 
+    // basic logic: set pokemon array with some methods, then use other method to show it.
     // to do: there's also a details method which operates on another level, more specific that may need to move elsewhere
     private $pokemons = [];
     // this number serves front-end, not api
@@ -177,4 +231,4 @@ class Pokemons_DB
         // var_dump($pokemon->name);
         return $pokemon;
     }
-}
+}*/

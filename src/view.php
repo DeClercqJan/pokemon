@@ -25,12 +25,12 @@ require_once("controller.php");
         <!-- to do: variably display pokemon-type dropdown based on selection of query_type. Javascript? -->
         <label for="type">Choose type from dropdown</label>
         <select id="type" name="type">
-            <?php
-            $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
-            foreach ($pokemon_type_list as $pokemon_type) { ?>
-                <option value=<?php echo $pokemon_type->name; ?>><?php echo $pokemon_type->name; ?></option>
-            <?php }
-            ?>
+<!--            <?php
+/*            $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
+            foreach ($pokemon_type_list as $pokemon_type) { */?>
+                <option value=<?php /*echo $pokemon_type->name; */?>><?php /*echo $pokemon_type->name; */?></option>
+            --><?php /*}
+            */?>
         </select>
         <!-- note:  I'm not able to calculate beforehand the numer of pokemon that an api call will return (will I search fire or rock? or do I just click to the next default call), I will not set options dynamically but offer to display 5, 10, ... 100  -->
         <label for="pokemon_per_page">Choose # pokemon_per_page</label>
@@ -54,29 +54,29 @@ require_once("controller.php");
     </header>
     <main class="border border-primary row">
     <!-- notification that e-mail has indeed been sent -->
-    <?php if (isset($_SESSION["mail_sent"]) && true == $_SESSION["mail_sent"]) {
-        ?>
+<!--    <?php /*if (isset($_SESSION["mail_sent"]) && true == $_SESSION["mail_sent"]) {
+        */?>
         <div class="border border-secondary col-12"> <?php
-        echo "mail has been sent!";
+/*        echo "mail has been sent!";
         // reset 
         $_SESSION["mail_sent"] = false;
-            ?> </div> <?php
-    }
-    ?>
+            */?> </div> --><?php
+/*    }
+    */?>
  <div class="border border-secondary col-8">
     <?php
-    // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
+/*    // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
     $results_page_all = $pokemons_db->get_pokemons_results_page_all();
     $current_results_page = $pokemons_db->get_pokemons_results_page();
-    display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page); ?>
+    display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page); */?><!--
         </div>
-        <?php  if (isset($_COOKIE["favourites"])) {
-            ?>
+        <?php /* if (isset($_COOKIE["favourites"])) {
+            */?>
             <div class="border border-secondary col-4"> <?php
-                display_pokemons($pokemons, $pokemons_db, true, $results_page_all, $current_results_page);
-                ?> </div>      <?php
-        }
-        ?>
+/*                display_pokemons($pokemons, $pokemons_db, true, $results_page_all, $current_results_page);
+                */?> </div>      --><?php
+/*        }
+        */?>
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

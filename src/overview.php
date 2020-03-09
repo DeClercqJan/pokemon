@@ -9,7 +9,7 @@ require_once("functions.php");
 // note: need to place this above rest of html and put everything in variable to I can echo this in this view
 require_once("controller.php");
 
-// if ("/overview" == $_SERVER["PATH_INFO"]) {
+/*// if ("/overview" == $_SERVER["PATH_INFO"]) {
     if("/src/overview.php" == $_SERVER["PHP_SELF"]) {
     // echo "test";
     $pokemon_id = (string) $_GET["id"];
@@ -19,6 +19,6 @@ require_once("controller.php");
     $pokemon_name = $pokemon_details->name;
     // var_dump($pokemon_name);
     echo "overview echo: $pokemon_name";
-}
+}*/
 
 // question how does this page relate to view and controller?
