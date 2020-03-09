@@ -71,7 +71,10 @@ elseif (isset($_GET["results_page"]) && isset($_SESSION["previous_query_type"]) 
     // $_SESSION["pokemons"] = $pokemons;
 }
 
+// trying out other way of doing things: separating json logic from pokemon class logic by overwriting original:
 $pokemons = $pokemons_db->show_pokemons();
+var_dump_pretty($pokemons);
+// $pokemons = $pokemons_class->show_pokemons2())
 
 // if (isset($_GET["results_page"])) {
 //     $new_pokemons_results_page = (int) $_GET["results_page"];

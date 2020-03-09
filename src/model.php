@@ -7,15 +7,15 @@ session_start();
 
 class Pokemon
 {
-    private $name = "";
-    private $details_url = "";
-    private $testProperty = "Jan DeClercq is the greatest pokemaster of all time";
+    // public $name = "";
+    // public $url = "";
+    private $testProperty = "Jan De Clercq is the greatest pokemaster of all time";
 
     public function __construct(object $pokemon_raw)
     {
         // $this->data = $pokemon_raw;
         $this->name = $pokemon_raw->name;
-        $this->details_url = $pokemon_raw->url;
+        $this->url = $pokemon_raw->url;
 
     }
 }
