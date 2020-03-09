@@ -4,6 +4,40 @@ declare(strict_types=1);
 
 session_start();
 
+
+class Pokemon
+{
+    private $name = "";
+    private $details_url = "";
+    private $testProperty = "Jan DeClercq is the greatest pokemaster of all time";
+
+    public function __construct(object $pokemon_raw)
+    {
+        // $this->data = $pokemon_raw;
+        $this->name = $pokemon_raw->name;
+        $this->details_url = $pokemon_raw->url;
+
+    }
+}
+
+class Pokemons
+{
+    private $pokemons = [];
+
+    public function __construct(array $pokemons_raw)
+    {
+        foreach ($pokemons_raw as $pokemon_raw) {
+            $pokemon = new Pokemon($pokemon_raw);
+            $this->pokemons[] = $pokemon;
+        }
+    }
+
+    public function show_pokemons2(): array
+    {
+        return $this->pokemons;
+    }
+}
+
 // to do: abstract class?
 // to do: catch errors
 //to do: typehints and such, private/public ...
@@ -20,7 +54,7 @@ class Pokemons_DB
     private $pokemon_per_page = 0;
 
     // not really necessary to have this as null, I think - or is it extra security?
-    private function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20) : object
+    private function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20): object
     {
         // yoda rule
         if (null != $pagenumber) {
@@ -44,31 +78,50 @@ class Pokemons_DB
         // $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon?offset=0&limit=10157");
         // yet the assignment wants to display 20 at a time
         $pokemons = $this->connection_pokemons(1);
+
+//
+//        // is this the correct moment to declare this class?
+//        $pokemons_class = new Pokemons();
+//
+//        foreach ($pokemons->results as $pokemon_raw) {
+//            // var_dump($pokemon_raw);
+//            $pokemon = new Pokemon($pokemon_raw);
+//            // var_dump_pretty($pokemon);
+//            $pokemons_class->add_pokemon_to_pokemons_array($pokemon);
+//        }
+
+        // var_dump_pretty($pokemons_class);
+
         $this->pokemons = $pokemons->results;
         $float = ceil($pokemons->count / 20);
-        $this->pokemons_results_page_all = (int) $float;
+        $this->pokemons_results_page_all = (int)$float;
     }
 
-    public function get_pokemons_results_page() : int
+    public function get_pokemons_array_raw(): array
+    {
+        return $this->pokemons;
+    }
+
+    public function get_pokemons_results_page(): int
     {
         return $this->pokemons_results_page;
     }
 
-    public function get_pokemons_results_page_all() : int
+    public function get_pokemons_results_page_all(): int
     {
         return $this->pokemons_results_page_all;
     }
 
     //
-    public function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page) : int
+    public function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page): int
     {
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
         $this->pokemons = $pokemons->results;
         $float = ceil($pokemons->count / $pokemon_per_page);
-        return $this->pokemons_results_page_all = (int) $float;
+        return $this->pokemons_results_page_all = (int)$float;
     }
 
-    public function show_pokemons_type_list() : array
+    public function show_pokemons_type_list(): array
     {
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
@@ -77,7 +130,7 @@ class Pokemons_DB
         return $pokemons_type_list;
     }
 
-    private function pokemon_type_results_to_default_results_logic(array $pokemons, int $pagenumber, int $pokemon_per_page) : array
+    private function pokemon_type_results_to_default_results_logic(array $pokemons, int $pagenumber, int $pokemon_per_page): array
     {
         $pokemons_count = count($pokemons);
         $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
@@ -89,8 +142,9 @@ class Pokemons_DB
         $pokemons2 = array_slice($pokemons, $offset, $length);
         return $pokemons2;
     }
+
     // notes: chose to only allow string, while integer works too.
-    public function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page) : array
+    public function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page): array
     {
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
@@ -107,15 +161,15 @@ class Pokemons_DB
         return $this->pokemons = $pokemons2;
     }
 
-    public function show_pokemons() : array
+    public function show_pokemons(): array
     {
         // perhaps it would be better not to call all pokemons in construct but put them here? edit: changed name
 
         return $this->pokemons;
     }
 
-    // id can be both id-number or name of pokemon 
-    public function get_pokemon_details($id) : object
+    // id can be both id-number or name of pokemon
+    public function get_pokemon_details($id): object
     {
         // echo "functie pokemon details fires met id = $id";
         $pokemon_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/$id");

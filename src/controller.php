@@ -6,8 +6,16 @@ session_start();
 
 require_once("model.php");
 
+// gonna try to separate json logic from pokemon class so that I can always use the pokemon classes in code if API changes in structure and I would only need to change a few things in the databaseconfig, not the rest of the code
+$pokemons_db2 = new Pokemons_DB;
+$pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
+$pokemons_class = new Pokemons($pokemons_raw);
+var_dump_pretty($pokemons_class->show_pokemons2());
+
+
 // ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
+
 
 // vertical styling, instead of nesting, for increased readability + yoda logic
 // TO DO: add page number
