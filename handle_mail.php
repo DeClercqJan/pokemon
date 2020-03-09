@@ -1,0 +1,78 @@
+<?php
+
+declare(strict_types=1);
+
+echo "test";
+
+session_start();
+
+require_once("functions.php");
+
+if (isset($_GET)) {
+    var_dump_pretty($_GET);
+}
+if (isset($_POST)) {
+    var_dump_pretty($_POST);
+}
+if (isset($_SESSION)) {
+    var_dump_pretty($_SESSION);
+}
+if (isset($_COOKIE)) {
+    // var_dump_pretty($_COOKIE);
+    if (isset($_COOKIE["favourites"])) {
+        $favourites_old = unserialize($_COOKIE["favourites"]);
+        var_dump($favourites_old);
+    }
+}
+
+if (isset($_POST["email"])) {
+
+    echo "post email is set";
+
+    $favourited_pokemon_to_mail = $_POST["favourited_pokemon_to_mail"];
+    var_dump($favourited_pokemon_to_mail);
+    $destination = $_POST["email"];
+    var_dump($destination);
+    $sender = "eddyeddyeddyborremans@gmail.com";
+
+    // adapted from https://www.php.net/manual/en/function.mail
+    // Multiple recipients
+    // $to = 'johny@example.com, sally@example.com'; // note the comma
+    $to = $destination;
+
+    // Subject
+    $subject = 'Look at this pokemon, it is so cool!';
+
+    // Message
+    $message = "
+    <html>
+    <head>
+      <title>Look at this pokemon, it is so cool!</title>
+    </head>
+    <body>
+<p>$favourited_pokemon_to_mail</p>
+    </body>
+    </html>
+    ";
+    var_dump($message);
+
+    $message = "test123 want message geeft gelijk enkel pokemon weer";
+
+    // To send HTML mail, the Content-type header must be set
+    $headers[] = 'MIME-Version: 1.0';
+    $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+    // Additional headers
+    // $headers[] = 'To: Mary <mary@example.com>, Kelly <kelly@example.com>';
+    $headers[] = "To <$destination>";
+    $headers[] = "From: Eddy Borremans <$sender>";
+    // $headers[] = "Cc: birthdayarchive@example.com";
+    $headers[] = "Bcc: $sender";
+
+    // Mail it
+    mail($to, $subject, $message, implode("\r\n", $headers));
+    
+    $_SESSION["mail_sent"] = true;
+
+    // header("Location: index.php");
+}

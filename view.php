@@ -1,6 +1,7 @@
 <?php
-
 declare(strict_types=1);
+
+// phpinfo();
 
 session_start();
 
@@ -46,7 +47,7 @@ require_once("controller.php");
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
+    <h1>Pokedoki</h1>
     <?php require("pagination.php");
     ?>
     <!-- to do refactor this over  pagination component etc. -->
@@ -84,12 +85,18 @@ require_once("controller.php");
         </select>
         <input type="submit">
     </form>
+    <?php if (isset($_SESSION["mail_sent"]) && true == $_SESSION["mail_sent"]) {
+        echo "mail has been sent!";
+        // reset 
+        $_SESSION["mail_sent"] = false;
+    }
+    ?>
     <?php  // just did this this way in order to be quick. But ths really should not be in the view - maybe some synergie/re-use of (parts of) display_pokemons function
     if (isset($_COOKIE["favourites"])) {
         // echo "isset indeed";
     ?>
         <h2>Pokemon in favourites</h2>
-    <?php
+        <?php
         $favourites_old = unserialize($_COOKIE["favourites"]);
         foreach ($favourites_old as $favourite) {
             // adapted stuff from display_pokemons function function
@@ -103,6 +110,18 @@ require_once("controller.php");
             $pokemon_id = $pokemon_details->id;
             echo "<a href='/overview.php?id=$pokemon_id'>Specifications</a>";
             // echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+        ?>
+            <form action="handle_mail.php" method="POST">
+                <label for='email'>Enter your email:</label>
+                <input type='email' id='email' name='email'>
+                <?php // sending data without creating input field 
+                ?>
+                <input type='hidden' name="favourited_pokemon_to_mail" value=<?php echo $pokemon_details->name; ?> />
+                <?php
+                ?>
+                <input type="submit">
+            </form>
+    <?php
         }
     }
     ?>
@@ -121,5 +140,3 @@ require_once("controller.php");
 <?php
 
 // what to do with category page? why not index? I think category is just the 'display', so not really a page based on a
-
-// to do: display favourites pokemons
