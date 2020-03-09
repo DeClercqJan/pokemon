@@ -55,5 +55,5 @@ if (isset($_POST["email"])) {
     
     $_SESSION["mail_sent"] = true;
 
-    header("Location: index.php");
+    header("Location: ../index.php");
 }
