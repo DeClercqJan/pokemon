@@ -21,7 +21,7 @@ if (isset($_COOKIE["favourites"])) {
     // trying to make it accessible on index by including path
     /* expire in 30 days */
     setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
-    var_dump_pretty($favourites_new_seralized);
+    // var_dump_pretty($favourites_new_seralized);
     header("Location: ../index.php");
 } else {
     echo "has not been set already";

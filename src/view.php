@@ -89,7 +89,7 @@ require_once("controller.php");
         <?php  if (isset($_COOKIE["favourites"])) {
             ?>
             <div class="border border-secondary col-4"> <?php
-                display_pokemons($pokemons, $pokemons_db, true);
+                display_pokemons($pokemons, $pokemons_db, true, $results_page_all, $current_results_page);
                 ?> </div>      <?php
         }
         ?>

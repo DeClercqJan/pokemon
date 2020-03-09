@@ -7,4 +7,3 @@ declare(strict_types=1);
 require_once("src/functions.php");
 
 require_once("src/view.php");
-
