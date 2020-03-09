@@ -20,7 +20,7 @@ class Pokemons_DB
     private $pokemon_per_page = 0;
 
     // not really necessary to have this as null, I think - or is it extra security?
-    public function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20)
+    private function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20) : object
     {
         // yoda rule
         if (null != $pagenumber) {
@@ -37,6 +37,7 @@ class Pokemons_DB
         return json_decode($pokemons_json);
     }
 
+    // chosen to write public explicitly for clarity
     public function __construct()
     {
         // there are 10157 pokemon in the database it appears, which I have set as parameters to get all
@@ -44,32 +45,30 @@ class Pokemons_DB
         // yet the assignment wants to display 20 at a time
         $pokemons = $this->connection_pokemons(1);
         $this->pokemons = $pokemons->results;
-        $this->pokemons_results_page_all = ceil($pokemons->count / 20);
+        $float = ceil($pokemons->count / 20);
+        $this->pokemons_results_page_all = (int) $float;
     }
 
-    function get_pokemons_results_page()
+    public function get_pokemons_results_page() : int
     {
         return $this->pokemons_results_page;
     }
 
-    function get_pokemons_results_page_all()
+    public function get_pokemons_results_page_all() : int
     {
         return $this->pokemons_results_page_all;
     }
 
-    function get_pokemon_per_page()
-    {
-        return $this->pokemon_per_page;
-    }
-
-    function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page)
+    //
+    public function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page) : int
     {
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
         $this->pokemons = $pokemons->results;
-        $this->pokemons_results_page_all = ceil($pokemons->count / $pokemon_per_page);
+        $float = ceil($pokemons->count / $pokemon_per_page);
+        return $this->pokemons_results_page_all = (int) $float;
     }
 
-    function show_pokemons_type_list()
+    public function show_pokemons_type_list() : array
     {
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
@@ -78,7 +77,7 @@ class Pokemons_DB
         return $pokemons_type_list;
     }
 
-    function pokemon_type_results_to_default_results_logic($pokemons, $pagenumber, $pokemon_per_page)
+    private function pokemon_type_results_to_default_results_logic(array $pokemons, int $pagenumber, int $pokemon_per_page) : array
     {
         $pokemons_count = count($pokemons);
         $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
@@ -91,7 +90,7 @@ class Pokemons_DB
         return $pokemons2;
     }
     // notes: chose to only allow string, while integer works too.
-    function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page)
+    public function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page) : array
     {
         // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
         $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
@@ -105,10 +104,10 @@ class Pokemons_DB
         }
         // need to calculatee the following as it is notreadily available in 
         $pokemons2 = $this->pokemon_type_results_to_default_results_logic($pokemons, $pagenumber, $pokemon_per_page);
-        $this->pokemons = $pokemons2;
+        return $this->pokemons = $pokemons2;
     }
 
-    function show_pokemons()
+    public function show_pokemons() : array
     {
         // perhaps it would be better not to call all pokemons in construct but put them here? edit: changed name
 
@@ -116,7 +115,7 @@ class Pokemons_DB
     }
 
     // id can be both id-number or name of pokemon 
-    function get_pokemon_details($id)
+    public function get_pokemon_details($id) : object
     {
         // echo "functie pokemon details fires met id = $id";
         $pokemon_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/$id");

@@ -10,20 +10,7 @@ require_once("controller.php");
     <!-- starter tempalte https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
     <!doctype html>
     <html lang="en">
-
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-              crossorigin="anonymous">
-
-        <title>Hello, world!</title>
-    </head>
-
+<?php require_once("head.php"); ?>
     <body class="container mw-100 m-0">
     <header class="border border-primary row">
     <h1 class="col-12 text-center" >Pokelidokeli</h1>
@@ -78,12 +65,9 @@ require_once("controller.php");
     ?>
  <div class="border border-secondary col-8">
     <?php
-
     // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
-
     $results_page_all = $pokemons_db->get_pokemons_results_page_all();
     $current_results_page = $pokemons_db->get_pokemons_results_page();
-
     display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page); ?>
         </div>
         <?php  if (isset($_COOKIE["favourites"])) {
