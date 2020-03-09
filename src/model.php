@@ -47,11 +47,6 @@ class Pokemons_DB
         $this->pokemons_results_page_all = ceil($pokemons->count / 20);
     }
 
-    private function __destruct()
-    {
-        // TO DO
-    }
-
     function get_pokemons_results_page()
     {
         return $this->pokemons_results_page;

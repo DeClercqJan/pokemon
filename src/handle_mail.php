@@ -6,6 +6,9 @@ echo "test";
 
 session_start();
 
+// to do: clean up this code and make the more advanced mailer work
+// to do? Danny says the standard mailer is not recommended, while I do use that one here
+// to do: check input e-mail/validation
 if (isset($_POST["email"])) {
 
     echo "post email is set";

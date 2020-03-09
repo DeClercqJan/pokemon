@@ -25,10 +25,10 @@ require_once("controller.php");
     </head>
 
     <body>
+    <header class="border border-primary">
     <h1>Pokelidokeli</h1>
-    <?php require("pagination.php");
-    ?>
     <!-- to do refactor this over  pagination component etc. -->
+        <div class="border border-secondary">
     <form action="../index.php" method="GET">
         <label for="query_type">Choose type query</label>
         <select id="query_type" name="query_type">
@@ -63,51 +63,33 @@ require_once("controller.php");
         </select>
         <input type="submit">
     </form>
+        </div>
+    </header>
+    <main class="border border-primary">
     <!-- notification that e-mail has indeed been sent -->
     <?php if (isset($_SESSION["mail_sent"]) && true == $_SESSION["mail_sent"]) {
+        ?>
+        <div class="border border-secondary"> <?php
         echo "mail has been sent!";
         // reset 
         $_SESSION["mail_sent"] = false;
+            ?> </div> <?php
     }
     ?>
-    <?php // just did this this way in order to be quick. But ths really should not be in the view - maybe some synergie/re-use of (parts of) display_pokemons function
-    if (isset($_COOKIE["favourites"])) {
-        // echo "isset indeed";
+    <?php  if (isset($_COOKIE["favourites"])) {
         ?>
-        <h2>Pokemon in favourites</h2>
-        <?php
-        $favourites_old = unserialize($_COOKIE["favourites"]);
-        foreach ($favourites_old as $favourite) {
-            // adapted stuff from display_pokemons function function
-            $pokemon_details = $pokemons_db->get_pokemon_details($favourite);
-            echo '<pre>';
-            echo $pokemon_details->name;
-            echo '</pre>';
-            $pokemon_sprite = $pokemon_details->sprites->front_default;
-            echo "<img src=" . $pokemon_sprite . ">";
-            // overview page
-            $pokemon_id = $pokemon_details->id;
-            echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
-            // echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
-            ?>
-            <form action="src/handle_mail.php" method="POST">
-                <label for='email'>Enter your email:</label>
-                <input type='email' id='email' name='email'>
-                <?php // sending data without creating input field 
-                ?>
-                <input type='hidden' name="favourited_pokemon_to_mail" value=<?php echo $pokemon_details->name; ?>/>
-                <?php
-                ?>
-                <input type="submit">
-            </form>
-            <?php
-        }
+    <div class="border border-secondary"> <?php
+        display_pokemons($pokemons, $pokemons_db, true);
+        ?> </div>      <?php
     }
-    ?>
-    <h2>Pokemon not necessarily in favourites</h2>
-    <?php display_pokemons($pokemons, $pokemons_db); ?>
+?> <div class="border border-secondary">
     <?php require("pagination.php");
     ?>
+    <?php display_pokemons($pokemons, $pokemons_db, false); ?>
+    <?php require("pagination.php");
+    ?>
+        </div>
+    </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
