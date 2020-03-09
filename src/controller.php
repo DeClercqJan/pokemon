@@ -71,12 +71,11 @@ $pokemons = $pokemons_db->show_pokemons();
 //     $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page);
 // }
 
-// onyl declares it, doesn't call it
-function display_pokemons($pokemons, $pokemons_db, $favourites)
+function display_pokemons($pokemons, $pokemons_db, $favourites, $results_page_all, $current_results_page )
 {
     if($favourites) {
         ?>
-        <h2>Pokemon in favourites</h2>
+        <h2 class="text-center">Pokemon in favourites</h2>
         <?php
         $favourites_old = unserialize($_COOKIE["favourites"]);
         foreach ($favourites_old as $favourite) {
@@ -105,12 +104,13 @@ function display_pokemons($pokemons, $pokemons_db, $favourites)
             <?php
         }
     }
-    // double if statement because the 2 can exist together
-    if (!$favourites) {
+    // double if statement because the 2 can exist together. edit: no, not necessary as multiple calls are being made
+    elseif (!$favourites) {
     ?>
-    <h2>Pokemon not necessarily in favourites</h2>
+    <h2 class="text-center">Pokemon not necessarily in favourites</h2>
     <?php
-    foreach ($pokemons as $pokemon) {
+        require("pagination.php");
+        foreach ($pokemons as $pokemon) {
         echo '<pre>';
         echo $pokemon->name;
         echo '</pre>';
@@ -122,8 +122,7 @@ function display_pokemons($pokemons, $pokemons_db, $favourites)
         echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
         echo "<a href='src/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
     }
+        require("pagination.php");
+
     }
 }
-
-$current_results_page = $pokemons_db->get_pokemons_results_page();
-$results_page_all = $pokemons_db->get_pokemons_results_page_all();

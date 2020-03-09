@@ -24,11 +24,11 @@ require_once("controller.php");
         <title>Hello, world!</title>
     </head>
 
-    <body>
-    <header class="border border-primary">
-    <h1>Pokelidokeli</h1>
+    <body class="container mw-100 m-0">
+    <header class="border border-primary row">
+    <h1 class="col-12 text-center" >Pokelidokeli</h1>
     <!-- to do refactor this over  pagination component etc. -->
-        <div class="border border-secondary">
+        <div class="border border-secondary col-12">
     <form action="../index.php" method="GET">
         <label for="query_type">Choose type query</label>
         <select id="query_type" name="query_type">
@@ -65,30 +65,34 @@ require_once("controller.php");
     </form>
         </div>
     </header>
-    <main class="border border-primary">
+    <main class="border border-primary row">
     <!-- notification that e-mail has indeed been sent -->
     <?php if (isset($_SESSION["mail_sent"]) && true == $_SESSION["mail_sent"]) {
         ?>
-        <div class="border border-secondary"> <?php
+        <div class="border border-secondary col-12"> <?php
         echo "mail has been sent!";
         // reset 
         $_SESSION["mail_sent"] = false;
             ?> </div> <?php
     }
     ?>
-    <?php  if (isset($_COOKIE["favourites"])) {
-        ?>
-    <div class="border border-secondary"> <?php
-        display_pokemons($pokemons, $pokemons_db, true);
-        ?> </div>      <?php
-    }
-?> <div class="border border-secondary">
-    <?php require("pagination.php");
-    ?>
-    <?php display_pokemons($pokemons, $pokemons_db, false); ?>
-    <?php require("pagination.php");
-    ?>
+ <div class="border border-secondary col-8">
+    <?php
+
+    // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
+
+    $results_page_all = $pokemons_db->get_pokemons_results_page_all();
+    $current_results_page = $pokemons_db->get_pokemons_results_page();
+
+    display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page); ?>
         </div>
+        <?php  if (isset($_COOKIE["favourites"])) {
+            ?>
+            <div class="border border-secondary col-4"> <?php
+                display_pokemons($pokemons, $pokemons_db, true);
+                ?> </div>      <?php
+        }
+        ?>
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
