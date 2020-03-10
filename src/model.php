@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 class Pokemon
 {
-    // public $name = "";
-    // public $url = "";
+    private $name = "";
+    private $url = "";
+    private $image_url = "";
     private $testProperty = "Jan De Clercq is the greatest pokemaster of all time";
 
     public function __construct(object $pokemon_raw)
@@ -13,29 +14,47 @@ class Pokemon
         // $this->data = $pokemon_raw;
         $this->name = $pokemon_raw->name;
         $this->url = $pokemon_raw->url;
-        $this->image = $this->get_pokemon_property($pokemon_raw->url, "front_default");
+        // $this->image = $this->get_pokemon_property($pokemon_raw->url, "front_default");
+        $this->image_url = $this->get_pokemon_property($pokemon_raw->url, "front_default");
 
     }
 
-    private function get_pokemon_property(string $pokemon_url, $property) // : string
+    // note: this works for images and SOME properties, BUT for many it doesn't.
+    private function get_pokemon_property(string $pokemon_url, string $property)
     {
-        $pokemon_details = $this->get_pokemon_details($pokemon_url);
-        echo "vanaf hier pokemon property functie voor property $property";
-        var_dump_pretty($pokemon_details);
-        // return $pokemon_details->sprites->front_default;
+        // echo "property in get pokemon_property is $property";
+        $pokemon_details = $this->get_pokemon_details($pokemon_url, $property);
+        // var_dump_pretty($pokemon_details);
+        // need to make it an array to use array_column function
+        $myArray = json_decode(json_encode($pokemon_details), true);
+        // search (multidimensional) array for matching key
+        $result_array = array_column($myArray, $property);
+        // var_dump_pretty($result_array);
+        foreach ($result_array as $key => $value ) {
+            // echo "key is $key <br>";
+            // echo "value is $value <br>"
+            return $value;
+        }
+        // note to self for future: may need to to typecast for integers ... may need to loop
+
+
+
     }
 
-// id can be both id-number or name of pokemon. edit: only name now
+// api can take both id-number or name of pokemon as input, yet I only use it with string
     private
-    function get_pokemon_details(string $pokemon_url) // : object
+    function get_pokemon_details(string $pokemon_url, string $property): object
     {
         $pokemon_json = file_get_contents($pokemon_url);
         $pokemon_details = json_decode($pokemon_json);
-        // return $pokemon_details;
-        // need to make it an array;
-        $myArray = json_decode(json_encode($pokemon_details), true);
-        return $myArray;
+        return $pokemon_details;
     }
+
+    public function get_image_url() {
+        return $this->image_url;
+
+    }
+
 }
 
 class Pokemons
