@@ -11,28 +11,22 @@ class Pokemon
 
     public function __construct(object $pokemon_raw)
     {
-        // $this->data = $pokemon_raw;
         $this->name = $pokemon_raw->name;
         $this->url = $pokemon_raw->url;
-        // $this->image = $this->get_pokemon_property($pokemon_raw->url, "front_default");
         $this->image_url = $this->get_pokemon_property_from_db($pokemon_raw->url, "front_default");
 
     }
 
     // note: this works for images and SOME properties, BUT for many it doesn't.
+    // QUESTION: should I call this set_ instead of get_?
     private function get_pokemon_property_from_db(string $pokemon_url, string $property)
     {
-        // echo "property in get pokemon_property is $property";
         $pokemon_details = $this->get_pokemon_details_from_db($pokemon_url, $property);
-        // var_dump_pretty($pokemon_details);
         // need to make it an array to use array_column function
         $myArray = json_decode(json_encode($pokemon_details), true);
         // search (multidimensional) array for matching key
         $result_array = array_column($myArray, $property);
-        // var_dump_pretty($result_array);
         foreach ($result_array as $key => $value) {
-            // echo "key is $key <br>";
-            // echo "value is $value <br>"
             return $value;
         }
         // note to self for future: may need to to typecast for integers ... may need to loop
@@ -86,16 +80,29 @@ class Pokemons
 class Pokemons_DB
 {
     // basic logic: set pokemon array with some methods, then use other method to show it.
-    // to do: there's also a details method which operates on another level, more specific that may need to move elsewhere
-    private $pokemons = [];
-    // this number serves front-end, not api
-    private $pokemons_results_page = 1;
+// note: there's also an api call to get more details and moved this to pokemon class as this seemed more logical to me
+    private $pokemons_raw = [];
+    // these numbers serves front-end, not api
+    private $pokemons_results_page = 0;
     private $pokemons_results_page_all = 0;
     private $pokemon_per_page = 0;
 
     private $pokemons_type_list_names = [];
 
-    // not really necessary to have this as null, I think - or is it extra security?
+    // chosen to write public explicitly for clarity
+    public function __construct()
+    {
+        // there are 10157 pokemon in the database it appears, which I have set as parameters to get all
+        // $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon?offset=0&limit=10157");
+        // yet the assignment wants to display 20 at a time
+        $pokemons = $this->connection_pokemons(1);
+
+        $this->pokemons_raw = $pokemons->results;
+        $float = ceil($pokemons->count / 20);
+        $this->pokemons_results_page_all = (int)$float;
+    }
+
+    // not really necessary to have this as null, I think - or is it extra security? or should i create void class??
     private function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20): object
     {
         // yoda rule
@@ -113,53 +120,29 @@ class Pokemons_DB
         return json_decode($pokemons_json);
     }
 
-    // chosen to write public explicitly for clarity
-    public function __construct()
+    private function connection_type() : object
     {
-        // there are 10157 pokemon in the database it appears, which I have set as parameters to get all
-        // $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon?offset=0&limit=10157");
-        // yet the assignment wants to display 20 at a time
-        $pokemons = $this->connection_pokemons(1);
-
-//
-//        // is this the correct moment to declare this class?
-//        $pokemons_class = new Pokemons();
-//
-//        foreach ($pokemons->results as $pokemon_raw) {
-//            // var_dump($pokemon_raw);
-//            $pokemon = new Pokemon($pokemon_raw);
-//            // var_dump_pretty($pokemon);
-//            $pokemons_class->add_pokemon_to_pokemons_array($pokemon);
-//        }
-
-        // var_dump_pretty($pokemons_class);
-
-        $this->pokemons = $pokemons->results;
-        $float = ceil($pokemons->count / 20);
-        $this->pokemons_results_page_all = (int)$float;
+        $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
+        return json_decode($type_data_raw);
     }
 
-    // NOTE: think I've confused the order of these set list functions: I need to call set names and set names calls set list - that's more clear
-    public function set_pokemons_type_list_names($pokemons_type_list): array
+    // setting names separately as property instead of multidemensional array
+    public function set_pokemons_type_list_names(): array
     {
+        $pokemons_type_list = $this->set_pokemons_type_list();
         $pokemons_type_list_names = [];
         foreach ($pokemons_type_list as $pokemon_type) {
-            array_push($pokemons_type_list_names, $pokemon_type->name);
+            $pokemons_type_list_names[] = $pokemon_type->name;
+            // array_push($pokemons_type_list_names, $pokemon_type->name);
         }
-        // var_dump($pokemons_type_list_names);
         return $this->pokemons_type_list_names = $pokemons_type_list_names;
     }
 
     public function set_pokemons_type_list(): array
     {
-        // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
-        $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
-        $type_data = json_decode($type_data_raw);
+        $type_data = $this->connection_type();
         $pokemons_type_list = $type_data->results;
-        // also needed to only set the types without the links as I'm calling this
-        // return $this->set_pokemons_type_list_names($pokemons_type_list);
-        return $this->set_pokemons_type_list_names($pokemons_type_list);
-
+        return $pokemons_type_list;
     }
 
     public function get_pokemons_type_list_names(): array
@@ -169,7 +152,7 @@ class Pokemons_DB
 
     public function get_pokemons_array_raw(): array
     {
-        return $this->pokemons;
+        return $this->pokemons_raw;
     }
 }
 /*// to do: abstract class?
