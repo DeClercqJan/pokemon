@@ -9,17 +9,11 @@ require_once("functions.php");
 // note: need to place this above rest of html and put everything in variable to I can echo this in this view
 require_once("controller.php");
 
-// if ("/overview" == $_SERVER["PATH_INFO"]) {
-if("/src/overview.php" == $_SERVER["PHP_SELF"]) {
-    echo "test <br>";
-    $pokemon_name = (string) $_GET["id"];
-    echo "pokemon id is $pokemon_name <br>";
-
-    // $pokemon_details = $pokemons[$pokemon_name]->get_pokemon_details_public($pokemon_id);
-    // var_dump_pretty($pokemon_details);
-    // $pokemon_name = $pokemon_details->name;
-    // var_dump($pokemon_name);
-    // echo "overview echo: $pokemon_name";
+if ("/src/overview.php" == $_SERVER["PHP_SELF"]) {
+    $pokemon_name = (string)$_GET["name"];
+    $pokemon = $pokemons_class->find_pokemon_in_pokemons($pokemon_name);
+    $testProperty = $pokemon->get_pokemon_property("testProperty");
+    echo $testProperty;
 }
 
 /*// if ("/overview" == $_SERVER["PATH_INFO"]) {

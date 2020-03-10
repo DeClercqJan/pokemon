@@ -36,8 +36,6 @@ class Pokemon
             return $value;
         }
         // note to self for future: may need to to typecast for integers ... may need to loop
-
-
     }
 
 // api can take both id-number or name of pokemon as input, yet I only use it with string
@@ -74,14 +72,16 @@ class Pokemons
         return $this->pokemons;
     }
 
-    public function find_pokemon_in_pokemons($name): pokemon
+    // configured that it takes name as parameter
+    public function find_pokemon_in_pokemons(string $pokemon_name) : pokemon
     {
-        foreach ($pokemons as $pokemon) {
-            if ($pokemon->get_pokemon_property("name") === $name) {
-            return pokemons;
-        }
+        foreach ($this->pokemons as $pokemon) {
+            if ($pokemon->get_pokemon_property("name") === $pokemon_name) {
+                return $pokemon;
+            }
         }
     }
+}
 
 class Pokemons_DB
 {

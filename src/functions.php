@@ -56,7 +56,7 @@ function display_pokemons(array $pokemons, $favourites = false)
             echo '</pre>';
             echo "<img src=" . $pokemon->get_pokemon_property("image_url") . ">";
             // $pokemon_id = $pokemon_details->id;
-            echo "<a href='src/overview.php?id=" . $pokemon->get_pokemon_property("name") . "'>Specifications</a>";
+            echo "<a href='src/overview.php?name=" . $pokemon->get_pokemon_property("name") . "'>Specifications</a>";
             // echo "<a href='src/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
         }
         // require("pagination.php");
