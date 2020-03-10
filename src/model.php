@@ -30,13 +30,12 @@ class Pokemon
         // search (multidimensional) array for matching key
         $result_array = array_column($myArray, $property);
         // var_dump_pretty($result_array);
-        foreach ($result_array as $key => $value ) {
+        foreach ($result_array as $key => $value) {
             // echo "key is $key <br>";
             // echo "value is $value <br>"
             return $value;
         }
         // note to self for future: may need to to typecast for integers ... may need to loop
-
 
 
     }
@@ -51,7 +50,8 @@ class Pokemon
     }
 
     // QUESTION: is this good practice? reduces code by not having to create getters for each, yet many things can be passed in ... I think it's ok if all properties need to be accessible
-    public function get_pokemon_property(string $property) {
+    public function get_pokemon_property(string $property)
+    {
         return $this->$property;
     }
 
@@ -73,7 +73,15 @@ class Pokemons
     {
         return $this->pokemons;
     }
-}
+
+    public function find_pokemon_in_pokemons($name): pokemon
+    {
+        foreach ($pokemons as $pokemon) {
+            if ($pokemon->get_pokemon_property("name") === $name) {
+            return pokemons;
+        }
+        }
+    }
 
 class Pokemons_DB
 {

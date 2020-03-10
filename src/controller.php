@@ -10,11 +10,7 @@ $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
 $pokemons_class = new Pokemons($pokemons_raw);
 // var_dump_pretty($pokemons_class->show_pokemons2());
 $pokemons = $pokemons_class->show_pokemons2();
-foreach ($pokemons as $pokemon) {
-    echo $pokemon->get_pokemon_property("image_url") . "<br>";
-    echo $pokemon->get_pokemon_property("name") . "<br>";
-
-}
+// var_dump_pretty($pokemons);
 
 /*// ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;

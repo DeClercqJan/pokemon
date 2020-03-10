@@ -51,14 +51,12 @@ function display_pokemons(array $pokemons, $favourites = false)
         // require("pagination.php");
         foreach ($pokemons as $pokemon) {
             echo '<pre>';
+            echo $pokemon->get_pokemon_property("name") . "<br>";
             // echo $pokemon->name;
             echo '</pre>';
-            // $pokemon_details =  $pokemons_db->get_pokemon_details($pokemon->name);
-            // $pokemon_sprite = $pokemon_details->sprites->front_default;
-            // echo "<img src=" . $pokemon_sprite . ">";
-            // overview page
+            echo "<img src=" . $pokemon->get_pokemon_property("image_url") . ">";
             // $pokemon_id = $pokemon_details->id;
-            // echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
+            echo "<a href='src/overview.php?id=" . $pokemon->get_pokemon_property("name") . "'>Specifications</a>";
             // echo "<a href='src/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
         }
         // require("pagination.php");
