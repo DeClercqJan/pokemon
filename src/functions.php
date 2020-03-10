@@ -29,7 +29,7 @@ function display_pokemons(array $pokemons, $favourites = false)
                         // overview page
                         $pokemon_id = $pokemon_details->id;
                         echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
-                        // echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+                        // echo "<a href='/handle_cookie.php?id=$pokemon_id'>Add to favorite</a>";
                         */ ?><!--
                 <form action="src/handle_mail.php" method="POST">
                     <label for='email'>Enter your email:</label>
@@ -46,18 +46,32 @@ function display_pokemons(array $pokemons, $favourites = false)
     } // double if statement because the 2 can exist together. edit: no, not necessary as multiple calls are being made
     elseif (!$favourites) {
         ?>
-        <h2 class="text-center">Pokemon not necessarily in favourites</h2>
+        <h2 class="text-center w-100">Pokemon not necessarily in favourites</h2>
         <?php
         // require("pagination.php");
         foreach ($pokemons as $pokemon) {
-            echo '<pre>';
-            echo $pokemon->get_pokemon_property("name") . "<br>";
+            $pokemon_name = $pokemon->get_pokemon_property("name"); ?>
+<!--            <div class="card" style="width: 18rem;">-->
+            <!-- note: no bootstrap support for w-20, which would be better -->
+            <div class="card w-25 text-center border border-warning">
+                <img class="card-img-top" src=<?php echo $pokemon->get_pokemon_property("image_url") ?> alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title"><? php echo $pokemon_name ?></h5>
+<!--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                    <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'"?> class="btn btn-secondary m-1">Specifications</a>
+                    <a href=<?php echo "'src/handle_cookie.php?name=" . $pokemon_name . "'"?> class="btn btn-primary m-1">Add to favorite</a>
+                </div>
+            </div>
+            <?php
+
+            // echo '<pre>';
+            // echo $pokemon_name . "<br>";
             // echo $pokemon->name;
-            echo '</pre>';
-            echo "<img src=" . $pokemon->get_pokemon_property("image_url") . ">";
+            // echo '</pre>';
+            // echo "<img src=" . $pokemon->get_pokemon_property("image_url") . ">";
             // $pokemon_id = $pokemon_details->id;
-            echo "<a href='/overview.php?name=" . $pokemon->get_pokemon_property("name") . "'>Specifications</a>";
-            // echo "<a href='src/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+            // echo "<a class='btn btn-primary m-1' href='/overview.php?name=" . $pokemon_name . "'>Specifications</a>";
+            // echo "<a class='btn btn-primary m 1' href='src/handle_cookie.php?name=" . $pokemon_name . "'>Add to favorite</a><br>";
         }
         // require("pagination.php");
     }
@@ -84,7 +98,7 @@ function display_pokemons(array $pokemons, object $pokemons_db, $favourites = fa
             // overview page
             $pokemon_id = $pokemon_details->id;
             echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
-            // echo "<a href='/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+            // echo "<a href='/handle_cookie.php?id=$pokemon_id'>Add to favorite</a>";
             */ ?>
             <form action="src/handle_mail.php" method="POST">
                 <label for='email'>Enter your email:</label>
@@ -115,7 +129,7 @@ function display_pokemons(array $pokemons, object $pokemons_db, $favourites = fa
             // overview page
             $pokemon_id = $pokemon_details->id;
             echo "<a href='src/overview.php?id=$pokemon_id'>Specifications</a>";
-            echo "<a href='src/cookie_handler.php?id=$pokemon_id'>Add to favorite</a>";
+            echo "<a href='src/handle_cookie.php?id=$pokemon_id'>Add to favorite</a>";
         }
         require("pagination.php");
     }

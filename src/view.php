@@ -63,7 +63,7 @@ require_once("controller.php");
             */?> </div> --><?php
 /*    }
     */?>
- <div class="border border-secondary col-8">
+ <div class="border border-secondary col-8 row d-flex justify-content-center">
     <?php
     // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
 //    $results_page_all = $pokemons_db->get_pokemons_results_page_all();

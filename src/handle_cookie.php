@@ -6,6 +6,8 @@ session_start();
 
 require_once("functions.php");
 
+echo "test1233";
+
 ///*$pokemon_id = $_GET["id"];
 //
 //if (isset($_COOKIE["favourites"])) {
