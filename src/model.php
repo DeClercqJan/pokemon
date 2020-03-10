@@ -23,7 +23,7 @@ class Pokemon
     private function get_pokemon_property_from_db(string $pokemon_url, string $property)
     {
         // echo "property in get pokemon_property is $property";
-        $pokemon_details = $this->get_pokemon_details($pokemon_url, $property);
+        $pokemon_details = $this->get_pokemon_details_from_db($pokemon_url, $property);
         // var_dump_pretty($pokemon_details);
         // need to make it an array to use array_column function
         $myArray = json_decode(json_encode($pokemon_details), true);
@@ -40,7 +40,7 @@ class Pokemon
 
 // api can take both id-number or name of pokemon as input, yet I only use it with string
     private
-    function get_pokemon_details(string $pokemon_url, string $property): object
+    function get_pokemon_details_from_db(string $pokemon_url, string $property): object
     {
         $pokemon_json = file_get_contents($pokemon_url);
         $pokemon_details = json_decode($pokemon_json);

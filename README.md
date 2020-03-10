@@ -14,6 +14,7 @@
 
 ## To do's
 - separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
+- overview page's base logic is solid, but I don't know what info to display there. Not first priority anyway
 - testing
 
 # ORIGINAL ASSIGNMENT BELOW
