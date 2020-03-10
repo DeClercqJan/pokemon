@@ -13,7 +13,28 @@ class Pokemon
         // $this->data = $pokemon_raw;
         $this->name = $pokemon_raw->name;
         $this->url = $pokemon_raw->url;
+        $this->image = $this->get_pokemon_property($pokemon_raw->url, "front_default");
 
+    }
+
+    private function get_pokemon_property(string $pokemon_url, $property) // : string
+    {
+        $pokemon_details = $this->get_pokemon_details($pokemon_url);
+        echo "vanaf hier pokemon property functie voor property $property";
+        var_dump_pretty($pokemon_details);
+        // return $pokemon_details->sprites->front_default;
+    }
+
+// id can be both id-number or name of pokemon. edit: only name now
+    private
+    function get_pokemon_details(string $pokemon_url) // : object
+    {
+        $pokemon_json = file_get_contents($pokemon_url);
+        $pokemon_details = json_decode($pokemon_json);
+        // return $pokemon_details;
+        // need to make it an array;
+        $myArray = json_decode(json_encode($pokemon_details), true);
+        return $myArray;
     }
 }
 

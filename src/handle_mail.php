@@ -26,7 +26,6 @@ if (isset($_POST["email"])) {
 
     // Subject
     $subject = 'Look at this pokemon, it is so cool!';
-
     // Message
     $message = "
     <html>

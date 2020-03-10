@@ -65,15 +65,17 @@ require_once("controller.php");
     */?>
  <div class="border border-secondary col-8">
     <?php
-/*    // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
-    $results_page_all = $pokemons_db->get_pokemons_results_page_all();
-    $current_results_page = $pokemons_db->get_pokemons_results_page();
-    display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page); */?><!--
+    // had to passs these in functions. Can probably be done better, but was a result of trying to refactor
+//    $results_page_all = $pokemons_db->get_pokemons_results_page_all();
+//    $current_results_page = $pokemons_db->get_pokemons_results_page();
+    // display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page);
+    display_pokemons($pokemons, false);
+    ?>
         </div>
-        <?php /* if (isset($_COOKIE["favourites"])) {
-            */?>
+        <?php /*if (isset($_COOKIE["favourites"])) {
+            */?><!--
             <div class="border border-secondary col-4"> <?php
-/*                display_pokemons($pokemons, $pokemons_db, true, $results_page_all, $current_results_page);
+/*                            display_pokemons($pokemons, $pokemons_db, true, $results_page_all, $current_results_page);
                 */?> </div>      --><?php
 /*        }
         */?>
