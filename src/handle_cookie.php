@@ -6,9 +6,37 @@ session_start();
 
 require_once("functions.php");
 
-echo "test1233";
+if(!isset($_GET["name"])) {
+    echo "you need to click add to favourite on the index page first.";
+}
+elseif (isset($_GET["name"]) && !isset($_COOKIE["favourites"])) {
+    $pokemon_name = $_GET["name"];
+    $favourites_new = [];
+    // read that this would be better than array_push...
+    $favourites_new[] = $pokemon_name;
+    // need to seralize array in order to store in cookie + also need to make sure only unique values are present in array
+    $favourites_new_seralized = serialize(array_unique($favourites_new));
+    // trying to make it accessible on index by including path
+    /* expire in 30 days */
+   setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
+   header("Location: ../index.php");
 
-///*$pokemon_id = $_GET["id"];
+}
+elseif (isset($_GET["name"]) && isset($_COOKIE["favourites"])) {
+    $pokemon_name = $_GET["name"];
+    $favourites_old = unserialize($_COOKIE["favourites"]);
+    $favourites_new = $favourites_old;
+    // read that this would be better than array_push...
+    $favourites_new[] = $pokemon_name;
+    // need to seralize array in order to store in cookie + also need to make sure only unique values are present in array
+    $favourites_new_seralized = serialize(array_unique($favourites_new));
+    // trying to make it accessible on index by including path
+    /* expire in 30 days */
+    setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
+    header("Location: ../index.php");
+
+}
+
 //
 //if (isset($_COOKIE["favourites"])) {
 //    echo "isset already";

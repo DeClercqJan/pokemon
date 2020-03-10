@@ -15,6 +15,7 @@
 ## To do's
 - separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
 - overview page's base logic is solid, but I don't know what info to display there. Not first priority anyway
+- style block of favourites. Something with row and width, check margins and such because the borders are overlapping. Maybe different box-model?
 - testing
 
 # ORIGINAL ASSIGNMENT BELOW
