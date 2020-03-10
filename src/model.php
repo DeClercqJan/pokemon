@@ -15,12 +15,12 @@ class Pokemon
         $this->name = $pokemon_raw->name;
         $this->url = $pokemon_raw->url;
         // $this->image = $this->get_pokemon_property($pokemon_raw->url, "front_default");
-        $this->image_url = $this->get_pokemon_property($pokemon_raw->url, "front_default");
+        $this->image_url = $this->get_pokemon_property_from_db($pokemon_raw->url, "front_default");
 
     }
 
     // note: this works for images and SOME properties, BUT for many it doesn't.
-    private function get_pokemon_property(string $pokemon_url, string $property)
+    private function get_pokemon_property_from_db(string $pokemon_url, string $property)
     {
         // echo "property in get pokemon_property is $property";
         $pokemon_details = $this->get_pokemon_details($pokemon_url, $property);
@@ -50,9 +50,9 @@ class Pokemon
         return $pokemon_details;
     }
 
-    public function get_image_url() {
-        return $this->image_url;
-
+    // QUESTION: is this good practice? reduces code by not having to create getters for each, yet many things can be passed in ... I think it's ok if all properties need to be accessible
+    public function get_pokemon_property(string $property) {
+        return $this->$property;
     }
 
 }

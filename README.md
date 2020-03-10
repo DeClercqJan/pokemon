@@ -6,6 +6,9 @@
 
 ## implementation
 - paid more attention to code quality: type hinting, security on classes, re-usability, yoda rule, limit indentation, strict type, defensive programming, names, comments, file structure, refactoring ...
+- database class fills up pokemonS class and while constructing it calls the pokemon class that also contains another api call to get more details (image and so)
+- created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, not much more
+- also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
 - basic bootstrap styling
 - Heroku deployment
 

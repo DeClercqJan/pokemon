@@ -51,7 +51,7 @@ function display_pokemons(array $pokemons, $favourites = false)
         // require("pagination.php");
         foreach ($pokemons as $pokemon) {
             echo '<pre>';
-            echo $pokemon->name;
+            // echo $pokemon->name;
             echo '</pre>';
             // $pokemon_details =  $pokemons_db->get_pokemon_details($pokemon->name);
             // $pokemon_sprite = $pokemon_details->sprites->front_default;

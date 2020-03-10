@@ -11,7 +11,9 @@ $pokemons_class = new Pokemons($pokemons_raw);
 // var_dump_pretty($pokemons_class->show_pokemons2());
 $pokemons = $pokemons_class->show_pokemons2();
 foreach ($pokemons as $pokemon) {
-    echo $pokemon->get_image_url() . "<br>";
+    echo $pokemon->get_pokemon_property("image_url") . "<br>";
+    echo $pokemon->get_pokemon_property("name") . "<br>";
+
 }
 
 /*// ALSO SETS DEFAULT LIST OF POKEMON
