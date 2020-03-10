@@ -1,3 +1,20 @@
+# pokelidokeli
+
+## Basic idea
+- find pokemon by browings or searching by type. Add them to your favourites cookie and e-mail a friend with a pokemonster to check out
+- Becode PHP exercise
+
+## implementation
+- paid more attention to code quality: type hinting, security on classes, re-usability, yoda rule, limit indentation, strict type, defensive programming, names, comments, file structure, refactoring ...
+- basic bootstrap styling
+- Heroku deployment
+
+## To do's
+- separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
+- testing
+
+# ORIGINAL ASSIGNMENT BELOW
+
 # Title: The Extreme pokemon challenge
 - Repository: `challenge-pokemon-php` (You should already have this repo, just make a branch on it.)
 - Type of Challenge: `Learning Challenge`
