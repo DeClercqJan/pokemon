@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-session_start();
-
-
 class Pokemon
 {
     // public $name = "";
@@ -90,6 +87,11 @@ class Pokemons_DB
         $this->pokemons = $pokemons->results;
         $float = ceil($pokemons->count / 20);
         $this->pokemons_results_page_all = (int)$float;
+    }
+
+    public function get_pokemons_array_raw(): array
+    {
+        return $this->pokemons;
     }
 }
 /*// to do: abstract class?

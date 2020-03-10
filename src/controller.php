@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-session_start();
-
 require_once("model.php");
 
 // gonna try to separate json logic from pokemon class so that I can always use the pokemon classes in code if API changes in structure and I would only need to change a few things in the databaseconfig, not the rest of the code
@@ -13,11 +11,11 @@ $pokemons_class = new Pokemons($pokemons_raw);
 var_dump_pretty($pokemons_class->show_pokemons2());
 
 
-// ALSO SETS DEFAULT LIST OF POKEMON
+/*// ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
 
-/*// vertical styling, instead of nesting, for increased readability + yoda logic
+// vertical styling, instead of nesting, for increased readability + yoda logic
 // TO DO: add page number
 // TO DO: error cases - take into account javascript on the front-end to hide/display suboptions for query_type options
 if ("default_browsing" == $_GET["query_type"] && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
@@ -69,12 +67,12 @@ elseif (isset($_GET["results_page"]) && isset($_SESSION["previous_query_type"]) 
     $_SESSION["pokemon_per_page"] = $pokemon_per_page;
     $_SESSION["results_page"] = $new_pokemons_results_page;
     // $_SESSION["pokemons"] = $pokemons;
-}*/
+}
 
 // trying out other way of doing things: separating json logic from pokemon class logic by overwriting original:
 $pokemons = $pokemons_db->show_pokemons();
 var_dump_pretty($pokemons);
-// $pokemons = $pokemons_class->show_pokemons2())
+// $pokemons = $pokemons_class->show_pokemons2())*/
 
 // if (isset($_GET["results_page"])) {
 //     $new_pokemons_results_page = (int) $_GET["results_page"];
