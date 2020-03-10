@@ -12,6 +12,10 @@ $pokemons_class = new Pokemons($pokemons_raw);
 $pokemons = $pokemons_class->show_pokemons2();
 // var_dump_pretty($pokemons);
 
+// put this here as the view should not call classes defined in model, but controller serves that purpose
+$pokemons_db2->set_pokemons_type_list();
+$pokemon_type_list_names = $pokemons_db2->get_pokemons_type_list_names();
+
 /*// ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 

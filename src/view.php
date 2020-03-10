@@ -25,12 +25,12 @@ require_once("controller.php");
                 <!-- to do: variably display pokemon-type dropdown based on selection of query_type. Javascript? -->
                 <label for="type">Choose type from dropdown</label>
                 <select id="type" name="type">
-                    <!--            <?php
-                    /*            $pokemon_type_list = $pokemons_db->show_pokemons_type_list();
-                                foreach ($pokemon_type_list as $pokemon_type) { */ ?>
-                <option value=<?php /*echo $pokemon_type->name; */ ?>><?php /*echo $pokemon_type->name; */ ?></option>
-            --><?php /*}
-            */ ?>
+                    <?php
+                    foreach ($pokemon_type_list_names as $pokemon_type_name) {
+                        ?>
+                        <option value=<?php echo $pokemon_type_name; ?>><?php echo $pokemon_type_name; ?></option>
+                    <?php }
+                    ?>
                 </select>
                 <!-- note:  I'm not able to calculate beforehand the numer of pokemon that an api call will return (will I search fire or rock? or do I just click to the next default call), I will not set options dynamically but offer to display 5, 10, ... 100  -->
                 <label for="pokemon_per_page">Choose # pokemon_per_page</label>
@@ -69,7 +69,7 @@ require_once("controller.php");
             //    $results_page_all = $pokemons_db->get_pokemons_results_page_all();
             //    $current_results_page = $pokemons_db->get_pokemons_results_page();
             // display_pokemons($pokemons, $pokemons_db, false, $results_page_all, $current_results_page);
-            display_pokemons($pokemons, $pokemons_class,false);
+            display_pokemons($pokemons, $pokemons_class, false);
             ?>
         </div>
         <?php if (isset($_COOKIE["favourites"])) {

@@ -73,7 +73,7 @@ class Pokemons
     }
 
     // configured that it takes name as parameter
-    public function find_pokemon_in_pokemons(string $pokemon_name) : pokemon
+    public function find_pokemon_in_pokemons(string $pokemon_name): pokemon
     {
         foreach ($this->pokemons as $pokemon) {
             if ($pokemon->get_pokemon_property("name") === $pokemon_name) {
@@ -92,6 +92,8 @@ class Pokemons_DB
     private $pokemons_results_page = 1;
     private $pokemons_results_page_all = 0;
     private $pokemon_per_page = 0;
+
+    private $pokemons_type_list_names = [];
 
     // not really necessary to have this as null, I think - or is it extra security?
     private function connection_pokemons(int $pagenumber = null, $pokemon_per_page = 20): object
@@ -135,6 +137,33 @@ class Pokemons_DB
         $this->pokemons = $pokemons->results;
         $float = ceil($pokemons->count / 20);
         $this->pokemons_results_page_all = (int)$float;
+    }
+
+    public function set_pokemons_type_list_names($pokemons_type_list): array
+    {
+        $pokemons_type_list_names = [];
+        foreach ($pokemons_type_list as $pokemon_type) {
+            array_push($pokemons_type_list_names, $pokemon_type->name);
+        }
+        // var_dump($pokemons_type_list_names);
+        return $this->pokemons_type_list_names = $pokemons_type_list_names;
+    }
+
+    public function set_pokemons_type_list(): array
+    {
+        // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
+        $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
+        $type_data = json_decode($type_data_raw);
+        $pokemons_type_list = $type_data->results;
+        // also needed to only set the types without the links as I'm calling this
+        // return $this->set_pokemons_type_list_names($pokemons_type_list);
+        return $this->set_pokemons_type_list_names($pokemons_type_list);
+
+    }
+
+    public function get_pokemons_type_list_names(): array
+    {
+        return $this->pokemons_type_list_names;
     }
 
     public function get_pokemons_array_raw(): array

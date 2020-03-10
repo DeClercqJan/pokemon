@@ -38,7 +38,7 @@ function display_pokemons(array $pokemons, $pokemons_class, $favourites = false)
                         <?php /*// sending data without creating input field
                     */ ?>
                         <input type='hidden' name="favourited_pokemon_to_mail"
-                               value=<?php /*echo $pokemon_details->name; */ ?>/>
+                               value=<?php echo $pokemon_details->name; ?>/>
                         <input type="submit">
                     </form>
                 </div>
@@ -70,15 +70,6 @@ function display_pokemons(array $pokemons, $pokemons_class, $favourites = false)
                 </div>
             </div>
             <?php
-
-            // echo '<pre>';
-            // echo $pokemon_name . "<br>";
-            // echo $pokemon->name;
-            // echo '</pre>';
-            // echo "<img src=" . $pokemon->get_pokemon_property("image_url") . ">";
-            // $pokemon_id = $pokemon_details->id;
-            // echo "<a class='btn btn-primary m-1' href='/overview.php?name=" . $pokemon_name . "'>Specifications</a>";
-            // echo "<a class='btn btn-primary m 1' href='src/handle_cookie.php?name=" . $pokemon_name . "'>Add to favorite</a><br>";
         }
         // require("pagination.php");
     }
