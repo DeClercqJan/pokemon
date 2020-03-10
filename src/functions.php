@@ -38,7 +38,7 @@ function display_pokemons(array $pokemons, $pokemons_class, $favourites = false)
                         <?php /*// sending data without creating input field
                     */ ?>
                         <input type='hidden' name="favourited_pokemon_to_mail"
-                               value=<?php echo $pokemon_details->name; ?>/>
+                               value=<?php echo $pokemon_name; ?>/>
                         <input type="submit">
                     </form>
                 </div>

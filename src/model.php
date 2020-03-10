@@ -139,6 +139,7 @@ class Pokemons_DB
         $this->pokemons_results_page_all = (int)$float;
     }
 
+    // NOTE: think I've confused the order of these set list functions: I need to call set names and set names calls set list - that's more clear
     public function set_pokemons_type_list_names($pokemons_type_list): array
     {
         $pokemons_type_list_names = [];
