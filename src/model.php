@@ -8,11 +8,13 @@ class Pokemon
     private $url = "";
     private $image_url = "";
     private $testProperty = "Jan De Clercq is the greatest pokemaster of all time";
+    private $id = 0;
 
     public function __construct(object $pokemon_raw)
     {
         // var_dump_pretty($pokemon_raw);
         $this->name = $pokemon_raw->name;
+        // $this->id = $pokemon_raw->id;
         $this->url = $pokemon_raw->url;
         $this->image_url = $this->get_pokemon_property_from_db($pokemon_raw->url, "front_default");
 
@@ -39,6 +41,10 @@ class Pokemon
     {
         $pokemon_json = file_get_contents($pokemon_url);
         $pokemon_details = json_decode($pokemon_json);
+        // var_dump($pokemon_details);
+        // var_dump($pokemon_details->id);
+        // need to put this here as I will need it for pokemon in cookies AND because get_pokemon_property_from_db doesn't work as intended
+        $this->id = $pokemon_details->id;
         return $pokemon_details;
     }
 
@@ -53,13 +59,34 @@ class Pokemon
 class Pokemons
 {
     private $pokemons = [];
+//    private $pokemons_bridge = [];
+//
+//    private function concat_to_previous_pokemons_array($pokemons_bridge)
+//    {
+//        if (empty($this->pokemons)) {
+//            $this->pokemons = $pokemons_bridge;
+//        } else {
+//            // var_dump($this->pokemons);
+//            // var_dump($pokemons_bridge)
+//            $merged_array = (array_merge($this->pokemons, $pokemons_bridge));
+//            var_dump($merged_array);
+//            $unique_array = array_unique($merged_array);
+//            var_dump($unique_array);
+//            // $this->pokemons = array_unique(array_merge($this->pokemons, $pokemons_bridge));
+//        }
+//    }
 
     public function __construct(array $pokemons_raw)
     {
         foreach ($pokemons_raw as $pokemon_raw) {
             $pokemon = new Pokemon($pokemon_raw);
             $this->pokemons[] = $pokemon;
+            // $this->pokemons_bridge[] = $pokemon;
         }
+
+//        var_dump_pretty($this->concat_to_previous_pokemons_array($this->pokemons_bridge));
+//        $this->pokemons = $this->concat_to_previous_pokemons_array($this->pokemons_bridge);
+
     }
 
     public function show_pokemons2(): array
@@ -70,6 +97,8 @@ class Pokemons
     // configured that it takes name as parameter
     public function find_pokemon_in_pokemons(string $pokemon_name): pokemon
     {
+        var_dump_pretty($pokemon_name);
+        var_dump_pretty($this->pokemons);
         foreach ($this->pokemons as $pokemon) {
             if ($pokemon->get_pokemon_property("name") === $pokemon_name) {
                 return $pokemon;
@@ -98,7 +127,8 @@ class Pokemons_favourited
     {
         // echo "wat volgt is die reformter <br>";
         //var_dump_pretty($pokemon_raw);
-        $pokemon_raw_reformated = (object)array('name' => $pokemon_raw, 'url' => "https://pokeapi.co/api/v2/pokemon/$pokemon_raw/");
+        var_dump($pokemon_raw);
+        $pokemon_raw_reformated = (object)array('name' => $pokemon_raw->name, 'url' => "https://pokeapi.co/api/v2/pokemon/$pokemon_raw->id/");
         // var_dump_pretty($pokemon_raw_reformated);
         return $pokemon_raw_reformated;
     }

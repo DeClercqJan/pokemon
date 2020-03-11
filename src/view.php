@@ -75,7 +75,7 @@ require_once("controller.php");
             $pokemons_favourited = new Pokemons_favourited($favourites_old);
             // var_dump_pretty($pokemons_class->show_pokemons2());
             // $pokemons = $pokemons_favourited->show_pokemons_favourited();
-            // var_dump_pretty($pokemons);
+            var_dump_pretty($pokemons_favourited);
             ?>
             <div class="border border-secondary col-4"> <?php
                 display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page);

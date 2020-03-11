@@ -20,7 +20,8 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
     if ($favourites) {
         ?>
         <h2 class="text-center w-100">Pokemon in favourites</h2>
-        <p>maybe this is a good spot if I want only one e-mailinputfield and button. That way the whole page could look symmetrical</p>
+        <p>maybe this is a good spot if I want only one e-mailinputfield and button. That way the whole page could look
+            symmetrical</p>
         <?php
         $pokemons_favourited = $pokemons_favourited->show_pokemons_favourited();
         foreach ($pokemons_favourited as $pokemon_favourited) {
@@ -29,7 +30,8 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
             <!--            <div class="card" style="width: 18rem;">-->
             <!-- note: no bootstrap support for w-20, which would be better -->
             <div class="card w-25 text-center border border-warning">
-                <img class="card-img-top" src=<?php echo $pokemon_favourited->get_pokemon_property("image_url") ?> alt="Card
+                <img class="card-img-top"
+                     src=<?php echo $pokemon_favourited->get_pokemon_property("image_url") ?> alt="Card
                      image cap">
                 <div class="card-body">
                     <h5 class="card-title"><? php echo $pokemon_name ?></h5>
@@ -60,18 +62,27 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
         <?php
         require("pagination.php");
         foreach ($pokemons as $pokemon) {
-            $pokemon_name = $pokemon->get_pokemon_property("name"); ?>
+            $pokemon_name = $pokemon->get_pokemon_property("name");
+            // $pokemon_url = $pokemon->get_pokemon_property("url");
+            // $pokemon_id = $pokemon->get_pokemon_property_from_db($pokemon_url, "id");
+            $pokemon_id = $pokemon->get_pokemon_property("id");
+            ?>
+
             <!--            <div class="card" style="width: 18rem;">-->
             <!-- note: no bootstrap support for w-20, which would be better -->
             <div class="card w-25 text-center border border-warning">
                 <img class="card-img-top" src=<?php echo $pokemon->get_pokemon_property("image_url") ?> alt="Card image
                      cap">
                 <div class="card-body">
-                    <h5 class="card-title"><? php echo $pokemon_name ?></h5>
+                    <h5 class="card-title"><?php echo $pokemon_name ?></h5>
                     <!--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                     <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'" ?> class="btn btn-secondary m-1">Specifications</a>
-                    <a href=<?php echo "'src/handle_cookie.php?name=" . $pokemon_name . "&results_page=$current_results_page" . "'"?> class="btn btn-primary
-                       m-1">Add to favorite</a>
+                                        <a href=
+                    <?php echo "'src/handle_cookie.php?name=" . $pokemon_name . "&id=" . $pokemon_id . "&results_page=$current_results_page" . "'"?> class="btn btn-primary
+                                           m-1">Add to favorite</a>
+<!--                    <a href=--><?php //echo "'src/handle_cookie.php?name=" . $pokemon_id . "&results_page=$current_results_page" . "'" ?><!-- class="btn-->
+<!--                       btn-primary-->
+<!--                       m-1">Add to favorite</a>-->
                 </div>
             </div>
             <?php

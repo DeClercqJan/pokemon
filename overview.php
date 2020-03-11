@@ -12,6 +12,7 @@ require_once("src/controller.php");
 if(isset($_GET["name"])) {
     $pokemon_name = (string)$_GET["name"];
     $pokemon = $pokemons_class->find_pokemon_in_pokemons($pokemon_name);
+    var_dump_pretty($pokemon);
     $testProperty = $pokemon->get_pokemon_property("testProperty");
     echo $testProperty;
 }
