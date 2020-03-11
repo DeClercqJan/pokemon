@@ -84,11 +84,22 @@ class Pokemons_favourited
 
     public function __construct(array $pokemons_raw)
     {
-        // maybe call $_SESSION here?
         foreach ($pokemons_raw as $pokemon_raw) {
-            $pokemon = new Pokemon($pokemon_raw);
+            $pokemon_raw_reformated = $this->make_favourited_pokemons_cookie_array_like_standard_input_pokemon_constructor($pokemon_raw);
+            $pokemon = new Pokemon($pokemon_raw_reformated);
+            // $pokemon = new Pokemon($pokemon_raw);
             $this->pokemons_favourited[] = $pokemon;
         }
+    }
+
+    // note that the formatting is NOT exactly the same as it does not take integers as input, but a pokemon_name for the URL property ...
+    private function make_favourited_pokemons_cookie_array_like_standard_input_pokemon_constructor($pokemon_raw)
+    {
+        // echo "wat volgt is die reformter <br>";
+        //var_dump_pretty($pokemon_raw);
+        $pokemon_raw_reformated = (object)array('name' => $pokemon_raw, 'url' => "https://pokeapi.co/api/v2/pokemon/$pokemon_raw/");
+        // var_dump_pretty($pokemon_raw_reformated);
+        return $pokemon_raw_reformated;
     }
 
     public function show_pokemons_favourited(): array
@@ -99,6 +110,7 @@ class Pokemons_favourited
     // configured that it takes name as parameter
     public function find_pokemon_in_pokemons_favourited(string $pokemon_name): pokemon
     {
+        echo "pokemon name in find functie is $pokemon_name";
         foreach ($this->pokemons_favourited as $pokemon_favourited) {
             if ($pokemon_favourited->get_pokemon_property("name") === $pokemon_name) {
                 return $pokemon_favourited;

@@ -70,9 +70,15 @@ require_once("controller.php");
             ?>
         </div>
         <?php if (isset($_COOKIE["favourites"])) {
+            $favourites_old = unserialize($_COOKIE["favourites"]);
+            // var_dump_pretty($favourites_old);
+            $pokemons_favourited = new Pokemons_favourited($favourites_old);
+            // var_dump_pretty($pokemons_class->show_pokemons2());
+            // $pokemons = $pokemons_favourited->show_pokemons_favourited();
+            // var_dump_pretty($pokemons);
             ?>
             <div class="border border-secondary col-4"> <?php
-                display_pokemons($pokemons, $pokemons_class, true, $results_page_all, $current_results_page);
+                display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page);
                 ?> </div>      <?php
         }
         ?>

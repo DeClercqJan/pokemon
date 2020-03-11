@@ -11,26 +11,24 @@ function var_dump_pretty($variable)
 
 // probably best to have this in a return statement, maybe use HEREDOC or so
 // question: why can't I say that $favourites is a boolean?
-function display_pokemons(array $pokemons, $pokemons_class, $favourites = false, int $results_page_all, int $current_results_page)
+function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = false, int $results_page_all, int $current_results_page)
 {
 // probably would work without explictly casting intergers as string, but heu
-    $results_page_all_string = (string) $results_page_all;
-    $current_results_page_string = (string) $current_results_page;
+    $results_page_all_string = (string)$results_page_all;
+    $current_results_page_string = (string)$current_results_page;
 
     if ($favourites) {
         ?>
         <h2 class="text-center w-100">Pokemon in favourites</h2>
         <?php
-        $favourites_old = unserialize($_COOKIE["favourites"]);
-        foreach ($favourites_old as $favourite_old) {
-            var_dump_pretty($favourite_old);
-            // to do: catch situation in which favourites are not already part of favouyrited pokemon at the moment - maybe create separate class for them? wuill this survive page refreshes?
-            $pokemon = $pokemons_class->find_pokemon_in_pokemons($favourite_old);
-            $pokemon_name = $pokemon->get_pokemon_property("name"); ?>
+        $pokemons_favourited = $pokemons_favourited->show_pokemons_favourited();
+        foreach ($pokemons_favourited as $pokemon_favourited) {
+            $pokemon_name = $pokemon_favourited->get_pokemon_property("name");
+            ?>
             <!--            <div class="card" style="width: 18rem;">-->
             <!-- note: no bootstrap support for w-20, which would be better -->
             <div class="card w-25 text-center border border-warning">
-                <img class="card-img-top" src=<?php echo $pokemon->get_pokemon_property("image_url") ?> alt="Card
+                <img class="card-img-top" src=<?php echo $pokemon_favourited->get_pokemon_property("image_url") ?> alt="Card
                      image cap">
                 <div class="card-body">
                     <h5 class="card-title"><? php echo $pokemon_name ?></h5>
