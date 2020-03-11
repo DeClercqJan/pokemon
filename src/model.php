@@ -59,33 +59,38 @@ class Pokemon
 class Pokemons
 {
     private $pokemons = [];
-//    private $pokemons_bridge = [];
-//
-//    private function concat_to_previous_pokemons_array($pokemons_bridge)
-//    {
-//        if (empty($this->pokemons)) {
-//            $this->pokemons = $pokemons_bridge;
-//        } else {
-//            // var_dump($this->pokemons);
-//            // var_dump($pokemons_bridge)
-//            $merged_array = (array_merge($this->pokemons, $pokemons_bridge));
-//            var_dump($merged_array);
-//            $unique_array = array_unique($merged_array);
-//            var_dump($unique_array);
-//            // $this->pokemons = array_unique(array_merge($this->pokemons, $pokemons_bridge));
-//        }
-//    }
+    private $pokemons_bridge = [];
 
-    public function __construct(array $pokemons_raw)
+    private function concat_to_previous_pokemons_array($pokemons_bridge)
     {
+        if (empty($this->pokemons)) {
+            return $pokemons_bridge;
+
+        } else {
+            // var_dump($this->pokemons);
+            // var_dump($pokemons_bridge)
+            $merged_array = array_merge($this->pokemons, $pokemons_bridge);
+            var_dump($merged_array);
+            $unique_array = array_unique($merged_array, SORT_REGULAR);
+            var_dump($unique_array);
+//            $this->pokemons = $pokemons_bridge;
+            return $unique_array;
+        }
+    }
+
+    public function __construct(array $pokemons_raw, $pokemons_in_cookie = [])
+    {
+        var_dump($pokemons_in_cookie);
+
         foreach ($pokemons_raw as $pokemon_raw) {
             $pokemon = new Pokemon($pokemon_raw);
             $this->pokemons[] = $pokemon;
-            // $this->pokemons_bridge[] = $pokemon;
         }
 
+        // $this->pokemons_bridge = $pokemons_in_cookie;
+
 //        var_dump_pretty($this->concat_to_previous_pokemons_array($this->pokemons_bridge));
-//        $this->pokemons = $this->concat_to_previous_pokemons_array($this->pokemons_bridge);
+       $this->pokemons = $this->concat_to_previous_pokemons_array($pokemons_in_cookie);
 
     }
 
@@ -127,7 +132,7 @@ class Pokemons_favourited
     {
         // echo "wat volgt is die reformter <br>";
         //var_dump_pretty($pokemon_raw);
-        var_dump($pokemon_raw);
+        // var_dump($pokemon_raw);
         $pokemon_raw_reformated = (object)array('name' => $pokemon_raw->name, 'url' => "https://pokeapi.co/api/v2/pokemon/$pokemon_raw->id/");
         // var_dump_pretty($pokemon_raw_reformated);
         return $pokemon_raw_reformated;
