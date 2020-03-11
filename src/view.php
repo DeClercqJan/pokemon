@@ -16,15 +16,15 @@ require_once("controller.php");
         <h1 class="col-12 text-center">Pokelidokeli</h1>
         <!-- to do refactor this over  pagination component etc. -->
         <div class="border border-secondary col-12">
-            <form action="../index.php" method="GET">
+            <form action="../index.php" method="GET" id="form">
                 <label for="query_type">Choose type query</label>
-                <select id="query_type" name="query_type">
+                <select id="queryType" name="query_type" onChange="check(this);">
                     <option value="default_browsing">default browsing</option>
                     <option value="search">search</option>
                 </select>
                 <!-- to do: variably display pokemon-type dropdown based on selection of query_type. Javascript? -->
                 <label for="type">Choose type from dropdown</label>
-                <select id="type" name="type">
+                <select id="ty  pe" name="type" disabled="disabled">
                     <?php
                     foreach ($pokemon_type_list_names as $pokemon_type_name) {
                         ?>
@@ -75,7 +75,7 @@ require_once("controller.php");
             $pokemons_favourited = new Pokemons_favourited($favourites_old);
             // var_dump_pretty($pokemons_class->show_pokemons2());
             // $pokemons = $pokemons_favourited->show_pokemons_favourited();
-            var_dump_pretty($pokemons_favourited);
+            // var_dump_pretty($pokemons_favourited);
             ?>
             <div class="border border-secondary col-4"> <?php
                 display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page);
@@ -94,6 +94,7 @@ require_once("controller.php");
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script src="../script.js"></script>
     </body>
 
     </html>

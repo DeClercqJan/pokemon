@@ -11,12 +11,14 @@
 - also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
 - basic bootstrap styling
 - Heroku deployment
+- concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1
 
 ## To do's
 - separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
 - overview page's base logic is solid, but I don't know what info to display there. Not first priority anyway
 - style block of favourites. Something with row and width, check margins and such because the borders are overlapping. Maybe different box-model?
 - testing
+- need to set array of pokemons visited earlier not in SESSION, but in cookies / alternatively, throw away this way of thinking and just call the api with the id's of the favourited pokemon (probably better)
 
 # ORIGINAL ASSIGNMENT BELOW
 

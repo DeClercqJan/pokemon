@@ -17,7 +17,6 @@ class Pokemon
         // $this->id = $pokemon_raw->id;
         $this->url = $pokemon_raw->url;
         $this->image_url = $this->get_pokemon_property_from_db($pokemon_raw->url, "front_default");
-
     }
 
     // note: this works for images and SOME properties, BUT for many it doesn't.
@@ -70,9 +69,9 @@ class Pokemons
             // var_dump($this->pokemons);
             // var_dump($pokemons_bridge)
             $merged_array = array_merge($this->pokemons, $pokemons_bridge);
-            var_dump($merged_array);
+            // var_dump($merged_array);
             $unique_array = array_unique($merged_array, SORT_REGULAR);
-            var_dump($unique_array);
+            // var_dump($unique_array);
 //            $this->pokemons = $pokemons_bridge;
             return $unique_array;
         }
@@ -80,7 +79,7 @@ class Pokemons
 
     public function __construct(array $pokemons_raw, $pokemons_in_cookie = [])
     {
-        var_dump($pokemons_in_cookie);
+        // var_dump($pokemons_in_cookie);
 
         foreach ($pokemons_raw as $pokemon_raw) {
             $pokemon = new Pokemon($pokemon_raw);
@@ -102,8 +101,8 @@ class Pokemons
     // configured that it takes name as parameter
     public function find_pokemon_in_pokemons(string $pokemon_name): pokemon
     {
-        var_dump_pretty($pokemon_name);
-        var_dump_pretty($this->pokemons);
+        // var_dump_pretty($pokemon_name);
+        // var_dump_pretty($this->pokemons);
         foreach ($this->pokemons as $pokemon) {
             if ($pokemon->get_pokemon_property("name") === $pokemon_name) {
                 return $pokemon;
@@ -194,8 +193,8 @@ class Pokemons_DB
         $limit = $pokemon_per_page;
         $this->pokemon_per_page = $pokemon_per_page;
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
-        echo "in conneciton pokemon is new pokemons results page call $new_pokemons_results_page_call <br>";
-        echo "in conneciton pokemon is limit $limit <br>";
+        // echo "in conneciton pokemon is new pokemons results page call $new_pokemons_results_page_call <br>";
+        // echo "in conneciton pokemon is limit $limit <br>";
         $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=$limit");
         return json_decode($pokemons_json);
     }
@@ -211,7 +210,7 @@ class Pokemons_DB
         $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
         $this->pokemons_raw = $pokemons->results;
         $float = ceil($pokemons->count / $pokemon_per_page);
-        echo "in change default pokemon results page function is float $float";
+        // echo "in change default pokemon results page function is float $float";
         return $this->pokemons_results_page_all = (int)$float;
     }
 

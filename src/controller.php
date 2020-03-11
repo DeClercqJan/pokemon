@@ -7,31 +7,8 @@ require_once("model.php");
 // gonna try to separate json logic from pokemon class so that I can always use the pokemon classes in code if API changes in structure and I would only need to change a few things in the databaseconfig, not the rest of the code
 $pokemons_db2 = new Pokemons_DB;
 $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
-// this gave headers error
-// if (!isset($_COOKIE["pokemons_array_of_pokemons_class"])) {
-
 $pokemons_class = new Pokemons($pokemons_raw);
-
-//if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
-//    echo "'cookie not isset has fired";
-//    $pokemons_class = new Pokemons($pokemons_raw);
-//    $pokemon_class_serialized = serialize($pokemons_class->show_pokemons2());
-//    // var_dump($pokemon_class_serialized);
-////    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized, time() + 3600 * 12 * 30, "/");
-//    $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
-//
-//} else {
-//    echo "cookie has been recognized";
-//    $previous_pokemons = unserialize($_SESSION["pokemons_array_of_pokemons_class"]);
-//    $pokemons_class = new Pokemons($pokemons_raw, $previous_pokemons);
-//    $pokemon_class_serialized_new = serialize($pokemons_class->show_pokemons2());
-//    var_dump($pokemon_class_serialized_new);
-//    $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
-//}
-
-// var_dump_pretty($pokemons_class->show_pokemons2());
 $pokemons = $pokemons_class->show_pokemons2();
-// var_dump_pretty($pokemons);
 
 // put this here as the view should not call classes defined in model, but controller serves that purpose
 $pokemons_db2->set_pokemons_type_list_names();
@@ -39,9 +16,10 @@ $pokemon_type_list_names = $pokemons_db2->get_pokemons_type_list_names();
 
 // needed for pagination component - part 1 - had to put this here to make pagination work when remaking the whole thing
 $results_page_all = $pokemons_db2->get_pokemons_results_page_all();
-echo "results page all is $results_page_all <br>";
+// echo "results page all is $results_page_all <br>";
 
 // serve pagination
+// to do: need to expand is
 if (isset($_GET["results_page"])) {
     echo "case 0 without specific query type in GET fires <br>";
     $new_pokemons_results_page = (int)$_GET["results_page"];
@@ -51,8 +29,10 @@ if (isset($_GET["results_page"])) {
     $pokemons = $pokemons_class->show_pokemons2();
 }
 
+// this gave headers error
+// if (!isset($_COOKIE["pokemons_array_of_pokemons_class"])) {
 if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
-    echo "'cookie not isset has fired";
+    // echo "'cookie not isset has fired";
     $pokemons_class = new Pokemons($pokemons_raw);
     $pokemon_class_serialized = serialize($pokemons_class->show_pokemons2());
     // var_dump($pokemon_class_serialized);
@@ -60,17 +40,17 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
 
 } else {
-    echo "cookie has been recognized";
+    // echo "cookie has been recognized";
     $previous_pokemons = unserialize($_SESSION["pokemons_array_of_pokemons_class"]);
     $pokemons_class = new Pokemons($pokemons_raw, $previous_pokemons);
     $pokemon_class_serialized_new = serialize($pokemons_class->show_pokemons2());
-    var_dump($pokemon_class_serialized_new);
+    // var_dump($pokemon_class_serialized_new);
     $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
 }
 
 // needed for pagination component - part 2
 $current_results_page = $pokemons_db2->get_pokemons_results_page();
-echo "current results page is $current_results_page <br>";
+// echo "current results page is $current_results_page <br>";
 
 
 // $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
