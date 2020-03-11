@@ -11,6 +11,7 @@ class Pokemon
 
     public function __construct(object $pokemon_raw)
     {
+        // var_dump_pretty($pokemon_raw);
         $this->name = $pokemon_raw->name;
         $this->url = $pokemon_raw->url;
         $this->image_url = $this->get_pokemon_property_from_db($pokemon_raw->url, "front_default");

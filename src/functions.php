@@ -20,6 +20,7 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
     if ($favourites) {
         ?>
         <h2 class="text-center w-100">Pokemon in favourites</h2>
+        <p>maybe this is a good spot if I want only one e-mailinputfield and button. That way the whole page could look symmetrical</p>
         <?php
         $pokemons_favourited = $pokemons_favourited->show_pokemons_favourited();
         foreach ($pokemons_favourited as $pokemon_favourited) {
@@ -69,7 +70,7 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
                     <h5 class="card-title"><? php echo $pokemon_name ?></h5>
                     <!--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                     <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'" ?> class="btn btn-secondary m-1">Specifications</a>
-                    <a href=<?php echo "'src/handle_cookie.php?name=" . $pokemon_name . "'" ?> class="btn btn-primary
+                    <a href=<?php echo "'src/handle_cookie.php?name=" . $pokemon_name . "&results_page=$current_results_page" . "'"?> class="btn btn-primary
                        m-1">Add to favorite</a>
                 </div>
             </div>
