@@ -24,6 +24,7 @@ function display_pokemons(array $pokemons, $pokemons_class, $favourites = false,
         $favourites_old = unserialize($_COOKIE["favourites"]);
         foreach ($favourites_old as $favourite_old) {
             var_dump_pretty($favourite_old);
+            // to do: catch situation in which favourites are not already part of favouyrited pokemon at the moment - maybe create separate class for them? wuill this survive page refreshes?
             $pokemon = $pokemons_class->find_pokemon_in_pokemons($favourite_old);
             $pokemon_name = $pokemon->get_pokemon_property("name"); ?>
             <!--            <div class="card" style="width: 18rem;">-->

@@ -77,6 +77,36 @@ class Pokemons
     }
 }
 
+// in progress of formulating
+class Pokemons_favourited
+{
+    private $pokemons_favourited = [];
+
+    public function __construct(array $pokemons_raw)
+    {
+        // maybe call $_SESSION here?
+        foreach ($pokemons_raw as $pokemon_raw) {
+            $pokemon = new Pokemon($pokemon_raw);
+            $this->pokemons_favourited[] = $pokemon;
+        }
+    }
+
+    public function show_pokemons_favourited(): array
+    {
+        return $this->pokemons_favourited;
+    }
+
+    // configured that it takes name as parameter
+    public function find_pokemon_in_pokemons_favourited(string $pokemon_name): pokemon
+    {
+        foreach ($this->pokemons_favourited as $pokemon_favourited) {
+            if ($pokemon_favourited->get_pokemon_property("name") === $pokemon_name) {
+                return $pokemon_favourited;
+            }
+        }
+    }
+}
+
 class Pokemons_DB
 {
     // basic logic: set pokemon array with some methods, then use other method to show it.
