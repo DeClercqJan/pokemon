@@ -11,14 +11,19 @@ function var_dump_pretty($variable)
 
 // probably best to have this in a return statement, maybe use HEREDOC or so
 // question: why can't I say that $favourites is a boolean?
-function display_pokemons(array $pokemons, $pokemons_class, $favourites = false)
+function display_pokemons(array $pokemons, $pokemons_class, $favourites = false, int $results_page_all, int $current_results_page)
 {
+// probably would work without explictly casting intergers as string, but heu
+    $results_page_all_string = (string) $results_page_all;
+    $current_results_page_string = (string) $current_results_page;
+
     if ($favourites) {
         ?>
         <h2 class="text-center w-100">Pokemon in favourites</h2>
         <?php
         $favourites_old = unserialize($_COOKIE["favourites"]);
         foreach ($favourites_old as $favourite_old) {
+            var_dump_pretty($favourite_old);
             $pokemon = $pokemons_class->find_pokemon_in_pokemons($favourite_old);
             $pokemon_name = $pokemon->get_pokemon_property("name"); ?>
             <!--            <div class="card" style="width: 18rem;">-->
@@ -53,7 +58,7 @@ function display_pokemons(array $pokemons, $pokemons_class, $favourites = false)
         ?>
         <h2 class="text-center w-100">Pokemon not necessarily in favourites</h2>
         <?php
-        // require("pagination.php");
+        require("pagination.php");
         foreach ($pokemons as $pokemon) {
             $pokemon_name = $pokemon->get_pokemon_property("name"); ?>
             <!--            <div class="card" style="width: 18rem;">-->
@@ -71,7 +76,7 @@ function display_pokemons(array $pokemons, $pokemons_class, $favourites = false)
             </div>
             <?php
         }
-        // require("pagination.php");
+        require("pagination.php");
     }
 }
 

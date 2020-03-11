@@ -116,14 +116,25 @@ class Pokemons_DB
         $limit = $pokemon_per_page;
         $this->pokemon_per_page = $pokemon_per_page;
         // opted to not use standard https://pokeapi.co/api/v2/pokemon but use parameters always for simplicity
+        echo "in conneciton pokemon is new pokemons results page call $new_pokemons_results_page_call <br>";
+        echo "in conneciton pokemon is limit $limit <br>";
         $pokemons_json = file_get_contents("https://pokeapi.co/api/v2/pokemon/?offset=$new_pokemons_results_page_call&limit=$limit");
         return json_decode($pokemons_json);
     }
 
-    private function connection_type() : object
+    private function connection_type(): object
     {
         $type_data_raw = file_get_contents("https://pokeapi.co/api/v2/type/");
         return json_decode($type_data_raw);
+    }
+
+    public function change_default_pokemons_results_page(int $pagenumber, int $pokemon_per_page): int
+    {
+        $pokemons = $this->connection_pokemons($pagenumber, $pokemon_per_page);
+        $this->pokemons_raw = $pokemons->results;
+        $float = ceil($pokemons->count / $pokemon_per_page);
+        echo "in change default pokemon results page function is float $float";
+        return $this->pokemons_results_page_all = (int)$float;
     }
 
     // setting names separately as property instead of multidemensional array
@@ -153,6 +164,16 @@ class Pokemons_DB
     public function get_pokemons_array_raw(): array
     {
         return $this->pokemons_raw;
+    }
+
+    public function get_pokemons_results_page(): int
+    {
+        return $this->pokemons_results_page;
+    }
+
+    public function get_pokemons_results_page_all(): int
+    {
+        return $this->pokemons_results_page_all;
     }
 }
 /*// to do: abstract class?

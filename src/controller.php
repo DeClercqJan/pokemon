@@ -16,6 +16,48 @@ $pokemons = $pokemons_class->show_pokemons2();
 $pokemons_db2->set_pokemons_type_list_names();
 $pokemon_type_list_names = $pokemons_db2->get_pokemons_type_list_names();
 
+// needed for pagination component - part 1 - had to put this here to make pagination work when remaking the whole thing
+$results_page_all = $pokemons_db2->get_pokemons_results_page_all();
+echo "results page all is $results_page_all <br>";
+
+// serve pagination
+if (isset($_GET["results_page"])) {
+    echo "case 0 without specific query type in GET fires <br>";
+    $new_pokemons_results_page = (int)$_GET["results_page"];
+    $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, 20);
+    $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
+    $pokemons_class = new Pokemons($pokemons_raw);
+    $pokemons = $pokemons_class->show_pokemons2();
+}
+
+// needed for pagination component - part 2
+$current_results_page = $pokemons_db2->get_pokemons_results_page();
+echo "current results page is $current_results_page <br>";
+
+
+// $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
+
+//    $_SESSION["previous_query_type"] = "default_browsing";
+//    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+//    $_SESSION["results_page"] = $new_pokemons_results_page;
+// $_SESSION["pokemons"] = $pokemons;
+// }
+
+/*if ("default_browsing" == $_GET["query_type"] && isset($_GET["results_page"])) {
+// if ("default_browsing" == $_GET["query_type"] && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
+    echo "case 1 (appended) fires <br>";
+    $new_pokemons_results_page = (int)$_GET["results_page"];
+//    $pokemon_per_page = (int)$_GET["pokemon_per_page"];
+
+    $pokemons = $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page);
+    // $pokemons = $pokemons_db->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
+
+//    $_SESSION["previous_query_type"] = "default_browsing";
+//    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+//    $_SESSION["results_page"] = $new_pokemons_results_page;
+    // $_SESSION["pokemons"] = $pokemons;
+}*/
+
 /*// ALSO SETS DEFAULT LIST OF POKEMON
 $pokemons_db = new Pokemons_DB;
 
