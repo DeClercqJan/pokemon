@@ -6,6 +6,11 @@ session_start();
 
 require_once("functions.php");
 
+// in order to remain on the same page when browsing instead of reverting to default everytme
+if(isset($_GET["results_page"])) {
+    $current_results_page_string = $_GET["results_page"];
+}
+
 if(!isset($_GET["name"])) {
     echo "you need to click add to favourite on the index page first.";
 }
@@ -19,7 +24,8 @@ elseif (isset($_GET["name"]) && !isset($_COOKIE["favourites"])) {
     // trying to make it accessible on index by including path
     /* expire in 30 days */
    setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
-   header("Location: ../index.php");
+   // header("Location: ../index.php");
+    header("Location: ../index.php?results_page=$current_results_page_string");
 
 }
 elseif (isset($_GET["name"]) && isset($_COOKIE["favourites"])) {
@@ -33,7 +39,8 @@ elseif (isset($_GET["name"]) && isset($_COOKIE["favourites"])) {
     // trying to make it accessible on index by including path
     /* expire in 30 days */
     setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
-    header("Location: ../index.php");
+    // header("Location: ../index.php");
+    header("Location: ../index.php?results_page=$current_results_page_string");
 
 }
 
