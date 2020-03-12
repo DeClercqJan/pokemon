@@ -67,7 +67,7 @@ require_once("controller.php");
             <?php
             // need to send current results page and such, definied in controller, to function as pagination component (included in display function) needs it
             // display_pokemons($pokemons, $pokemons_class, false, $results_page_all, $current_results_page);
-            display_pokemons($pokemons, $pokemons_class, false, $results_page_all, $current_results_page, $query_type, $pokemon_per_page);
+            display_pokemons($pokemons, $pokemons_class, false, $results_page_all, $current_results_page, $query_type, $type, $pokemon_per_page);
             ?>
         </div>
         <?php if (isset($_COOKIE["favourites"])) {
@@ -79,7 +79,7 @@ require_once("controller.php");
             // var_dump_pretty($pokemons_favourited);
             ?>
             <div class="border border-secondary col-4"> <?php
-                display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page, $query_type, $pokemon_per_page);
+                display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page, $query_type, $type, $pokemon_per_page);
                 ?> </div>      <?php
         }
         ?>

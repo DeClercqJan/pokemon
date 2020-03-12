@@ -15,9 +15,13 @@ if(isset($_GET["results_page"])) {
 if(isset($_GET["query_type"])) {
     $query_type = $_GET["query_type"];
 }
+if(isset($_GET["type"])) {
+    $type = $_GET["type"];
+}
 if(isset($_GET["pokemon_per_page"])) {
     $pokemon_per_page = $_GET["pokemon_per_page"];
 }
+
 
 if(!isset($_GET["name"])) {
     echo "you need to click add to favourite on the index page first.";
@@ -37,7 +41,7 @@ elseif (isset($_GET["name"]) && isset($_GET["id"]) && !isset($_COOKIE["favourite
    setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
    // header("Location: ../index.php");
     // header("Location: ../index.php?results_page=$current_results_page_string");
-    $url = "Location: ../index.php?query_type=$query_type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string";
+    $url = "Location: ../index.php?query_type=$query_type&type=$type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string";
     // var_dump($url);
     header($url);
     // header("Location: ../index.php?query_type=$query_type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string");
@@ -64,7 +68,7 @@ elseif (isset($_GET["name"]) && isset($_GET["id"]) && isset($_COOKIE["favourites
     setcookie("favourites", $favourites_new_seralized, time() + 3600*12*30, "/");
     // header("Location: ../index.php");
     // header("Location: ../index.php?results_page=$current_results_page_string");
-    $url = "Location: ../index.php?query_type=$query_type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string";
+    $url = "Location: ../index.php?query_type=$query_type&type=$type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string";
     // var_dump($url);
     header($url);
     //header("Location: ../index.php?query_type=$query_type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string");

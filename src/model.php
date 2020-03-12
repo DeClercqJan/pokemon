@@ -89,7 +89,7 @@ class Pokemons
         // $this->pokemons_bridge = $pokemons_in_cookie;
 
 //        var_dump_pretty($this->concat_to_previous_pokemons_array($this->pokemons_bridge));
-       $this->pokemons = $this->concat_to_previous_pokemons_array($pokemons_in_cookie);
+        $this->pokemons = $this->concat_to_previous_pokemons_array($pokemons_in_cookie);
 
     }
 
@@ -233,6 +233,40 @@ class Pokemons_DB
         return $pokemons_type_list;
     }
 
+    public function find_pokemons_by_type(string $type, int $pagenumber, int $pokemon_per_page): array
+    {
+        // decided not to refactor this in separate connection function as the result is qualitatively different: list of categories versus list of pokemon that match catergory
+        $all_type_data_json = file_get_contents("https://pokeapi.co/api/v2/type/$type");
+        $all_type_data = json_decode($all_type_data_json);
+        // needed to reformat this in order to have a uniform pokemons array in this class in order to have re-usable code
+
+        $pokemons = [];
+
+        $pokemons_raw = $all_type_data->pokemon;
+        foreach ($pokemons_raw as $pokemon_raw) {
+            $pokemon = $pokemon_raw->pokemon;
+            array_push($pokemons, $pokemon);
+        }
+        // need to calculatee the following as it is notreadily available in
+        $pokemons2 = $this->pokemon_type_results_to_default_results_logic($pokemons, $pagenumber, $pokemon_per_page);
+        //  var_dump($pokemons2);
+        // return $this->pokemons = $pokemons2;
+        return $this->pokemons_raw = $pokemons2;
+    }
+
+    private function pokemon_type_results_to_default_results_logic(array $pokemons, int $pagenumber, int $pokemon_per_page): array
+    {
+        $pokemons_count = count($pokemons);
+        $this->pokemons_results_page_all = ceil($pokemons_count / $pokemon_per_page);
+        $this->pokemons_results_page = $pagenumber;
+        $pagenumber_new = $pagenumber - 1;
+        $this->pokemon_per_page = $pokemon_per_page;
+        $offset = $pagenumber_new * $pokemon_per_page;
+        $length = $pokemon_per_page;
+        $pokemons2 = array_slice($pokemons, $offset, $length);
+        return $pokemons2;
+    }
+
     public function get_pokemons_type_list_names(): array
     {
         return $this->pokemons_type_list_names;
@@ -252,6 +286,8 @@ class Pokemons_DB
     {
         return $this->pokemons_results_page_all;
     }
+
+
 }
 /*// to do: abstract class?
 // to do: catch errors

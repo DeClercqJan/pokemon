@@ -32,6 +32,12 @@ if(isset($_GET["query_type"])) {
 else {
     $query_type = "";
 }
+if(isset($_POST["get"])) {
+    $type = $_GET["get"];
+}
+else {
+    $type = "";
+}
 if(isset($_GET["pokemon_per_page"])) {
     $pokemon_per_page = $_GET["pokemon_per_page"];
 }
@@ -52,7 +58,27 @@ if (isset($_GET["query_type"]) && "default_browsing" == $_GET["query_type"] && i
 //    $_SESSION["results_page"] = $new_pokemons_results_page;
     // $_SESSION["pokemons"] = $pokemons;
 }
-else if (isset($_GET["results_page"])){
+elseif (isset($_GET["query_type"]) && "search" == $_GET["query_type"] && isset($_GET["type"]) && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
+    echo "case 2 fires <br>";
+    $type = $_GET["type"];
+    $new_pokemons_results_page = (int) $_GET["results_page"];
+    $pokemon_per_page = (int) $_GET["pokemon_per_page"];
+    // $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
+    $pokemons_db2->find_pokemons_by_type($type, $new_pokemons_results_page, $pokemon_per_page);
+    $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
+    $pokemons_class = new Pokemons($pokemons_raw);
+    $pokemons = $pokemons_class->show_pokemons2();
+    // var_dump($pokemons);
+    /*$_SESSION["previous_query_type"] =  "search";
+    // this does not appear to work with $type ...
+    $_SESSION["type"] = $_GET["type"];
+    $_SESSION["pokemon_per_page"] = $pokemon_per_page;
+    $_SESSION["results_page"] = $new_pokemons_results_page;
+    // $_SESSION["pokemons"] = $pokemons;*/
+}
+// serve pagination
+// to do: need to expand is
+elseif (isset($_GET["results_page"])){
     echo "case 0 without specific query type in GET fires <br>";
     $new_pokemons_results_page = (int)$_GET["results_page"];
     $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, 20);
