@@ -10,7 +10,7 @@
 - created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, not much more
 - also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
 - concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1
-- controller checks URL paramters and sets dummy paramters if not used. If/else checks structure triggers relevant database calls
+- controller checks URL paramters and sets dummy paramters if not used. If/else checks structure triggers relevant database calls. (In previous version, SESSION was used for this)
 - displaying of actual pokemon is done by populating functions that in turn contains components such as pagination that re-use or append these paramters
 - basic bootstrap styling
 - Heroku deployment

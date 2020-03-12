@@ -66,17 +66,12 @@ require_once("controller.php");
         <div class="border border-secondary col-8 row d-flex justify-content-center">
             <?php
             // need to send current results page and such, definied in controller, to function as pagination component (included in display function) needs it
-            // display_pokemons($pokemons, $pokemons_class, false, $results_page_all, $current_results_page);
             display_pokemons($pokemons, $pokemons_class, false, $results_page_all, $current_results_page, $query_type, $type, $pokemon_per_page);
             ?>
         </div>
         <?php if (isset($_COOKIE["favourites"])) {
             $favourites_old = unserialize($_COOKIE["favourites"]);
-            // var_dump_pretty($favourites_old);
             $pokemons_favourited = new Pokemons_favourited($favourites_old);
-            // var_dump_pretty($pokemons_class->show_pokemons2());
-            // $pokemons = $pokemons_favourited->show_pokemons_favourited();
-            // var_dump_pretty($pokemons_favourited);
             ?>
             <div class="border border-secondary col-4"> <?php
                 display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page, $query_type, $type, $pokemon_per_page);
