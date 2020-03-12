@@ -19,6 +19,7 @@
 - style block of favourites. Something with row and width, check margins and such because the borders are overlapping. Maybe different box-model?
 - testing
 - need to set array of pokemons visited earlier not in SESSION, but in cookies / alternatively, throw away this way of thinking and just call the api with the id's of the favourited pokemon (probably better)
+- or I could use react front-end with state and such and only call API if new things are needed. This should greatly improve loading speed
 
 # ORIGINAL ASSIGNMENT BELOW
 

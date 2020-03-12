@@ -11,7 +11,7 @@ function var_dump_pretty($variable)
 
 // probably best to have this in a return statement, maybe use HEREDOC or so
 // question: why can't I say that $favourites is a boolean?
-function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = false, int $results_page_all, int $current_results_page)
+function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = false, int $results_page_all, int $current_results_page, string $query_type = "default_browsing", $pokemon_per_page = 20)
 {
 // probably would work without explictly casting intergers as string, but heu
     $results_page_all_string = (string)$results_page_all;
@@ -77,12 +77,9 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
                     <h5 class="card-title"><?php echo $pokemon_name ?></h5>
                     <!--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                     <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'" ?> class="btn btn-secondary m-1">Specifications</a>
-                                        <a href=
-                    <?php echo "'src/handle_cookie.php?name=" . $pokemon_name . "&id=" . $pokemon_id . "&results_page=$current_results_page" . "'"?> class="btn btn-primary
-                                           m-1">Add to favorite</a>
-<!--                    <a href=--><?php //echo "'src/handle_cookie.php?name=" . $pokemon_id . "&results_page=$current_results_page" . "'" ?><!-- class="btn-->
-<!--                       btn-primary-->
-<!--                       m-1">Add to favorite</a>-->
+                    <a href=<?php echo "src/handle_cookie.php?query_type=$query_type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string&name=" . $pokemon_name . "&id=" . $pokemon_id . "&results_page=$current_results_page" ?>
+                        class="btn btn-primary m-1">Add to favorite
+                    </a>
                 </div>
             </div>
             <?php
