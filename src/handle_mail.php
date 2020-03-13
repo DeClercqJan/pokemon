@@ -32,20 +32,22 @@ echo "great succes!";
 // to do? Danny says the standard mailer is not recommended, while I do use that one here
 // s$favourited_pokemon_to_mail = $_POST["favourited_pokemon_to_mail"];
 $favourited_pokemon_to_mail = unserialize($_SESSION["favourited_pokemon_to_mail"]);
-var_dump($favourited_pokemon_to_mail);
+var_dump($favourited_pokemon_to_mail->show_pokemons_favourited());
+$favourited_pokemon_to_mail_transformed = $favourited_pokemon_to_mail->show_pokemons_favourited();
 // var_dump($favourited_pokemon_to_mail);
-$destination = $_POST["email"];
-$sender = "eddyeddyeddyborremans@gmail.com";
+
+//$destination = $_POST["email"];
+//$sender = "eddyeddyeddyborremans@gmail.com";
 
 // adapted from https://www.php.net/manual/en/function.mail
 // Multiple recipients
 // $to = 'johny@example.com, sally@example.com'; // note the comma
-$to = $destination;
+//$to = $destination;
 
 function transformer($favourited_pokemon_to_mail)
 {
     var_dump($favourited_pokemon_to_mail);
-    foreach ($favourited_pokemon_to_mail->pokemons_favourited as $favourited_pokemon_to_mail_singular) {
+    foreach ($favourited_pokemon_to_mail as $favourited_pokemon_to_mail_singular) {
         echo "transformer functie started";
         $favourited_pokemon_to_mail_singular = "<li>" . $favourited_pokemon_to_mail_singular . "</li>";
         var_dump($favourited_pokemon_to_mail_singular);
@@ -53,13 +55,15 @@ function transformer($favourited_pokemon_to_mail)
     }
 }
 
-/*$favourited_pokemon_to_mail_transformed = array($favourited_pokemon_to_mail);
-var_dump($favourited_pokemon_to_mail_transformed);
-var_dump($favourited_pokemon_to_mail_transformed->pokemons_favourited);
+//$favourited_pokemon_to_mail_transformed = array($favourited_pokemon_to_mail);
+//var_dump($favourited_pokemon_to_mail_transformed);
+//var_dump($favourited_pokemon_to_mail_transformed->pokemons_favourited);
+//$favourited_pokemon_to_mail_transformed2 = array_map("transformer", $favourited_pokemon_to_mail_transformed);
+//var_dump($favourited_pokemon_to_mail_transformed2);
 $favourited_pokemon_to_mail_transformed2 = array_map("transformer", $favourited_pokemon_to_mail_transformed);
-var_dump($favourited_pokemon_to_mail_transformed2);*/
+var_dump($favourited_pokemon_to_mail_transformed2);
 
-// Subject
+/*// Subject
 $subject = 'Look at this pokemon, it is so cool!';
 // Message
 $message = "
@@ -91,5 +95,5 @@ if (mail($to, $subject, $message, implode("\r\n", $headers))) {
 } else {
     $_SESSION["mail_sent"] = false;
     echo "error";
-}
+}*/
 //}
