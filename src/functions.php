@@ -19,10 +19,19 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
     $current_results_page_string = (string)$current_results_page;
 
     if ($favourites) {
+
+        // had to put this in session object as using a hidden html input field did not work with a serialize/unserialize array-value
+        $_SESSION["favourited_pokemon_to_mail"] = serialize($pokemons_favourited)
+
         ?>
         <h2 class="text-center w-100">Pokemon in favourites</h2>
-        <p>maybe this is a good spot if I want only one e-mailinputfield and button. That way the whole page could look
-            symmetrical</p>
+            <form action="src/handle_mail.php" method="POST">
+                <label for='email'>Send favourites to someone:</label>
+                <input type='email' id='email' name='email'>
+                <?php /*// sending data without creating input field
+                    */ ?>
+                <input type="submit">
+            </form>
         <?php
         $pokemons_favourited = $pokemons_favourited->show_pokemons_favourited();
         foreach ($pokemons_favourited as $pokemon_favourited) {
@@ -40,23 +49,21 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
                     <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'" ?> class="btn btn-secondary m-1">Specifications</a>
                     <!--                    <a href=-->
                     <?php //echo "'src/handle_cookie.php?name=" . $pokemon_name . "'"?><!-- class="btn btn-primary m-1">Add to favorite</a>-->
-                    <form action="src/handle_mail.php" method="POST">
-                        <label for='email'>Enter your email:</label></br>
-                        <input type='email' id='email' name='email'></br>
-                        <?php /*// sending data without creating input field
-                    */ ?>
-                        <input type='hidden' name="favourited_pokemon_to_mail"
-                               value=<?php echo $pokemon_name; ?>/>
-                        <input type="submit">
-                    </form>
+                    <!--                    <form action="src/handle_mail.php" method="POST">-->
+                    <!--                        <label for='email'>Enter your email:</label></br>-->
+                    <!--                        <input type='email' id='email' name='email'></br>-->
+                    <!--                        --><?php ///*// sending data without creating input field
+                    //                    */ ?>
+                    <!--                        <input type='hidden' name="favourited_pokemon_to_mail"-->
+                    <!--                               value=--><?php //echo $pokemon_name; ?><!--/>-->
+                    <!--                        <input type="submit">-->
+                    <!--                    </form>-->
                 </div>
             </div>
             <?php
             /*            }*/
         }
-    }
-
-    elseif
+    } elseif
     (!$favourites) {
         ?>
         <h2 class="text-center w-100">Pokemon not necessarily in favourites</h2>
@@ -79,7 +86,7 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
                     <!--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                     <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'" ?> class="btn btn-secondary m-1">Specifications</a>
                     <a href=<?php echo "src/handle_cookie.php?query_type=$query_type&type=$type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string&name=" . $pokemon_name . "&id=" . $pokemon_id . "&results_page=$current_results_page" ?>
-                        class="btn btn-primary m-1">Add to favorite
+                       class="btn btn-primary m-1">Add to favorite
                     </a>
                 </div>
             </div>

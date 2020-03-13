@@ -27,9 +27,17 @@ require_once("controller.php");
                 <select id="type" name="type" disabled="disabled">
                     <?php
                     foreach ($pokemon_type_list_names as $pokemon_type_name) {
-                        ?>
-                        <option value=<?php echo $pokemon_type_name; ?>><?php echo $pokemon_type_name; ?></option>
-                    <?php }
+
+                        if ($pokemon_type_name == $_GET["type"]) {
+                            ?>
+                            <option selected
+                                    value=<?php echo $pokemon_type_name; ?>><?php echo $pokemon_type_name; ?></option>
+                            <?php
+                        } else {
+                            ?>
+                            <option value=<?php echo $pokemon_type_name; ?>><?php echo $pokemon_type_name; ?></option>
+                        <?php }
+                    }
                     ?>
                 </select>
                 <!-- note:  I'm not able to calculate beforehand the numer of pokemon that an api call will return (will I search fire or rock? or do I just click to the next default call), I will not set options dynamically but offer to display 5, 10, ... 100  -->
