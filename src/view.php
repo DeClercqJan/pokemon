@@ -53,26 +53,7 @@ require_once("controller.php");
         </div>
     </header>
     <main class="border border-primary row">
-        <!-- notification that e-mail has indeed been sent. probably should put this in separate component -->
-        <?php if (isset($_SESSION["mail_sent"]) && !isset($_SESSION["e_mail_error"])) {
-            ?>
-            <div class="col-12 alert alert-success" role="alert">
-                <?php
-                echo "mail has been sent";
-                unset($_SESSION["mail_sent"]);
-                ?>
-            </div>
-            <?php
-        } elseif (!isset($_SESSION["mail_sent"]) && isset($_SESSION["e_mail_error"])) {
-            ?>
-            <div class="col-12 alert alert-danger" role="alert">
-                <?php
-                echo $_SESSION["e_mail_error"];
-                echo "email error fires";
-                ?>
-            </div>
-            <?php
-        } ?>
+        <?php require_once("src/mail_error_display.php"); ?>
         <div class="border border-secondary col-8 row d-flex justify-content-center">
             <?php
             // need to send current results page and such, definied in controller, to function as pagination component (included in display function) needs it
@@ -83,7 +64,9 @@ require_once("controller.php");
             ?>
             <div class="border border-secondary col-4"> <?php
                 display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page, $query_type, $type, $pokemon_per_page);
-                ?> </div>      <?php
+                ?>
+            </div>
+            <?php
         }
         ?>
     </main>
