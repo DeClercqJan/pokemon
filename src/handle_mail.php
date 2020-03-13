@@ -6,6 +6,17 @@ echo "test";
 
 session_start();
 
+var_dump($_POST);
+
+if(isset($_POST["email"]) && (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))) {
+echo "test123";
+}
+else {
+    echo "error. You need to fill in a valid e-mailadres. Alternatively, you've loaded this page directly instead of coming here from somwerhere else";
+}
+
+// don't forget validaiton!
+
 /*// to do: clean up this code and make the more advanced mailer work
 // to do? Danny says the standard mailer is not recommended, while I do use that one here
 // to do: check input e-mail/validation

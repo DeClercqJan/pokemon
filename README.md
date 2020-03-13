@@ -5,7 +5,7 @@
 - Becode PHP exercise
 
 ## implementation
-- paid more attention to code quality: type hinting, security on classes, re-usability, yoda rule, limit indentation, strict type, defensive programming, names, comments, file structure, refactoring ...
+- paid more attention to code quality: type hinting, security on classes, re-usability, yoda rule, limit indentation, strict type, defensive programming, names, comments, file structure, refactoring, as little PHP in html(view) as possible
 - database class fills up pokemonS class and while constructing it calls the pokemon class that also contains another api call to get more details (image and so)
 - created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, not much more
 - also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
@@ -23,6 +23,8 @@
 - testing
 - need to set array of pokemons visited earlier not in SESSION, but in cookies / alternatively, throw away this way of thinking and just call the api with the id's of the favourited pokemon (probably better)
 - or I could use react front-end with state and such and only call API if new things are needed. This should greatly improve loading speed
+- or maybe best, because it's php, just store previous data in cookies and concat this with new information needed
+- feedback Danny: my way of including html in function is creating new view. Better to have a few lines of PHP in MY view than to create this awkward function. Thijs: you will need to mix php and html at some point anyway
 
 # ORIGINAL ASSIGNMENT BELOW
 

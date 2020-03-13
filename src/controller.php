@@ -103,3 +103,8 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
 // needed for pagination component - part 2
 $current_results_page = $pokemons_db2->get_pokemons_results_page();
 
+// this to limit code in view
+if(isset($_COOKIE["favourites"])) {
+    $favourites_old = unserialize($_COOKIE["favourites"]);
+    $pokemons_favourited = new Pokemons_favourited($favourites_old);
+}

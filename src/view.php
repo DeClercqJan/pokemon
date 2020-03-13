@@ -70,8 +70,6 @@ require_once("controller.php");
             ?>
         </div>
         <?php if (isset($_COOKIE["favourites"])) {
-            $favourites_old = unserialize($_COOKIE["favourites"]);
-            $pokemons_favourited = new Pokemons_favourited($favourites_old);
             ?>
             <div class="border border-secondary col-4"> <?php
                 display_pokemons($pokemons, $pokemons_favourited, true, $results_page_all, $current_results_page, $query_type, $type, $pokemon_per_page);
