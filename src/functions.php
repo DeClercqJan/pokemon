@@ -44,7 +44,7 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
                      src=<?php echo $pokemon_favourited->get_pokemon_property("image_url") ?> alt="Card
                      image cap">
                 <div class="card-body">
-                    <h5 class="card-title"><? php echo $pokemon_name ?></h5>
+                    <h5 class="card-title"><? echo $pokemon_name ?></h5>
                     <!--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                     <a href=<?php echo "'/overview.php?name=" . $pokemon_name . "'" ?> class="btn btn-secondary m-1">Specifications</a>
                     <!--                    <a href=-->
