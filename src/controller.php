@@ -5,28 +5,24 @@ declare(strict_types=1);
 require_once("model.php");
 
 // needed to populate function that also includes link to cookie handler and ultimately keep current results page as before favourite request
-if(isset($_GET["results_page"])) {
+if (isset($_GET["results_page"])) {
     $current_results_page_string = $_GET["results_page"];
-}
-else {
+} else {
     $current_results_page_string = "";
 }
-if(isset($_GET["query_type"])) {
+if (isset($_GET["query_type"])) {
     $query_type = $_GET["query_type"];
-}
-else {
+} else {
     $query_type = "";
 }
-if(isset($_POST["get"])) {
+if (isset($_POST["get"])) {
     $type = $_GET["get"];
-}
-else {
+} else {
     $type = "";
 }
-if(isset($_GET["pokemon_per_page"])) {
+if (isset($_GET["pokemon_per_page"])) {
     $pokemon_per_page = $_GET["pokemon_per_page"];
-}
-else {
+} else {
     $pokemon_per_page = "";
 }
 
@@ -56,12 +52,11 @@ if (isset($_GET["query_type"]) && "default_browsing" == $_GET["query_type"] && i
     $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
     $pokemons_class = new Pokemons($pokemons_raw);
     $pokemons = $pokemons_class->show_pokemons2();
-}
-elseif (isset($_GET["query_type"]) && "search" == $_GET["query_type"] && isset($_GET["type"]) && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
+} elseif (isset($_GET["query_type"]) && "search" == $_GET["query_type"] && isset($_GET["type"]) && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
     // echo "case 2 fires <br>";
     $type = $_GET["type"];
-    $new_pokemons_results_page = (int) $_GET["results_page"];
-    $pokemon_per_page = (int) $_GET["pokemon_per_page"];
+    $new_pokemons_results_page = (int)$_GET["results_page"];
+    $pokemon_per_page = (int)$_GET["pokemon_per_page"];
     // $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
     $pokemons_db2->find_pokemons_by_type($type, $new_pokemons_results_page, $pokemon_per_page);
     $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
@@ -71,7 +66,7 @@ elseif (isset($_GET["query_type"]) && "search" == $_GET["query_type"] && isset($
 
 // serve pagination
 // to do: need to expand is
-elseif (isset($_GET["results_page"])){
+elseif (isset($_GET["results_page"])) {
     // echo "case 0 without specific query type in GET fires <br>";
     $new_pokemons_results_page = (int)$_GET["results_page"];
     $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, 20);
@@ -89,22 +84,25 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     $pokemon_class_serialized = serialize($pokemons_class->show_pokemons2());
     // var_dump($pokemon_class_serialized);
 //    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized, time() + 3600 * 12 * 30, "/");
-    $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
+    // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
+    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized);
 
 } else {
     // echo "cookie has been recognized";
-    $previous_pokemons = unserialize($_SESSION["pokemons_array_of_pokemons_class"]);
+    // $previous_pokemons = unserialize($_SESSION["pokemons_array_of_pokemons_class"]);
+    $previous_pokemons = $_SESSION["pokemons_array_of_pokemons_class"];
     $pokemons_class = new Pokemons($pokemons_raw, $previous_pokemons);
     $pokemon_class_serialized_new = serialize($pokemons_class->show_pokemons2());
     // var_dump($pokemon_class_serialized_new);
-    $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
+    // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
+    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new);
 }
 
 // needed for pagination component - part 2
 $current_results_page = $pokemons_db2->get_pokemons_results_page();
 
 // this to limit code in view
-if(isset($_COOKIE["favourites"])) {
+if (isset($_COOKIE["favourites"])) {
     $favourites_old = unserialize($_COOKIE["favourites"]);
     $pokemons_favourited = new Pokemons_favourited($favourites_old);
 }
