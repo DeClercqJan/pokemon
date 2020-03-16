@@ -1,0 +1,36 @@
+src/handle_cookie.php:6 PhanUndeclaredConstant Reference to undeclared constant \On
+src/handle_cookie.php:44 PhanPossiblyUndeclaredGlobalVariable Global variable $current_results_page_string is possibly undeclared
+src/handle_cookie.php:44 PhanPossiblyUndeclaredGlobalVariable Global variable $pokemon_per_page is possibly undeclared
+src/handle_cookie.php:44 PhanPossiblyUndeclaredGlobalVariable Global variable $query_type is possibly undeclared
+src/handle_cookie.php:44 PhanPossiblyUndeclaredGlobalVariable Global variable $type is possibly undeclared
+src/handle_cookie.php:68 PhanPossiblyUndeclaredGlobalVariable Global variable $current_results_page_string is possibly undeclared
+src/handle_cookie.php:68 PhanPossiblyUndeclaredGlobalVariable Global variable $pokemon_per_page is possibly undeclared
+src/handle_cookie.php:68 PhanPossiblyUndeclaredGlobalVariable Global variable $query_type is possibly undeclared
+src/handle_cookie.php:68 PhanPossiblyUndeclaredGlobalVariable Global variable $type is possibly undeclared
+src/handle_mail.php:5 PhanUndeclaredConstant Reference to undeclared constant \On
+src/handle_mail.php:68 PhanUndeclaredVariableDim Variab
+le $headers was undeclared, but array fields are being added to it.
+src/model.php:198 PhanPossiblyUndeclaredVariable Variable $new_pokemons_results_page_call is possibly undeclared
+src/pagination.php:12 PhanUndeclaredGlobalVariable Global variable $current_results_page_string is undeclared
+src/pagination.php:18 PhanUndeclaredGlobalVariable Global variable $pokemon_per_page is undeclared
+src/pagination.php:18 PhanUndeclaredGlobalVariable Global variable $query_type is undeclared
+src/pagination.php:18 PhanUndeclaredGlobalVariable Global variable $type is undeclared
+src/pagination.php:28 PhanUndeclaredGlobalVariable Global variable $results_page_all_string is undeclared
+src/pagination.php:33 PhanUndeclaredGlobalVariable Global variable $pokemon_per_page is undeclared
+src/pagination.php:33 PhanUndeclaredGlobalVariable Global variable $query_type is undeclared
+src/pagination.php:33 PhanUndeclaredGlobalVariable Global variable $type is undeclared
+src/view.php:29 PhanUndeclaredGlobalVariable Global variable $pokemon_type_list_names is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $current_results_page is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $pokemon_per_page is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $pokemons is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $pokemons_class is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $query_type is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $results_page_all is undeclared
+src/view.php:68 PhanUndeclaredGlobalVariable Global variable $type is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $current_results_page is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $pokemon_per_page is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $pokemons is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $pokemons_favourited is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $query_type is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $results_page_all is undeclared
+src/view.php:74 PhanUndeclaredGlobalVariable Global variable $type is undeclared

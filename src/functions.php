@@ -12,7 +12,7 @@ function var_dump_pretty($variable)
 // see readme for note whether or not(not) this was a good idea
 // probably best to have this in a return statement, maybe use HEREDOC or so
 // question: why can't I say that $favourites is a boolean?
-function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = false, int $results_page_all, int $current_results_page, string $query_type = "default_browsing", $type, $pokemon_per_page = 20)
+function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = false, int $results_page_all = 1, int $current_results_page =1, string $query_type = "default_browsing", $type = "", $pokemon_per_page = 20)
 {
 // probably would work without explictly casting intergers as string, but heu
     $results_page_all_string = (string)$results_page_all;

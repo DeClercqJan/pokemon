@@ -5,27 +5,33 @@
 - Becode PHP exercise
 
 ## implementation
+### principles
 - paid more attention to code quality: type hinting, security on classes, re-usability, yoda rule, limit indentation, strict type, defensive programming, names, comments, file structure, refactoring, as little PHP in html(view) as possible
-- database class fills up pokemonS class and while constructing it calls the pokemon class that also contains another api call to get more details (image and so)
-- created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, not much more
-- also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
-- concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1
+- separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
+### how it works
+- database class fills up pokemonS class and while constructing it calls the pokemon (singular) class that also contains another api call to get more details (image and so)
 - controller checks URL paramters and sets dummy paramters if not used. If/else checks structure triggers relevant database calls. (In previous version, SESSION was used for this)
+- also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
 - displaying of actual pokemon is done by populating functions that in turn contains components such as pagination that re-use or append these paramters
+- concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1
+### other stuff
+- phan testing: see analysis.txt file 
 - basic bootstrap styling
 - Heroku deployment
 
 ## To do's
-- separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
-- overview page's base logic is solid, but I don't know what info to display there. Not first priority anyway
+### style
 - style block of favourites. Something with row and width, check margins and such because the borders are overlapping. Maybe different box-model?
 - also: if too many favourites, the left column leaves a lot of whitespace that is not present when few pokes are favourited
-- testing
+### features
+- overview page's base logic is solid, but I don't know what info to display there. Not first priority anyway
+- check if mailer works from BeCode's location and elsewhere. mail-tester.com error report included here
+- created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, names ... not much more
+### others
 - need to set array of pokemons visited earlier not in SESSION, but in cookies / alternatively, throw away this way of thinking and just call the api with the id's of the favourited pokemon (probably better)
 - or I could use react front-end with state and such and only call API if new things are needed. This should greatly improve loading speed
 - or maybe best, because it's php, just store previous data in cookies and concat this with new information needed
 - feedback Danny: my way of including html in function is creating new view. Better to have a few lines of PHP in MY view than to create this awkward function. Thijs: you will need to mix php and html at some point anyway
-- check if mailer works from BeCode's location
 
 # ORIGINAL ASSIGNMENT BELOW
 

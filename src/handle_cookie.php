@@ -1,8 +1,10 @@
 <?php
 
 declare(strict_types=1);
+require_once("test.php");
 
 ini_set('display_errors', On);
+
 
 session_start();
 
