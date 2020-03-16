@@ -13,7 +13,7 @@
 - controller checks URL paramters and sets dummy paramters if not used. If/else checks structure triggers relevant database calls. (In previous version - see "old-version" branch, SESSION was used for this)
 - also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
 - displaying of actual pokemon is done by populating functions that in turn contains components such as pagination that re-use or append these paramters
-- concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1
+- concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1 using search_in ... -method
 ### other stuff
 - didn't really follow the overview, categorie ... structure of the assignment as I did not really get what was asked for
 - onyl one e-mailfield but multiple favourited pokemon to send over, including a link to detail page
@@ -33,11 +33,15 @@
 - created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, names ... not much more
 - need to variably display pagenumbers. This will work for standard browsing, but can't be provided beforehand for type searches as these are so variable. Maybe disable for first search, but after re-render, this is known and can be adapted? 
 - button to remove from favourites
+### need for speed
+- speed is shit with this concating of earlier searched pokemon. Is it really that? In performance thingie of mozilla dev tools it's a few seconds just for the images (which are individual api-calls). Most of it, is 'HTML though'. Not clear whether this is because of my slow local device or wether the api-calls are in there (the concating of old and new, as I say it). Actually, this could be, as SESSION - I believe - is stored on the server and not on the local device. Trial and error up next?
+- alternative 3: I could try to serve this code on a faster device. How's Heroku?
+- alternative 4: use cookies instead of sessions
+- alternatively, alternative 2: throw away this way of thinking and just call the api with the id's of the favourited pokemon directly instead of storing previous things in SESSION
+- alternative 1:  I could use react front-end with state and such and only call API if new things are needed. Not sure if this way of thinking is actually correct; I am already storing a lot in session; I DON'T call page 1 + 2 + 3 ... I store page 1 and 2 when showing 3. This alternative is costly, as it is a lot of work
+
 ### others
-- need to set array of pokemons visited earlier not in SESSION, but in cookies / alternatively, throw away this way of thinking and just call the api with the id's of the favourited pokemon (probably better)
-- or I could use react front-end with state and such and only call API if new things are needed. This should greatly improve loading speed
-- or maybe best, because it's php, just store previous data in cookies and concat this with new information needed
-- feedback Danny: my way of including html in function is creating new view. Better to have a few lines of PHP in MY view than to create this awkward function. Thijs: you will need to mix php and html at some point anyway
+- feedback Danny: my way of including html in function is creating new view. Better to have a few lines of PHP in MY view than to create this awkward function. Thijs: you will need to mix php and html at some point anyway. Figure out these concepts and get file structure up to standard
 
 # ORIGINAL ASSIGNMENT BELOW
 
