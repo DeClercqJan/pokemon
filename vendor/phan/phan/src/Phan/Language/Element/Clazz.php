@@ -632,9 +632,6 @@ class Clazz extends AddressableElement
         $visited = [];
         for ($current = $this; $current->hasParentType(); $current = $parent) {
             $fqsen = $current->getFQSEN();
-            if (!$current->hasParentType()) {
-                return $fqsen;
-            }
 
             if (!$code_base->hasClassWithFQSEN(
                 $current->getParentClassFQSEN()
@@ -733,7 +730,7 @@ class Clazz extends AddressableElement
             // Private properties of traits are accessible from the class that used that trait
             // (as well as from within the trait itself).
             // Also, for inheritance purposes, treat protected properties the same way.
-            if ($from_trait && !$property->isPublic()) {
+            if ($from_trait) {
                 $property->setDefiningFQSEN($property_fqsen);
             }
 
@@ -1012,6 +1009,15 @@ class Clazz extends AddressableElement
                 $code_base,
                 $context->getClassFQSENOrNull()
             );
+        }
+        if ($is_static && $property) {
+            // If the property is from a trait, the (different) defining FQSEN is the FQSEN of the class using the FQSEN, not the trait.
+            $defining_fqsen = $property->getDefiningFQSEN();
+            if ($defining_fqsen !== $property_fqsen) {
+                if ($code_base->hasPropertyWithFQSEN($defining_fqsen)) {
+                    $property = $code_base->getPropertyByFQSEN($defining_fqsen);
+                }
+            }
         }
 
         // If the property exists and is accessible, return it

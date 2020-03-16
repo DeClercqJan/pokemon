@@ -79,6 +79,7 @@ use function is_string;
  * @phan-file-suppress PhanPartialTypeMismatchArgument node is complicated
  * @phan-file-suppress PhanPartialTypeMismatchArgumentInternal node is complicated
  * @phan-file-suppress PhanPluginDescriptionlessCommentOnPublicMethod
+ * @method UnionType __invoke(Node $node)
  */
 class UnionTypeVisitor extends AnalysisVisitor
 {
@@ -646,6 +647,8 @@ class UnionTypeVisitor extends AnalysisVisitor
                 return VoidType::instance(false)->asRealUnionType();
             case \ast\flags\TYPE_FALSE:
                 return FalseType::instance(false)->asRealUnionType();
+            case \ast\flags\TYPE_STATIC:
+                return StaticType::instance(false)->asRealUnionType();
             default:
                 \Phan\Debug::printNode($node);
                 throw new AssertionError("All flags must match. Found ($node->flags) "
@@ -827,7 +830,8 @@ class UnionTypeVisitor extends AnalysisVisitor
         // Use the exact same truthiness rules as PHP to check if the conditional is truthy.
         // (e.g. "0" and 0.0 and '' are false)
         if (!is_scalar($cond)) {
-            throw new TypeError('$cond must be Node or scalar');
+            // Phan should have emitted a PhanSyntaxError elsewhere
+            return null;
         }
         return (bool)$cond;
     }
@@ -1909,7 +1913,7 @@ class UnionTypeVisitor extends AnalysisVisitor
                     if (\is_int($dim_value) || \filter_var($dim_value, \FILTER_VALIDATE_INT) !== false) {
                         // If we request a string offset from a string, that's not valid. Only accept integer dimensions as valid.
                         // in php, indices of strings can be negative
-                        if ($resulting_element_type !== null) {
+                        if ($resulting_element_type instanceof UnionType) {
                             $resulting_element_type = $resulting_element_type->withType(StringType::instance(false));
                         } else {
                             $resulting_element_type = StringType::instance(false)->asPHPDocUnionType();
@@ -1931,7 +1935,7 @@ class UnionTypeVisitor extends AnalysisVisitor
             if ($element_type !== null) {
                 // $element_type may be non-null but $element_type->isEmpty() may be true.
                 // So, we use null to indicate failure below
-                if ($resulting_element_type !== null) {
+                if ($resulting_element_type instanceof UnionType) {
                     $resulting_element_type = $resulting_element_type->withUnionType($element_type);
                 } else {
                     $resulting_element_type = $element_type;
@@ -2525,6 +2529,7 @@ class UnionTypeVisitor extends AnalysisVisitor
             }
 
             $union_type = $property->getUnionType()->withStaticResolvedInContext($property->getContext());
+
             // Map template types to concrete types
             if ($union_type->hasTemplateTypeRecursive()) {
                 // Get the type of the object calling the property
@@ -2539,6 +2544,18 @@ class UnionTypeVisitor extends AnalysisVisitor
                 );
 
                 return $union_type;
+            } elseif (!$is_static) {
+                // Inherit any new additional inferred union types from the declaring class,
+                // unless the property type has template types.
+                $defining_fqsen = $property->getDefiningFQSEN();
+                if ($property->getFQSEN() !== $defining_fqsen) {
+                    if ($this->code_base->hasPropertyWithFQSEN($defining_fqsen)) {
+                        $declaring_union_type = $this->code_base->getPropertyByFQSEN($defining_fqsen)->getUnionType();
+                        if ($declaring_union_type !== $union_type && !$declaring_union_type->hasTemplateTypeRecursive()) {
+                            $union_type = $union_type->withUnionType($declaring_union_type);
+                        }
+                    }
+                }
             }
 
             if ($union_type->isEmptyArrayShape() && $property->getPHPDocUnionType()->isEmpty()) {
@@ -2659,6 +2676,7 @@ class UnionTypeVisitor extends AnalysisVisitor
                 $function_types = $function->getUnionType();
             }
             if ($possible_types) {
+                '@phan-var UnionType $possible_types';
                 $possible_types = $possible_types->withUnionType($function_types);
             } else {
                 $possible_types = $function_types;
@@ -2777,17 +2795,11 @@ class UnionTypeVisitor extends AnalysisVisitor
                         );
                     }
 
-                    // Remove any references to \static or \static[]
-                    // once we're talking about the method's return
-                    // type outside of its class
-                    // TODO: Convert static[] to array or object[]
-                    foreach ($union_type->getTypeSet() as $type) {
-                        if ($type->hasStaticOrSelfTypesRecursive($this->code_base)) {
-                            $union_type = $union_type->withoutType($type);
-                        }
-                    }
+                    // Resolve any references to \static or \static[]
+                    $union_type = $union_type->withStaticResolvedInContext($class->getInternalContext());
 
                     if ($combined_union_type) {
+                        '@phan-var UnionType $combined_union_type';
                         $combined_union_type = $combined_union_type->withUnionType($union_type);
                     } else {
                         $combined_union_type = $union_type;

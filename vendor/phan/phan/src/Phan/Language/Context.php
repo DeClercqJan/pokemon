@@ -780,6 +780,7 @@ class Context extends FileRef
     /**
      * @param int $node_id \spl_object_id($node)
      * @param bool $should_catch_issue_exception the value passed to UnionTypeVisitor
+     * @suppress PhanPartialTypeMismatchReturn seen with --analyze-twice because $this->cache is reused
      */
     public function getUnionTypeOfNodeIfCached(int $node_id, bool $should_catch_issue_exception): ?UnionType
     {
@@ -1020,6 +1021,7 @@ class Context extends FileRef
                 return null;
             }
             if ($result) {
+                '@phan-var UnionType $result';
                 $result = $result->withUnionType($extra);
             } else {
                 $result = $extra;

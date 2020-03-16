@@ -8,9 +8,12 @@ use ast;
 use ast\Node;
 use Closure;
 use Phan\Analysis\PostOrderAnalysisVisitor;
+use Phan\AST\TolerantASTConverter\Shim;
 
 use function implode;
 use function is_string;
+
+Shim::load();
 
 /**
  * This converts a PHP AST into an approximate string representation.
@@ -120,8 +123,17 @@ class ASTReverter
             ast\AST_TYPE => static function (Node $node): string {
                 return PostOrderAnalysisVisitor::AST_CAST_FLAGS_LOOKUP[$node->flags];
             },
+            /**
+             * @suppress PhanPartialTypeMismatchArgument
+             */
+            ast\AST_TYPE_UNION => static function (Node $node): string {
+                return implode('|', \array_map('self::toShortTypeString', $node->children));
+            },
+            /**
+             * @suppress PhanTypeMismatchArgumentNullable
+             */
             ast\AST_NULLABLE_TYPE => static function (Node $node): string {
-                return '?' . self::toShortString($node->children['type']);
+                return '?' . self::toShortTypeString($node->children['type']);
             },
             ast\AST_POST_INC => static function (Node $node): string {
                 return self::formatIncDec('%s++', $node->children['var']);
@@ -226,6 +238,13 @@ class ASTReverter
                     self::toShortString($node->children['expr'])
                 );
             },
+            ast\AST_ASSIGN_REF => static function (Node $node): string {
+                return \sprintf(
+                    "(%s =& %s)",
+                    self::toShortString($node->children['var']),
+                    self::toShortString($node->children['expr'])
+                );
+            },
             /** @suppress PhanAccessClassConstantInternal */
             ast\AST_ASSIGN_OP => static function (Node $node): string {
                 return \sprintf(
@@ -310,6 +329,14 @@ class ASTReverter
                     self::toShortString($node->children['args'])
                 );
             },
+            ast\AST_CLONE => static function (Node $node): string {
+                // clone($x)->someMethod() has surprising precedence,
+                // so surround `clone $x` with parenthesis.
+                return \sprintf(
+                    '(clone(%s))',
+                    self::toShortString($node->children['expr'])
+                );
+            },
             ast\AST_CONDITIONAL => static function (Node $node): string {
                 ['cond' => $cond, 'true' => $true, 'false' => $false] = $node->children;
                 if ($true !== null) {
@@ -329,8 +356,38 @@ class ASTReverter
                     self::toShortString($node->children['expr'])
                 );
             },
+            ast\AST_PRINT => static function (Node $node): string {
+                return \sprintf(
+                    'print(%s)',
+                    self::toShortString($node->children['expr'])
+                );
+            },
+            ast\AST_UNPACK => static function (Node $node): string {
+                return \sprintf(
+                    '...(%s)',
+                    self::toShortString($node->children['expr'])
+                );
+            },
+            // TODO: AST_SHELL_EXEC, AST_ENCAPS_LIST(in shell_exec or double quotes)
         ];
     }
+
+    /**
+     * Returns the representation of an AST_TYPE, AST_NULLABLE_TYPE, AST_TYPE_UNION, or AST_NAME, as seen in an element signature
+     */
+    public static function toShortTypeString(Node $node): string
+    {
+        if ($node->kind === ast\AST_NULLABLE_TYPE) {
+            // @phan-suppress-next-line PhanTypeMismatchArgumentNullable
+            return '?' . self::toShortTypeString($node->children['type']);
+        }
+        if ($node->kind === ast\AST_TYPE) {
+            return PostOrderAnalysisVisitor::AST_TYPE_FLAGS_LOOKUP[$node->flags];
+        }
+        // Probably AST_NAME
+        return self::toShortString($node);
+    }
+
 
     /**
      * @param Node|string|int|float $node
