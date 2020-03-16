@@ -10,11 +10,15 @@
 - separate json logic from pokemon classes in order to have reusable code in case the API changes in structure, MVC
 ### how it works
 - database class fills up pokemonS class and while constructing it calls the pokemon (singular) class that also contains another api call to get more details (image and so)
-- controller checks URL paramters and sets dummy paramters if not used. If/else checks structure triggers relevant database calls. (In previous version, SESSION was used for this)
+- controller checks URL paramters and sets dummy paramters if not used. If/else checks structure triggers relevant database calls. (In previous version - see "old-version" branch, SESSION was used for this)
 - also have universal getters function that returns any property of class instance that is called. There are not any properties that need to be hidden atm
 - displaying of actual pokemon is done by populating functions that in turn contains components such as pagination that re-use or append these paramters
 - concated array of previous pokemons searched with new pokemons in order to be able to search it to display it when for instance you are browsing page 2 but still want to be able to see a favourited pokemon on page 1
 ### other stuff
+- didn't really follow the overview, categorie ... structure of the assignment as I did not really get what was asked for
+- onyl one e-mailfield but multiple favourited pokemon to send over, including a link to detail page
+- javascript disabling of certain options when not relevant
+- validation of mailing functionaltiy
 - phan testing: see analysis.txt file 
 - basic bootstrap styling
 - Heroku deployment
@@ -27,6 +31,8 @@
 - overview page's base logic is solid, but I don't know what info to display there. Not first priority anyway
 - check if mailer works from BeCode's location and elsewhere. mail-tester.com error report included here
 - created half working function (yet good concept) that easily searches json for property and sets this as property of pokemon instance. Functional for images, names ... not much more
+- need to variably display pagenumbers. This will work for standard browsing, but can't be provided beforehand for type searches as these are so variable. Maybe disable for first search, but after re-render, this is known and can be adapted? 
+- button to remove from favourites
 ### others
 - need to set array of pokemons visited earlier not in SESSION, but in cookies / alternatively, throw away this way of thinking and just call the api with the id's of the favourited pokemon (probably better)
 - or I could use react front-end with state and such and only call API if new things are needed. This should greatly improve loading speed
