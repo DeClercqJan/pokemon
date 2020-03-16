@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use ast\Node;
 use Phan\AST\UnionTypeVisitor;
+use Phan\Config;
 use Phan\Language\Context;
 use Phan\Language\Element\PassByReferenceVariable;
 use Phan\Parse\ParseVisitor;
@@ -62,6 +63,9 @@ class RedundantAssignmentPreAnalysisVisitor extends PluginAwarePreAnalysisVisito
     public function visitAssign(Node $node): void
     {
         $var = $node->children['var'];
+        if (!$var instanceof Node) {
+            return;
+        }
         if ($var->kind !== ast\AST_VAR) {
             return;
         }
@@ -103,6 +107,10 @@ class RedundantAssignmentPreAnalysisVisitor extends PluginAwarePreAnalysisVisito
         }
         if ($this->context->isInGlobalScope()) {
             if ($variable->getFileRef()->getFile() !== $this->context->getFile()) {
+                // Don't warn if this variable was set by a different file
+                return;
+            }
+            if (Config::getValue('__analyze_twice') && $variable->getFileRef()->getLineNumberStart() === $this->context->getLineNumberStart()) {
                 // Don't warn if this variable was set by a different file
                 return;
             }

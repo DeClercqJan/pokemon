@@ -83,6 +83,7 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
     /**
      * @param list<ClosureDeclarationParameter> $params
      * @param UnionType $return_type
+     * @suppress PhanPluginUnknownObjectMethodCall TODO: Figure out how the type is getting overridden in PostOrderAnalysisVisitor->analyzeCallToFunctionLike
      */
     public function __construct(FileRef $file_ref, array $params, UnionType $return_type, bool $returns_reference, bool $is_nullable)
     {
@@ -124,7 +125,7 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
             }
             $return_type = $this->return_type;
             $return_type_string = $return_type->__toString();
-            if ($return_type->typeCount() >= 2) {
+            if ($return_type->typeCount() >= 2 || \substr($return_type_string, -1) === ']') {
                 $return_type_string = "($return_type_string)";
             }
             return ($this->is_nullable ? '?' : '') . static::NAME . '(' . \implode(',', $parts) . '):' . $return_type_string;
@@ -220,7 +221,7 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
             return false;
         }
         // TODO: Allow nullable/null to cast to void?
-        if (!$this->return_type->canCastToUnionTypeHandlingTemplates($type->return_type, $code_base)) {
+        if (!$this->return_type->asExpandedTypes($code_base)->canCastToUnionTypeHandlingTemplates($type->return_type, $code_base)) {
             return false;
         }
         foreach ($this->params as $i => $param) {
@@ -309,6 +310,24 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
         yield from $this->return_type->getReferencedClasses();
     }
 
+    /**
+     * Returns a generator that yields all types and subtypes in the phpdoc type set.
+     *
+     * For example, for the union type `MyClass[]|false`, 3 types will be generated: `MyClass[]`, `MyClass`, and `false`.
+     * This does not deduplicate types.
+     *
+     * @return Generator<Type>
+     */
+    public function getTypesRecursively(): Generator
+    {
+        yield $this;
+        foreach ($this->params as $param) {
+            yield from $param->getNonVariadicUnionType()->getTypesRecursively();
+        }
+
+        yield from $this->return_type->getTypesRecursively();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
     // Begin FunctionInterface overrides. Most of these are intentionally no-ops
     ////////////////////////////////////////////////////////////////////////////////
@@ -366,7 +385,7 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
     }
 
     /**
-     * @phan-return \Generator<FunctionLikeDeclarationType>
+     * @phan-return \Generator<static>
      * @override
      */
     public function alternateGenerator(CodeBase $_): Generator
@@ -669,6 +688,11 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
         throw new \AssertionError('unexpected call to ' . __METHOD__);
     }
 
+    public function hasYield(): bool
+    {
+        throw new \AssertionError('unexpected call to ' . __METHOD__);
+    }
+
     public function setInternalScope(ClosedScope $scope): void
     {
         throw new \AssertionError('unexpected call to ' . __METHOD__);
@@ -715,6 +739,11 @@ abstract class FunctionLikeDeclarationType extends Type implements FunctionInter
     }
 
     public function getUnionTypeWithUnmodifiedStatic(): UnionType
+    {
+        return $this->return_type;
+    }
+
+    public function getOriginalReturnType(): UnionType
     {
         return $this->return_type;
     }

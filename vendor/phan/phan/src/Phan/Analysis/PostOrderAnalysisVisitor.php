@@ -37,6 +37,7 @@ use Phan\Language\Element\PassByReferenceVariable;
 use Phan\Language\Element\Property;
 use Phan\Language\Element\Variable;
 use Phan\Language\FQSEN\FullyQualifiedClassName;
+use Phan\Language\FQSEN\FullyQualifiedGlobalConstantName;
 use Phan\Language\Type;
 use Phan\Language\Type\ArrayType;
 use Phan\Language\Type\FalseType;
@@ -988,7 +989,17 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
         flags\TYPE_CALLABLE => 'callable',
         flags\TYPE_VOID => 'void',
         flags\TYPE_ITERABLE => 'iterable',
+        flags\TYPE_FALSE => 'false',
+        flags\TYPE_STATIC => 'static',
     ];
+
+    /**
+     * @suppress PhanUselessBinaryAddRight this replaces 'unset' with 'null'
+     */
+    public const AST_TYPE_FLAGS_LOOKUP = [
+        ast\flags\TYPE_NULL => 'null',
+    ] + self::AST_CAST_FLAGS_LOOKUP;
+
 
     /**
      * @param Node $node
@@ -1243,6 +1254,87 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
 
     /**
      * @param Node $node
+     * A node to parse
+     *
+     * @return Context
+     * A new or an unchanged context resulting from
+     * parsing the node
+     */
+    public function visitClassConstDecl(Node $node): Context
+    {
+        $class = $this->context->getClassInScope($this->code_base);
+
+        foreach ($node->children as $child_node) {
+            if (!$child_node instanceof Node) {
+                throw new AssertionError('expected class const element to be a Node');
+            }
+            $name = $child_node->children['name'];
+            if (!\is_string($name)) {
+                throw new AssertionError('expected class const name to be a string');
+            }
+            try {
+                $const_decl = $class->getConstantByNameInContext($this->code_base, $name, $this->context);
+                $const_decl->getUnionType();
+            } catch (IssueException $exception) {
+                // We need to do this in order to check keys and (after the first 5) values in AST arrays, possibly other types.
+                Issue::maybeEmitInstance(
+                    $this->code_base,
+                    $this->context,
+                    $exception->getIssueInstance()
+                );
+            } catch (Exception $_) {
+                // Swallow any other types of exceptions. We'll log the errors
+                // elsewhere.
+            }
+        }
+
+        return $this->context;
+    }
+
+    /**
+     * @param Node $node
+     * A node to parse
+     *
+     * @return Context
+     * A new or an unchanged context resulting from
+     * parsing the node
+     */
+    public function visitConstDecl(Node $node): Context
+    {
+        foreach ($node->children as $child_node) {
+            if (!$child_node instanceof Node) {
+                throw new AssertionError('expected const element to be a Node');
+            }
+            $name = $child_node->children['name'];
+            if (!\is_string($name)) {
+                throw new AssertionError('expected const name to be a string');
+            }
+
+            try {
+                $fqsen = FullyQualifiedGlobalConstantName::fromStringInContext(
+                    $name,
+                    $this->context
+                );
+                $const_decl = $this->code_base->getGlobalConstantByFQSEN($fqsen);
+                $const_decl->getUnionType();
+            } catch (IssueException $exception) {
+                // We need to do this in order to check keys and (after the first 5) values in AST arrays, possibly other types.
+                Issue::maybeEmitInstance(
+                    $this->code_base,
+                    $this->context,
+                    $exception->getIssueInstance()
+                );
+            } catch (Exception $_) {
+                // Swallow any other types of exceptions. We'll log the errors
+                // elsewhere.
+            }
+        }
+
+        return $this->context;
+    }
+
+    /**
+     * @param Node $node
      * A node of kind `ast\AST_CLASS_NAME` to parse
      *
      * @return Context
@@ -1298,14 +1390,10 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             && !$return_type->hasType(VoidType::instance(false))
             && !$return_type->hasType(NullType::instance(false))
         ) {
-            $this->emitIssue(
-                Issue::TypeMissingReturn,
-                $node->lineno,
-                (string)$func->getFQSEN(),
-                (string)$return_type
-            );
+            $this->warnTypeMissingReturn($func, $node);
         }
         $this->analyzeNoOp($node, Issue::NoopClosure);
+        $this->checkForFunctionInterfaceIssues($node, $func);
         return $this->context;
     }
 
@@ -1417,20 +1505,22 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             }
 
             // Check if the return type is compatible with the declared return type.
+            $is_mismatch = false;
             if (!$method->isReturnTypeUndefined()) {
                 $resolved_expression_type = $expression_type->withStaticResolvedInContext($context);
                 // We allow base classes to cast to subclasses, and subclasses to cast to base classes,
                 // but don't allow subclasses to cast to subclasses on a separate branch of the inheritance tree
                 if (!$this->checkCanCastToReturnType($resolved_expression_type, $method_return_type)) {
                     $this->emitTypeMismatchReturnIssue($resolved_expression_type, $method, $method_return_type, $lineno);
+                    $is_mismatch = true;
                 } elseif (Config::get_strict_return_checking() && $resolved_expression_type->typeCount() > 1) {
-                    self::analyzeReturnStrict($code_base, $method, $resolved_expression_type, $method_return_type, $lineno);
+                    $is_mismatch = self::analyzeReturnStrict($code_base, $method, $resolved_expression_type, $method_return_type, $lineno);
                 }
             }
             // For functions that aren't syntactically Generators,
             // update the set/existence of return values.
 
-            if ($method->isReturnTypeUndefined()) {
+            if ($method->isReturnTypeModifiable() && !$is_mismatch) {
                 // Add the new type to the set of values returned by the
                 // method
                 $method->setUnionType($method->getUnionType()->withUnionType($expression_type));
@@ -1603,7 +1693,7 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
         }
         $expected_value_type = $template_type_list[\min(1, $type_list_count - 1)];
         try {
-            if (!$yield_value_type->withStaticResolvedInContext($context)->asExpandedTypes($code_base)->canCastToUnionType($expected_value_type)) {
+            if (!$yield_value_type->withStaticResolvedInContext($context)->asExpandedTypes($code_base)->canCastToUnionType($expected_value_type->withStaticResolvedInContext($context))) {
                 $this->emitIssue(
                     Issue::TypeMismatchGeneratorYieldValue,
                     $node->lineno,
@@ -1625,7 +1715,7 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             }
             // TODO: finalize syntax to indicate the absence of a key or value (e.g. use void instead?)
             $expected_key_type = $template_type_list[0];
-            if (!$yield_key_type->withStaticResolvedInContext($context)->asExpandedTypes($code_base)->canCastToUnionType($expected_key_type)) {
+            if (!$yield_key_type->withStaticResolvedInContext($context)->asExpandedTypes($code_base)->canCastToUnionType($expected_key_type->withStaticResolvedInContext($context))) {
                 $this->emitIssue(
                     Issue::TypeMismatchGeneratorYieldKey,
                     $node->lineno,
@@ -1787,7 +1877,7 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
         UnionType $expression_type,
         UnionType $method_return_type,
         int $lineno
-    ): void {
+    ): bool {
         $type_set = $expression_type->getTypeSet();
         $context = $this->context;
         if (\count($type_set) < 2) {
@@ -1831,12 +1921,12 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
 
         if ($mismatch_expanded_types === null) {
             // No mismatches
-            return;
+            return false;
         }
 
         // If we have TypeMismatchReturn already, then also suppress the partial mismatch warnings (e.g. PartialTypeMismatchReturn) as well.
         if ($this->context->hasSuppressIssue($code_base, Issue::TypeMismatchReturn)) {
-            return;
+            return false;
         }
         $this->emitIssue(
             self::getStrictIssueType($mismatch_type_set),
@@ -1846,6 +1936,7 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             (string)$method_return_type,
             $mismatch_expanded_types
         );
+        return true;
     }
 
     private static function getStrictIssueType(UnionType $union_type): string
@@ -2056,6 +2147,20 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
      */
     public function visitPropDecl(Node $node): Context
     {
+        return $this->context;
+    }
+
+    /**
+     * @param Node $node (@phan-unused-param)
+     * A node to parse
+     *
+     * @return Context
+     * A new or an unchanged context resulting from
+     * parsing the node
+     */
+    public function visitPropGroup(Node $node): Context
+    {
+        $this->checkUnionTypeCompatibility($node->children['type']);
         return $this->context;
     }
 
@@ -2652,13 +2757,9 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             && !$return_type->hasType(VoidType::instance(false))
             && !$return_type->hasType(NullType::instance(false))
         ) {
-            $this->emitIssue(
-                Issue::TypeMissingReturn,
-                $node->lineno,
-                (string)$method->getFQSEN(),
-                (string)$return_type
-            );
+            $this->warnTypeMissingReturn($method, $node);
         }
+        $this->checkForFunctionInterfaceIssues($node, $method);
 
         if ($method->hasReturn() && $method->isMagicAndVoid()) {
             $this->emitIssue(
@@ -2668,23 +2769,18 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             );
         }
 
-        $parameters_seen = [];
-        foreach ($method->getParameterList() as $i => $parameter) {
-            $name = $parameter->getName();
-            if (isset($parameters_seen[$name])) {
-                $this->emitIssue(
-                    Issue::ParamRedefined,
-                    $node->lineno,
-                    '$' . $name
-                );
-            } else {
-                $parameters_seen[$name] = $i;
-            }
-        }
-
         return $this->context;
     }
 
+    private function warnTypeMissingReturn(FunctionInterface $method, Node $node): void
+    {
+        $this->emitIssue(
+            $method->getRealReturnType()->isEmpty() ? Issue::TypeMissingReturn : Issue::TypeMissingReturnReal,
+            $node->lineno,
+            $method->getFQSEN(),
+            $method->getUnionType()
+        );
+    }
     /**
      * Visit a node with kind `ast\AST_FUNC_DECL`
      *
@@ -2715,16 +2811,21 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
             && !$return_type->hasType(VoidType::instance(false))
             && !$return_type->hasType(NullType::instance(false))
         ) {
-            $this->emitIssue(
-                Issue::TypeMissingReturn,
-                $node->lineno,
-                (string)$method->getFQSEN(),
-                (string)$return_type
-            );
+            $this->warnTypeMissingReturn($method, $node);
         }
 
+        $this->checkForFunctionInterfaceIssues($node, $method);
+
+        return $this->context;
+    }
+
+    /**
+     * @suppress PhanPossiblyUndeclaredProperty
+     */
+    private function checkForFunctionInterfaceIssues(Node $node, FunctionInterface $function): void
+    {
         $parameters_seen = [];
-        foreach ($method->getParameterList() as $i => $parameter) {
+        foreach ($function->getParameterList() as $i => $parameter) {
             if (isset($parameters_seen[$parameter->getName()])) {
                 $this->emitIssue(
                     Issue::ParamRedefined,
@@ -2735,8 +2836,64 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
                 $parameters_seen[$parameter->getName()] = $i;
             }
         }
+        foreach ($node->children['params']->children as $param) {
+            $this->checkUnionTypeCompatibility($param->children['type']);
+        }
+        $this->checkUnionTypeCompatibility($node->children['returnType']);
+    }
 
-        return $this->context;
+    private function checkUnionTypeCompatibility(?Node $type): void
+    {
+        if (!$type) {
+            return;
+        }
+        if (Config::get_closest_target_php_version_id() >= 80000) {
+            return;
+        }
+        if ($type->kind === ast\AST_TYPE_UNION) {
+            // TODO: Warn about false|false, false|null, etc in php 8.0.
+            $this->emitIssue(
+                Issue::CompatibleUnionType,
+                $type->lineno,
+                ASTReverter::toShortString($type)
+            );
+            return;
+        }
+        if ($type->kind === ast\AST_NULLABLE_TYPE) {
+            $inner_type = $type->children['type'];
+            if (!\is_object($inner_type)) {
+                // The polyfill will create param type nodes for function(? $x)
+                // Phan warns elsewhere.
+                return;
+            }
+        } else {
+            $inner_type = $type;
+        }
+        // echo \Phan\Debug::nodeToString($type) . "\n";
+        if ($inner_type->kind === ast\AST_NAME) {
+            return;
+        }
+        if ($inner_type->kind !== ast\AST_TYPE) {
+            // e.g. ast\TYPE_UNION
+            $this->emitIssue(
+                Issue::InvalidNode,
+                $inner_type->lineno,
+                "Unsupported union type syntax " . ASTReverter::toShortString($inner_type)
+            );
+            return;
+        }
+        if ($inner_type->flags === ast\flags\TYPE_STATIC) {
+            $this->emitIssue(
+                Issue::CompatibleStaticType,
+                $inner_type->lineno
+            );
+        } elseif (\in_array($inner_type->flags, [ast\flags\TYPE_FALSE, ast\flags\TYPE_NULL], true)) {
+            $this->emitIssue(
+                Issue::InvalidNode,
+                $inner_type->lineno,
+                "Invalid union type " . ASTReverter::toShortTypeString($type) . " in element signature"
+            );
+        }
     }
 
     /**
@@ -3684,6 +3841,7 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
         FunctionInterface $method,
         array $arguments = []
     ): void {
+        $method = $this->findDefiningMethod($method);
         if (!$method->needsRecursiveAnalysis()) {
             return;
         }
@@ -3781,6 +3939,7 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
         Node $argument_list_node,
         FunctionInterface $method
     ): void {
+        $method = $this->findDefiningMethod($method);
         $original_method_scope = $method->getInternalScope();
         $method->setInternalScope(clone($original_method_scope));
         $method_context = $method->getContext();
@@ -3868,6 +4027,20 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
         } finally {
             $method->setInternalScope($original_method_scope);
         }
+    }
+
+    private function findDefiningMethod(FunctionInterface $method): FunctionInterface
+    {
+        if ($method instanceof Method) {
+            $defining_fqsen = $method->getDefiningFQSEN();
+            if ($method->getFQSEN() !== $defining_fqsen) {
+                // This should always happen, unless in the language server mode
+                if ($this->code_base->hasMethodWithFQSEN($defining_fqsen)) {
+                    return $this->code_base->getMethodByFQSEN($defining_fqsen);
+                }
+            }
+        }
+        return $method;
     }
 
     /**
@@ -3992,26 +4165,29 @@ class PostOrderAnalysisVisitor extends AnalysisVisitor
                 $argument_type = $argument_type->withUnionType($argument_types[$i]);
             }
         }
-        // Then set the new type on that parameter based
-        // on the argument's type. We'll use this to
-        // retest the method with the passed in types
-        // TODO: if $argument_type is non-empty and !isType(NullType), instead use setUnionType?
+        // $argument_type = $this->filterValidArgumentTypes($argument_type, $non_variadic_parameter_type);
+        if (!$argument_type->isEmpty()) {
+            // Then set the new type on that parameter based
+            // on the argument's type. We'll use this to
+            // retest the method with the passed in types
+            // TODO: if $argument_type is non-empty and !isType(NullType), instead use setUnionType?
 
-        if ($parameter->isCloneOfVariadic()) {
-            // For https://github.com/phan/phan/issues/1525 : Collapse array shapes into generic arrays before recursively analyzing a method.
-            if ($parameter->hasEmptyNonVariadicType()) {
-                $parameter->setUnionType(
-                    $argument_type->withFlattenedArrayShapeOrLiteralTypeInstances()->asListTypes()->withRealTypeSet($parameter->getNonVariadicUnionType()->getRealTypeSet())
-                );
+            if ($parameter->isCloneOfVariadic()) {
+                // For https://github.com/phan/phan/issues/1525 : Collapse array shapes into generic arrays before recursively analyzing a method.
+                if ($parameter->hasEmptyNonVariadicType()) {
+                    $parameter->setUnionType(
+                        $argument_type->withFlattenedArrayShapeOrLiteralTypeInstances()->asListTypes()->withRealTypeSet($parameter->getNonVariadicUnionType()->getRealTypeSet())
+                    );
+                } else {
+                    $parameter->addUnionType(
+                        $argument_type->withFlattenedArrayShapeOrLiteralTypeInstances()->asListTypes()->withRealTypeSet($parameter->getNonVariadicUnionType()->getRealTypeSet())
+                    );
+                }
             } else {
                 $parameter->addUnionType(
-                    $argument_type->withFlattenedArrayShapeOrLiteralTypeInstances()->asListTypes()->withRealTypeSet($parameter->getNonVariadicUnionType()->getRealTypeSet())
+                    $argument_type->withFlattenedArrayShapeOrLiteralTypeInstances()->withRealTypeSet($parameter->getNonVariadicUnionType()->getRealTypeSet())
                 );
             }
-        } else {
-            $parameter->addUnionType(
-                $argument_type->withFlattenedArrayShapeOrLiteralTypeInstances()->withRealTypeSet($parameter->getNonVariadicUnionType()->getRealTypeSet())
-            );
         }
 
         // If we're passing by reference, get the variable

@@ -188,6 +188,12 @@ final class EmptyUnionType extends UnionType
         return $this;
     }
 
+    /** @override */
+    public function eraseTemplatesRecursive(): UnionType
+    {
+        return $this;
+    }
+
     /**
      * @return bool
      * True if this union type has any types that have generic
@@ -1542,7 +1548,7 @@ final class EmptyUnionType extends UnionType
 
     public function getDebugRepresentation(): string
     {
-        return '';
+        return '(empty union type)';
     }
 
     public function canPossiblyCastToClass(CodeBase $code_base, Type $class_type): bool
@@ -1596,5 +1602,17 @@ final class EmptyUnionType extends UnionType
     public function classStringOrObjectTypes(): UnionType
     {
         return $this;
+    }
+
+    /**
+     * @return Generator<Type> no types.
+     * @suppress PhanImpossibleCondition
+     * @suppress PhanTypeMismatchGeneratorYieldValue
+     */
+    public function getTypesRecursively(): Generator
+    {
+        if (false) {
+            yield;
+        }
     }
 }
