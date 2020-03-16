@@ -25,6 +25,7 @@
 - or I could use react front-end with state and such and only call API if new things are needed. This should greatly improve loading speed
 - or maybe best, because it's php, just store previous data in cookies and concat this with new information needed
 - feedback Danny: my way of including html in function is creating new view. Better to have a few lines of PHP in MY view than to create this awkward function. Thijs: you will need to mix php and html at some point anyway
+- check if mailer works from BeCode's location
 
 # ORIGINAL ASSIGNMENT BELOW
 
