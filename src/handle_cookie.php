@@ -1,10 +1,8 @@
 <?php
 
 declare(strict_types=1);
-require_once("test.php");
 
 ini_set('display_errors', On);
-
 
 session_start();
 
@@ -44,7 +42,6 @@ elseif (isset($_GET["name"]) && isset($_GET["id"]) && !isset($_COOKIE["favourite
     $url = "Location: ../index.php?query_type=$query_type&type=$type&pokemon_per_page=$pokemon_per_page&results_page=$current_results_page_string";
     // var_dump($url);
     header($url);
-
 }
 
 elseif (isset($_GET["name"]) && isset($_GET["id"]) && isset($_COOKIE["favourites"])) {

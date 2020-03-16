@@ -40,5 +40,7 @@ src/handle_cookie.php:5 PhanUndeclaredConstant Reference to undeclared constant 
 src/handle_mail.php:5 PhanUndeclaredConstant Reference to undeclared constant \On
 
 issetfunctie om op te vangen:
+----
 src/handle_cookie.php:42 PhanPossiblyUndeclaredGlobalVariable Global variable $current_results_page_string is possibly undeclared
 
+=>to do: need to continue this

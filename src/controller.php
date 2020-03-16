@@ -49,7 +49,7 @@ $results_page_all = $pokemons_db2->get_pokemons_results_page_all();
 // question: do i need cases 3 and 4 of previous iteration? I used sessions then, but at first glance, I'm done
 // to do: check more systematically if all use cases are possibl
 if (isset($_GET["query_type"]) && "default_browsing" == $_GET["query_type"] && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
-    echo "case 1 fires <br>";
+    // echo "case 1 fires <br>";
     $new_pokemons_results_page = (int)$_GET["results_page"];
     $pokemon_per_page = (int)$_GET["pokemon_per_page"];
     $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, $pokemon_per_page);
@@ -58,7 +58,7 @@ if (isset($_GET["query_type"]) && "default_browsing" == $_GET["query_type"] && i
     $pokemons = $pokemons_class->show_pokemons2();
 }
 elseif (isset($_GET["query_type"]) && "search" == $_GET["query_type"] && isset($_GET["type"]) && isset($_GET["pokemon_per_page"]) && isset($_GET["results_page"])) {
-    echo "case 2 fires <br>";
+    // echo "case 2 fires <br>";
     $type = $_GET["type"];
     $new_pokemons_results_page = (int) $_GET["results_page"];
     $pokemon_per_page = (int) $_GET["pokemon_per_page"];
@@ -72,7 +72,7 @@ elseif (isset($_GET["query_type"]) && "search" == $_GET["query_type"] && isset($
 // serve pagination
 // to do: need to expand is
 elseif (isset($_GET["results_page"])){
-    echo "case 0 without specific query type in GET fires <br>";
+    // echo "case 0 without specific query type in GET fires <br>";
     $new_pokemons_results_page = (int)$_GET["results_page"];
     $pokemons_db2->change_default_pokemons_results_page($new_pokemons_results_page, 20);
     $pokemons_raw = $pokemons_db2->get_pokemons_array_raw();
