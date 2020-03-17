@@ -11,7 +11,6 @@ use Phan\Analysis\Analyzable;
 use Phan\AST\UnionTypeVisitor;
 use Phan\CodeBase;
 use Phan\Config;
-use Phan\Exception\CodeBaseException;
 use Phan\Language\Context;
 use Phan\Language\ElementContext;
 use Phan\Language\FQSEN\FullyQualifiedMethodName;
@@ -109,6 +108,11 @@ class Method extends ClassElement implements FunctionInterface
             $this->setParameterList($parameter_list);
         }
         $this->checkForTemplateTypes();
+    }
+
+    public function __clone()
+    {
+        $this->setInternalScope(clone($this->getInternalScope()));
     }
 
     /**
@@ -624,6 +628,8 @@ class Method extends ClassElement implements FunctionInterface
             $method->setPHPDocReturnType($comment_return_union_type);
         }
         $element_context->freeElementReference();
+        // Populate the original return type.
+        $method->setOriginalReturnType();
 
         return $method;
     }
@@ -739,6 +745,7 @@ class Method extends ClassElement implements FunctionInterface
      * @return \Generator
      * @phan-return \Generator<Method>
      * The set of all alternates to this method
+     * @suppress PhanParamSignatureMismatch
      */
     public function alternateGenerator(CodeBase $code_base): \Generator
     {
@@ -760,10 +767,8 @@ class Method extends ClassElement implements FunctionInterface
      * The code base with which to look for classes
      *
      * @return Method[]
-     * The Methods that this Method is overriding
+     * 0 or more Methods that this Method is overriding
      * (Abstract methods are returned before concrete methods)
-     *
-     * @throws CodeBaseException if 0 methods were found.
      */
     public function getOverriddenMethods(
         CodeBase $code_base
@@ -808,16 +813,9 @@ class Method extends ClassElement implements FunctionInterface
         }
         // Return abstract methods before concrete methods, in order to best check method compatibility.
         $method_list = \array_merge($abstract_method_list, $method_list);
-        if (\count($method_list) > 0) {
-            return $method_list;
-        }
-
-        // Throw an exception if this method doesn't override
-        // anything
-        throw new CodeBaseException(
-            $this->getFQSEN(),
-            "Method $this with FQSEN {$this->getFQSEN()} does not override another method"
-        );
+        // Give up on throwing exceptions if this method doesn't override anything.
+        // Mixins and traits result in too many edge cases: https://github.com/phan/phan/issues/3796
+        return $method_list;
     }
 
     /**

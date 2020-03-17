@@ -2604,6 +2604,8 @@ class Type
         $template_type_list = $this->template_parameter_type_list;
         if (count($template_type_list) >= 2 && count($template_type_list) <= 4) {
             return $template_type_list[1];
+        } elseif (count($template_type_list) === 1) {
+            return $template_type_list[0];
         }
         return null;
     }
@@ -3348,9 +3350,12 @@ class Type
 
         // Test to see if this (or any ancestor types) can cast to the given union type.
         $expanded_types = $this_resolved->asExpandedTypes($code_base);
-        return $expanded_types->canCastToUnionType(
-            $union_type
-        );
+        foreach ($expanded_types->getTypeSet() as $type) {
+            if ($type->isSubtypeOfAnyTypeInSet($union_type->getTypeSet())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -3358,9 +3363,25 @@ class Type
      * Either this or 'static' resolved in the given context.
      */
     public function withStaticResolvedInContext(
-        Context $_
+        Context $context
     ): Type {
+        if ($this->template_parameter_type_list) {
+            return $this->withStaticResolvedInContextTemplate($context);
+        }
         return $this;
+    }
+
+    private function withStaticResolvedInContextTemplate(
+        Context $context
+    ): Type {
+        $new_template_parameter_type_list = [];
+        foreach ($this->template_parameter_type_list as $t) {
+            $new_template_parameter_type_list[] = $t->withStaticResolvedInContext($context);
+        }
+        if ($new_template_parameter_type_list === $this->template_parameter_type_list) {
+            return $this;
+        }
+        return self::fromType($this, $new_template_parameter_type_list);
     }
 
     /**
@@ -3921,6 +3942,19 @@ class Type
     }
 
     /**
+     * Convert `\MyClass<T>` and `\MyClass<\OtherClass>` to just `\MyClass`.
+     *
+     * TODO: Override in subclasses such as generic arrays, generic iterables, and array shapes.
+     */
+    public function eraseTemplatesRecursive(): Type
+    {
+        if (!$this->template_parameter_type_list) {
+            return $this;
+        }
+        return static::fromType($this, []);
+    }
+
+    /**
      * @param array<string,UnionType> $template_parameter_type_map
      * A map from template type identifiers to concrete types
      *
@@ -4104,5 +4138,21 @@ class Type
     public function withErasedUnionTypes(): Type
     {
         return $this;
+    }
+
+    /**
+     * Returns a generator that yields all types and subtypes in the phpdoc type set.
+     *
+     * For example, for the type `MyClass<T[]>`, 3 types will be generated: `MyClass<T[]>` `T[]`, and `T`.
+     * This does not deduplicate types.
+     *
+     * @return Generator<Type>
+     */
+    public function getTypesRecursively(): Generator
+    {
+        yield $this;
+        foreach ($this->template_parameter_type_list as $template_union_type) {
+            yield from $template_union_type->getTypesRecursively();
+        }
     }
 }

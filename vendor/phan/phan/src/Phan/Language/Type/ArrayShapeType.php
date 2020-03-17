@@ -261,6 +261,7 @@ final class ArrayShapeType extends ArrayType implements GenericArrayInterface
                     continue;
                 }
                 if ($element_union_types) {
+                    '@phan-var UnionType $element_union_types';
                     $element_union_types = $element_union_types->withType($target_type->genericArrayElementType());
                 } else {
                     $element_union_types = $target_type->genericArrayElementUnionType();
@@ -1118,5 +1119,13 @@ final class ArrayShapeType extends ArrayType implements GenericArrayInterface
     public function asAssociativeArrayType(bool $unused_can_reduce_size): ArrayType
     {
         return $this;
+    }
+
+    public function getTypesRecursively(): Generator
+    {
+        yield $this;
+        foreach ($this->field_types as $type) {
+            yield from $type->getTypesRecursively();
+        }
     }
 }

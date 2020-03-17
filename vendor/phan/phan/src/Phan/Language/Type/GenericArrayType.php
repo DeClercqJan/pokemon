@@ -312,7 +312,7 @@ class GenericArrayType extends ArrayType implements GenericArrayInterface
         $string = $this->element_type->__toString();
         if ($this->key_type === self::KEY_MIXED) {
             // Disambiguation is needed for ?T[] and (?T)[] but not array<int,?T>
-            if ($string[0] === '?') {
+            if ($string[0] === '?' || $this->element_type instanceof FunctionLikeDeclarationType) {
                 $string = '(' . $string . ')';
             }
             $string = "{$string}[]";
@@ -876,5 +876,30 @@ class GenericArrayType extends ArrayType implements GenericArrayInterface
             return NonEmptyListType::fromElementType($this->element_type, $this->is_nullable, $this->key_type);
         }
         return ListType::fromElementType($this->element_type, $this->is_nullable, $this->key_type);
+    }
+
+    public function isSubtypeOf(Type $type): bool
+    {
+        // TODO more specific
+        if (!$this->canCastToType($type)) {
+            return false;
+        }
+        // TODO: Also account for iterables
+        if ($type instanceof GenericArrayType) {
+            if (!$this->element_type->isSubtypeOf($type->element_type)) {
+                return false;
+            }
+        } elseif ($type instanceof GenericIterableType) {
+            if (!$this->element_type->asPHPDocUnionType()->hasSubtypeOf($type->getElementUnionType())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function getTypesRecursively(): Generator
+    {
+        yield $this;
+        yield from $this->element_type->getTypesRecursively();
     }
 }

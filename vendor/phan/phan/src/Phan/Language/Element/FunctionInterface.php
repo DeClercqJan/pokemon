@@ -149,6 +149,12 @@ interface FunctionInterface extends AddressableElementInterface
     public function setHasYield(bool $has_yield): void;
 
     /**
+     * @return bool
+     * True if this method yields any value(i.e. it is a \Generator)
+     */
+    public function hasYield(): bool;
+
+    /**
      * @return list<Parameter>
      * A list of parameters on the method
      */
@@ -201,7 +207,7 @@ interface FunctionInterface extends AddressableElementInterface
     public function getOutputReferenceParamNames(): array;
 
     /**
-     * @return \Generator
+     * @return \Generator<static>
      * The set of all alternates to this function
      */
     public function alternateGenerator(CodeBase $code_base): \Generator;
@@ -447,4 +453,11 @@ interface FunctionInterface extends AddressableElementInterface
      * Other approaches, such as analyzing loops multiple times, are possible, but not implemented.
      */
     public function getVariableTypeFallbackMap(CodeBase $code_base): array;
+
+    /**
+     * Gets the original union type of this function/method.
+     *
+     * This is populated the first time it is called.
+     */
+    public function getOriginalReturnType(): UnionType;
 }

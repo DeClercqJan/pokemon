@@ -43,6 +43,7 @@ use function is_array;
 use function is_resource;
 use function is_string;
 use function str_repeat;
+use function strcasecmp;
 use function strlen;
 
 use const DIRECTORY_SEPARATOR;
@@ -69,7 +70,7 @@ class CLI
     /**
      * This should be updated to x.y.z-dev after every release, and x.y.z before a release.
      */
-    public const PHAN_VERSION = '2.5.0';
+    public const PHAN_VERSION = '2.6.1';
 
     /**
      * List of short flags passed to getopt
@@ -85,6 +86,7 @@ class CLI
     public const GETOPT_LONG_OPTIONS = [
         'absolute-path-issue-messages',
         'allow-polyfill-parser',
+        'analyze-all-files',
         'assume-real-types-for-internal-functions',
         'automatic-fix',
         'backward-compatibility-checks',
@@ -102,7 +104,9 @@ class CLI
         'directory:',
         'disable-cache',
         'disable-plugins',
+        'dump-analyzed-file-list',
         'dump-ast',
+        'dump-ctags:',
         'dump-parsed-file-list',
         'dump-signatures-file:',
         'find-signature:',
@@ -142,6 +146,7 @@ class CLI
         'language-server-tcp-server:',
         'language-server-verbose',
         'load-baseline:',
+        'analyze-twice',
         'long-progress-bar',
         'markdown-issue-messages',
         'memory-limit:',
@@ -173,6 +178,11 @@ class CLI
         'use-fallback-parser',
         'version',
     ];
+
+    /**
+     * @internal
+     */
+    public const DUMP_ANALYZED = 'dump_analyzed';
 
     /**
      * @var OutputInterface used for outputting the formatted issue messages.
@@ -531,8 +541,21 @@ class CLI
                 case 'dump-ast':
                     Config::setValue('dump_ast', true);
                     break;
+                case 'dump-ctags':
+                    if (strcasecmp($value, 'basic') !== 0) {
+                        CLI::printErrorToStderr("Unsupported value --dump-ctags='$value'. Supported values are 'basic'.\n");
+                        exit(1);
+                    }
+                    Config::setValue('plugins', \array_merge(
+                        Config::getValue('plugins'),
+                        [__DIR__ . '/Plugin/Internal/CtagsPlugin.php']
+                    ));
+                    break;
                 case 'dump-parsed-file-list':
                     Config::setValue('dump_parsed_file_list', true);
+                    break;
+                case 'dump-analyzed-file-list':
+                    Config::setValue('dump_parsed_file_list', self::DUMP_ANALYZED);
                     break;
                 case 'dump-signatures-file':
                     Config::setValue('dump_signatures_file', $value);
@@ -804,6 +827,7 @@ class CLI
                 case 'C':
                 case 'color':
                 case 'no-color':
+                case 'analyze-all-files':
                     // Handled before processing the CLI flag `--help`
                     break;
                 case 'save-baseline':
@@ -828,10 +852,12 @@ class CLI
                     }
                     Config::setValue('baseline_path', $value);
                     break;
+                case 'analyze-twice':
+                    Config::setValue('__analyze_twice', true);
+                    break;
                 default:
                     // All of phan's long options are currently at least 2 characters long.
                     $key_repr = strlen($key) >= 2 ? "--$key" : "-$key";
-                    echo "Checking $key\n";
                     if ($value === false && in_array($key . ':', self::GETOPT_LONG_OPTIONS, true)) {
                         throw new UsageException("Missing required argument value for '$key_repr'", EXIT_FAILURE);
                     }
@@ -881,6 +907,9 @@ class CLI
                 $this->file_list_in_config,
                 array_slice($argv, 1)
             );
+        }
+        if (isset($opts['analyze-all-files'])) {
+            Config::setValue('exclude_analysis_directory_list', []);
         }
 
         $this->recomputeFileList();
@@ -1133,6 +1162,10 @@ class CLI
         if ($processes !== 1) {
             \fprintf(STDERR, "Notice: Running with processes=1 instead of processes=%s - the daemon/language server assumes it will run as a single process" . PHP_EOL, (string)\json_encode($processes));
             Config::setValue('processes', 1);
+        }
+        if (Config::getValue('__analyze_twice')) {
+            \fwrite(STDERR, "Notice: Running analysis phase once instead of --analyze-twice - the daemon/language server assumes it will run as a single process" . PHP_EOL);
+            Config::setValue('__analyze_twice', false);
         }
     }
 
@@ -1522,6 +1555,12 @@ $init_help
   (For best results, the baseline should be generated with the same/similar
   environment and settings as those used to run Phan)
 
+ --analyze-twice
+  Runs the analyze phase twice. Because Phan gathers additional type information for properties, return types, etc. during analysis,
+  this may emit a more complete list of issues.
+
+  This cannot be used with --processes <int>.
+
  -v, --version
   Print Phan's version number
 
@@ -1549,9 +1588,19 @@ Extended help:
   This is useful to verify that options such as exclude_file_regex are
   properly set up, or to run other checks on the files Phan would parse.
 
+ --dump-analyzed-file-list
+  Emit a newline-separated list of files Phan would analyze to stdout.
+
  --dump-signatures-file <filename>
   Emit JSON serialized signatures to the given file.
   This uses a method signature format similar to FunctionSignatureMap.php.
+
+ --dump-ctags=basic
+  Dump a ctags file to <project root>/tags using the parsed and analyzed files
+  in the Phan config.
+  Currently, this only dumps classes/constants/functions/properties,
+  and not variable definitions.
+  This should be used with --quick, and can't be used with --processes <int>.
 
  --automatic-fix
   Automatically fix any issues Phan is capable of fixing.
@@ -1577,6 +1626,11 @@ Extended help:
  --absolute-path-issue-messages
   Emit issues with their absolute paths instead of relative paths.
   This does not affect files mentioned within the issue.
+
+ --analyze-all-files
+  Ignore the --exclude-directory-list <dir_list> flag and `exclude_analysis_directory_list` config settings and analyze all files that were parsed.
+  This is slow, but useful when third-party files being parsed have incomplete type information.
+  Also see --analyze-twice.
 
  --constant-variable-detection
   Emit issues for variables that could be replaced with literals or constants.
@@ -2280,6 +2334,17 @@ EOB
         if (strlen($buf) > 0) {
             fwrite(STDERR, $buf);
         }
+    }
+
+    /**
+     * Reset the long progress state to the initial state.
+     *
+     * Useful for --analyze-twice
+     */
+    public static function resetLongProgressState(): void
+    {
+        self::$current_progress_offset_long_progress = 0;
+        self::$current_progress_state_long_progress = null;
     }
 
     private static function renderLongProgress(string $msg, float $p, float $memory, ?int $offset, ?int $count): string
