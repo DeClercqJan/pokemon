@@ -19,7 +19,7 @@
 - onyl one e-mailfield but multiple favourited pokemon to send over, including a link to detail page
 - javascript disabling of certain options when not relevant
 - validation of mailing functionaltiy
-- phan testing: see analysis.txt file 
+- started phan testing: see analysis.txt file (still need to check stuff)
 - basic bootstrap styling
 - Heroku deployment
 
