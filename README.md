@@ -35,10 +35,10 @@
 - button to remove from favourites
 ### need for speed
 - speed is shit with this concating of earlier searched pokemon. Is it really that? In performance thingie of mozilla dev tools it's a few seconds just for the images (which are individual api-calls). Most of it, is 'HTML though'. Not clear whether this is because of my slow local device or wether the api-calls are in there (the concating of old and new, as I say it). Actually, this could be, as SESSION - I believe - is stored on the server and not on the local device. Trial and error up next?
-(- alternative 3: I could try to serve this code on a faster device. How's Heroku? About the same... so not it)
-(- alternative 4: use cookies instead of sessions. How's that? About the same...)
-- alternatively, alternative 2: throw away this way of thinking and just call the api with the id's of the favourited pokemon directly instead of storing previous things in SESSION
-(- alternative 1:  I could use react front-end with state and such and only call API if new things are needed. Not sure if this way of thinking is actually correct; I am already storing a lot in session; I DON'T call page 1 + 2 + 3 ... I store page 1 and 2 when showing 3. This alternative is costly, as it is a lot of work)
+- NOPE alternative 3: I could try to serve this code on a faster device. How's Heroku? About the same... so not it
+- NOPE alternative 4: use cookies instead of sessions. How's that? About the same...
+- PROBABLY YES alternatively, alternative 2: throw away this way of thinking and just call the api with the id's of the favourited pokemon directly instead of storing previous things in SESSION
+- NOPE alternative 1:  I could use react front-end with state and such and only call API if new things are needed. Not sure if this way of thinking is actually correct; I am already storing a lot in session; I DON'T call page 1 + 2 + 3 ... I store page 1 and 2 when showing 3. This alternative is costly, as it is a lot of work
 
 
 ### others
