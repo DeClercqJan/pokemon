@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d8adeb33-3a16-4df9-8371-0be4bbadb1d0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/vendor/felixfbecker/advanced-json-rpc/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/felixfbecker/advanced-json-rpc/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/DiagnosticsProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/DiagnosticsProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Expression/AnonymousFunctionCreationExpression.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Expression/AnonymousFunctionCreationExpression.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Expression/ArrowFunctionCreationExpression.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Expression/ArrowFunctionCreationExpression.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/FunctionReturnType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/FunctionReturnType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/MethodDeclaration.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/MethodDeclaration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/MissingMemberDeclaration.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/MissingMemberDeclaration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Parameter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Parameter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/PropertyDeclaration.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/PropertyDeclaration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Statement/FunctionDeclaration.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Statement/FunctionDeclaration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Statement/NamespaceUseDeclaration.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Node/Statement/NamespaceUseDeclaration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Parser.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser/src/Parser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/netresearch/jsonmapper/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/netresearch/jsonmapper/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/netresearch/jsonmapper/src/JsonMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/netresearch/jsonmapper/src/JsonMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/internal_stubs/ast.phan_php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/internal_stubs/ast.phan_php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/DuplicateExpressionPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/DuplicateExpressionPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/InvokePHPNativeSyntaxCheckPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/InvokePHPNativeSyntaxCheckPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PHPDocRedundantPlugin/Fixers.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PHPDocRedundantPlugin/Fixers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PHPDocToRealTypesPlugin/Fixers.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PHPDocToRealTypesPlugin/Fixers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PhanSelfCheckPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PhanSelfCheckPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PreferNamespaceUsePlugin/Fixers.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PreferNamespaceUsePlugin/Fixers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PrintfCheckerPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/PrintfCheckerPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/RedundantAssignmentPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/RedundantAssignmentPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/UnknownElementTypePlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/.phan/plugins/UnknownElementTypePlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/NEWS.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/NEWS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/ASTReverter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/ASTReverter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/ASTSimplifier.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/ASTSimplifier.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/FallbackUnionTypeVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/FallbackUnionTypeVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Parser.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Parser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/TolerantASTConverter/Shim.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/TolerantASTConverter/Shim.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/TolerantASTConverter/TolerantASTConverter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/TolerantASTConverter/TolerantASTConverter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/TolerantASTConverter/ast_shim.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/TolerantASTConverter/ast_shim.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/UnionTypeVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/UnionTypeVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Visitor/Element.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Visitor/Element.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Visitor/FlagVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Visitor/FlagVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Visitor/FlagVisitorImplementation.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/AST/Visitor/FlagVisitorImplementation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ArgumentType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ArgumentType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/AssignOperatorAnalysisVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/AssignOperatorAnalysisVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/AssignmentVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/AssignmentVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ConditionVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ConditionVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ConditionVisitorInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ConditionVisitorInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ConditionVisitorUtil.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ConditionVisitorUtil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ParameterTypesAnalyzer.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ParameterTypesAnalyzer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/PostOrderAnalysisVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/PostOrderAnalysisVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/PreOrderAnalysisVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/PreOrderAnalysisVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ReferenceCountsAnalyzer.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Analysis/ReferenceCountsAnalyzer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/BlockAnalysisVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/BlockAnalysisVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Bootstrap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/CLI.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/CLI.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/CodeBase.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/CodeBase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Config/Initializer.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Config/Initializer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Daemon/Request.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Daemon/Request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Debug.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Debug.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Issue.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Issue.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/IssueInstance.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/IssueInstance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Context.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Context.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Clazz.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Clazz.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Comment/Builder.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Comment/Builder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Flags.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Flags.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Func.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Func.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/FunctionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/FunctionFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/FunctionInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/FunctionInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/FunctionTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/FunctionTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Method.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Method.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/PassByReferenceVariable.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/PassByReferenceVariable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Property.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Property.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/TypedElement.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/TypedElement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Variable.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Element/Variable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/EmptyUnionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/EmptyUnionType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Internal/FunctionSignatureMap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Internal/FunctionSignatureMap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Internal/PropertyMap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Internal/PropertyMap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/ArrayShapeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/ArrayShapeType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/FunctionLikeDeclarationType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/FunctionLikeDeclarationType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/GenericArrayType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/GenericArrayType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/GenericIterableType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/GenericIterableType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/ScalarType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/Type/ScalarType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/UnionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/UnionType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/UnionTypeBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Language/UnionTypeBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Library/FileCache.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Library/FileCache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Library/Map.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Library/Map.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Library/Set.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Library/Set.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Parse/ParseVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Parse/ParseVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Phan.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Phan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/ConfigPluginSet.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/ConfigPluginSet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/ArrayReturnTypeOverridePlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/ArrayReturnTypeOverridePlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/BaselineLoadingPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/BaselineLoadingPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/MiscParamPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/MiscParamPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/RedundantConditionCallPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/RedundantConditionCallPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/VariableTracker/VariableTrackerVisitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phan/phan/src/Phan/Plugin/Internal/VariableTracker/VariableTrackerVisitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpspec/prophecy/CHANGES.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpspec/prophecy/CHANGES.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/phpspec/prophecy/src/Prophecy/PhpDocumentor/ClassTagRetriever.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpspec/prophecy/src/Prophecy/PhpDocumentor/ClassTagRetriever.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpServers">
+    <servers>
+      <server host="localhost" id="13f7345b-b1f0-44e4-8d4b-2c984c235da5" name="localhost" port="8000" />
+    </servers>
+  </component>
+  <component name="PhpWebServerValidation" path_to_validation_script="$PROJECT_DIR$" selected_validation_type="LOCAL" web_path_to_validation_script="http://localhost:8000//" />
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/felixfbecker/advanced-json-rpc" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/netresearch/jsonmapper" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/phan/phan" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/sabre/event" />
+      <path value="$PROJECT_DIR$/vendor/microsoft/tolerant-php-parser" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1YsrGuzxsPLjL3kE38vpBSjV8aq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="/etc/php/7.4/cli/php.ini" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index.php">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script." />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d8adeb33-3a16-4df9-8371-0be4bbadb1d0" name="Default Changelist" comment="" />
+      <created>1583742050976</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583742050976</updated>
+      <workItem from="1583742053434" duration="18949000" />
+      <workItem from="1583786239202" duration="5040000" />
+      <workItem from="1583828903734" duration="25032000" />
+      <workItem from="1583867053428" duration="1596000" />
+      <workItem from="1583914665239" duration="23033000" />
+      <workItem from="1583944134768" duration="4792000" />
+      <workItem from="1584022754718" duration="13712000" />
+      <workItem from="1584087943641" duration="52214000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="411" y="120" width="824" height="684" key="#CLI_Interpreters" timestamp="1583831872062">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="411" y="120" width="824" height="684" key="#CLI_Interpreters/67.27.1533.873@67.27.1533.873" timestamp="1583831872062" />
+    <state x="478" y="133" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584374689505">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="291" y="120" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1533.873@67.27.1533.873" timestamp="1583790918011" />
+    <state x="478" y="133" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.2813.997@67.27.2813.997" timestamp="1584374689505" />
+    <state x="497" y="267" width="663" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1584106379419">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="497" y="267" width="663" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1533.873@67.27.1533.873" timestamp="1584106379419" />
+    <state x="1973" y="260" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1584370282575">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="1973" y="260" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.2813.997@67.27.2813.997" timestamp="1584370282575" />
+    <state x="551" y="288" width="554" height="456" key="#com.jetbrains.php.debug.validation.PhpWebServerValidationDialog#" timestamp="1583829409056">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="551" y="288" width="554" height="456" key="#com.jetbrains.php.debug.validation.PhpWebServerValidationDialog#/67.27.1533.873@67.27.1533.873" timestamp="1583829409056" />
+    <state x="507" y="142" width="642" height="640" key="#model.php" timestamp="1583790750899">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="507" y="142" width="642" height="640" key="#model.php/67.27.1533.873@67.27.1533.873" timestamp="1583790750899" />
+    <state x="821" y="231" width="424" height="484" key="FileChooserDialogImpl" timestamp="1584364768748">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="611" y="206" width="424" height="513" key="FileChooserDialogImpl/67.27.1533.873@67.27.1533.873" timestamp="1583832524107" />
+    <state x="821" y="231" width="424" height="484" key="FileChooserDialogImpl/67.27.2813.997@67.27.2813.997" timestamp="1584364768748" />
+    <state width="1234" height="843" key="GridCell.Tab.0.bottom" timestamp="1584392634455">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.0.bottom/67.27.1533.873@67.27.1533.873" timestamp="1583831746132" />
+    <state width="1234" height="843" key="GridCell.Tab.0.bottom/67.27.2813.997@67.27.2813.997" timestamp="1584392634455" />
+    <state width="1234" height="843" key="GridCell.Tab.0.center" timestamp="1584392634454">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.0.center/67.27.1533.873@67.27.1533.873" timestamp="1583831746131" />
+    <state width="1234" height="843" key="GridCell.Tab.0.center/67.27.2813.997@67.27.2813.997" timestamp="1584392634454" />
+    <state width="1234" height="843" key="GridCell.Tab.0.left" timestamp="1584392634454">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.0.left/67.27.1533.873@67.27.1533.873" timestamp="1583831746130" />
+    <state width="1234" height="843" key="GridCell.Tab.0.left/67.27.2813.997@67.27.2813.997" timestamp="1584392634454" />
+    <state width="1234" height="843" key="GridCell.Tab.0.right" timestamp="1584392634455">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.0.right/67.27.1533.873@67.27.1533.873" timestamp="1583831746131" />
+    <state width="1234" height="843" key="GridCell.Tab.0.right/67.27.2813.997@67.27.2813.997" timestamp="1584392634455" />
+    <state width="1487" height="272" key="GridCell.Tab.1.bottom" timestamp="1583831746133">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.1.bottom/67.27.1533.873@67.27.1533.873" timestamp="1583831746133" />
+    <state width="1487" height="272" key="GridCell.Tab.1.center" timestamp="1583831746132">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.1.center/67.27.1533.873@67.27.1533.873" timestamp="1583831746132" />
+    <state width="1487" height="272" key="GridCell.Tab.1.left" timestamp="1583831746132">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.1.left/67.27.1533.873@67.27.1533.873" timestamp="1583831746132" />
+    <state width="1487" height="272" key="GridCell.Tab.1.right" timestamp="1583831746133">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.1.right/67.27.1533.873@67.27.1533.873" timestamp="1583831746133" />
+    <state width="1487" height="272" key="GridCell.Tab.2.bottom" timestamp="1583831746135">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.2.bottom/67.27.1533.873@67.27.1533.873" timestamp="1583831746135" />
+    <state width="1487" height="272" key="GridCell.Tab.2.center" timestamp="1583831746135">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.2.center/67.27.1533.873@67.27.1533.873" timestamp="1583831746135" />
+    <state width="1487" height="272" key="GridCell.Tab.2.left" timestamp="1583831746134">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.2.left/67.27.1533.873@67.27.1533.873" timestamp="1583831746134" />
+    <state width="1487" height="272" key="GridCell.Tab.2.right" timestamp="1583831746135">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="1487" height="272" key="GridCell.Tab.2.right/67.27.1533.873@67.27.1533.873" timestamp="1583831746135" />
+    <state x="635" y="276" width="386" height="373" key="NewPhpClassDialog" timestamp="1583915075018">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="635" y="276" width="386" height="373" key="NewPhpClassDialog/67.27.1533.873@67.27.1533.873" timestamp="1583915075018" />
+    <state x="629" y="388" width="399" height="149" key="NewPhpFileDialog" timestamp="1584106392044">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="629" y="388" width="399" height="149" key="NewPhpFileDialog/67.27.1533.873@67.27.1533.873" timestamp="1584106392044" />
+    <state x="682" y="124" width="293" height="676" key="RollbackChangesDialog" timestamp="1583790630878">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="682" y="124" width="293" height="676" key="RollbackChangesDialog/67.27.1533.873@67.27.1533.873" timestamp="1583790630878" />
+    <state x="322" y="97" key="SettingsEditor" timestamp="1584107373016">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="322" y="97" key="SettingsEditor/67.27.1533.873@67.27.1533.873" timestamp="1584107373016" />
+    <state width="914" height="510" key="SwitcherDM" timestamp="1584351460931">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/67.27.1533.873@67.27.1533.873" timestamp="1583836315750" />
+    <state width="914" height="510" key="SwitcherDM/67.27.2813.997@67.27.2813.997" timestamp="1584351460931" />
+    <state x="489" y="290" key="com.intellij.ide.util.TipDialog" timestamp="1584087942444">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="489" y="290" key="com.intellij.ide.util.TipDialog/67.27.1533.873@67.27.1533.873" timestamp="1584087942444" />
+    <state x="497" y="115" width="662" height="695" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583790012979">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="497" y="115" width="662" height="695" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1533.873@67.27.1533.873" timestamp="1583790012979" />
+    <state x="601" y="382" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583787157962">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="601" y="382" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1533.873@67.27.1533.873" timestamp="1583787157962" />
+    <state x="305" y="27" width="1056" height="873" key="dock-window-1" timestamp="1584369373299">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="305" y="27" width="1056" height="873" key="dock-window-1/67.27.2813.997@67.27.2813.997" timestamp="1584369373299" />
+    <state x="479" y="29" width="709" height="867" key="find.popup" timestamp="1583918356264">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="479" y="29" width="709" height="867" key="find.popup/67.27.1533.873@67.27.1533.873" timestamp="1583918356264" />
+    <state width="600" height="424" key="javadoc.popup" timestamp="1583766530532">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state width="600" height="424" key="javadoc.popup/67.27.1533.873@67.27.1533.873" timestamp="1583766530532" />
+    <state x="1984" y="154" width="501" height="713" key="refactoring.ChangeSignatureDialog" timestamp="1584370583971">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="1984" y="154" width="501" height="713" key="refactoring.ChangeSignatureDialog/67.27.2813.997@67.27.2813.997" timestamp="1584370583971" />
+    <state x="497" y="208" key="run.anything.popup" timestamp="1584114096140">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="497" y="208" key="run.anything.popup/67.27.1533.873@67.27.1533.873" timestamp="1584114096140" />
+    <state x="35" y="180" width="1234" height="775" key="search.everywhere.popup" timestamp="1584346966462">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1584036590437" />
+    <state x="35" y="180" width="1234" height="775" key="search.everywhere.popup/67.27.2813.997@67.27.2813.997" timestamp="1584346966462" />
+    <state x="1965" y="423" width="540" height="175" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1584364852872">
+      <screen x="67" y="27" width="2813" height="997" />
+    </state>
+    <state x="1965" y="423" width="540" height="175" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.2813.997@67.27.2813.997" timestamp="1584364852872" />
+  </component>
+</project>

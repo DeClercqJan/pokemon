@@ -76,7 +76,7 @@ elseif (isset($_GET["results_page"])) {
 }
 
 // this serves to have more and more pokemon available to search in (for instance to display in favourites). See readme
-// this gave headers error so using SESSION instead
+// this gave headers error so using SESSION instead. edit: it does work with cookies, but there's no performance gain
 // if (!isset($_COOKIE["pokemons_array_of_pokemons_class"])) {
 if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     // echo "'cookie not isset has fired";
@@ -84,8 +84,8 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     $pokemon_class_serialized = serialize($pokemons_class->show_pokemons2());
     // var_dump($pokemon_class_serialized);
 //    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized, time() + 3600 * 12 * 30, "/");
-    // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
-    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized);
+   // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
+    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized,  time() + 3600 * 12 * 30, "/");
 
 } else {
     // echo "cookie has been recognized";
@@ -93,9 +93,9 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     $previous_pokemons = $_SESSION["pokemons_array_of_pokemons_class"];
     $pokemons_class = new Pokemons($pokemons_raw, $previous_pokemons);
     $pokemon_class_serialized_new = serialize($pokemons_class->show_pokemons2());
-    // var_dump($pokemon_class_serialized_new);
-    // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
-    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new);
+    // var_dump($pokemon_class_serialized_new);okie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new);
+    //$_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
+    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new, time() + 3600 * 12 * 30, "/");
 }
 
 // needed for pagination component - part 2
