@@ -35,10 +35,10 @@
 - button to remove from favourites
 ### need for speed
 - speed is shit with this concating of earlier searched pokemon. Is it really that? In performance thingie of mozilla dev tools it's a few seconds just for the images (which are individual api-calls). Most of it, is 'HTML though'. Not clear whether this is because of my slow local device or wether the api-calls are in there (the concating of old and new, as I say it). Actually, this could be, as SESSION - I believe - is stored on the server and not on the local device. Trial and error up next?
-- alternative 3: I could try to serve this code on a faster device. How's Heroku?
-- alternative 4: use cookies instead of sessions
-- alternatively, alternative 2: throw away this way of thinking and just call the api with the id's of the favourited pokemon directly instead of storing previous things in SESSION
-- alternative 1:  I could use react front-end with state and such and only call API if new things are needed. Not sure if this way of thinking is actually correct; I am already storing a lot in session; I DON'T call page 1 + 2 + 3 ... I store page 1 and 2 when showing 3. This alternative is costly, as it is a lot of work
+(- alternative 3: I could try to serve this code on a faster device. How's Heroku? no good)
+(- alternative 4: use cookies instead of sessions. Nope)
+-> alternatively, alternative 2: throw away this way of thinking and just call the api with the id's of the favourited pokemon directly instead of storing previous things in SESSION
+(- alternative 1:  I could use react front-end with state and such and only call API if new things are needed. Not sure if this way of thinking is actually correct; I am already storing a lot in session; I DON'T call page 1 + 2 + 3 ... I store page 1 and 2 when showing 3. This alternative is costly, as it is a lot of work so not gonna start as I need to do something else)
 
 ### others
 - feedback Danny: my way of including html in function is creating new view. Better to have a few lines of PHP in MY view than to create this awkward function. Thijs: you will need to mix php and html at some point anyway. Figure out these concepts and get file structure up to standard
