@@ -25,7 +25,7 @@ function display_pokemons(array $pokemons, $pokemons_favourited, $favourites = f
 
         ?>
         <h2 class="text-center w-100">Pokemon in favourites</h2>
-            <form action="/app/src/controller.php" method="POST">
+            <form action="controller.php" method="POST">
                 <label for='email'>Send favourites to someone:</label>
                 <input type='email' id='email' name='email'>
                 <?php /*// sending data without creating input field
