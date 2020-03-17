@@ -4,7 +4,7 @@ declare(strict_types=1);
 session_start();
 
 // note: need to place this above rest of html and put everything in variable to I can echo this in this view
-require_once("controller.php");
+require_once("../src/controller.php");
 
 ?>
     <!-- starter tempalte https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
