@@ -9,5 +9,6 @@
         "phan/phan": "2.x"
     },
     "require": {
+        "php": "7.4.3"
     }
 }

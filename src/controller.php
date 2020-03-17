@@ -84,8 +84,8 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     $pokemon_class_serialized = serialize($pokemons_class->show_pokemons2());
     // var_dump($pokemon_class_serialized);
 //    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized, time() + 3600 * 12 * 30, "/");
-    $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
-    // setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized,  time() + 3600 * 12 * 30, "/");
+    // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized;
+    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized,  time() + 3600 * 12 * 30, "/");
 
 } else {
     // echo "cookie has been recognized";
@@ -94,8 +94,8 @@ if (!isset($_SESSION["pokemons_array_of_pokemons_class"])) {
     $pokemons_class = new Pokemons($pokemons_raw, $previous_pokemons);
     $pokemon_class_serialized_new = serialize($pokemons_class->show_pokemons2());
     // var_dump($pokemon_class_serialized_new);okie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new);
-    $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
-    // setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new, time() + 3600 * 12 * 30, "/");
+    // $_SESSION["pokemons_array_of_pokemons_class"] = $pokemon_class_serialized_new;
+    setcookie("pokemons_array_of_pokemons_class", $pokemon_class_serialized_new, time() + 3600 * 12 * 30, "/");
 }
 
 // needed for pagination component - part 2

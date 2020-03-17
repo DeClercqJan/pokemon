@@ -62,6 +62,7 @@ class Pokemons
 
     private function concat_to_previous_pokemons_array($pokemons_bridge)
     {
+        // var_dump($pokemons_bridge);
         if (empty($this->pokemons)) {
             return $pokemons_bridge;
 
