@@ -39,6 +39,7 @@
 - NOPE alternative 4: use cookies instead of sessions. How's that? About the same...
 - PROBABLY YES alternatively, alternative 2: throw away this way of thinking and just call the api with the id's of the favourited pokemon directly instead of storing previous things in SESSION
 - NOPE alternative 1:  I could use react front-end with state and such and only call API if new things are needed. Not sure if this way of thinking is actually correct; I am already storing a lot in session; I DON'T call page 1 + 2 + 3 ... I store page 1 and 2 when showing 3. This alternative is costly, as it is a lot of work
+- heroku deployment worked in the past, but not anymore. Don't understand the logs at https://pokelidokeli.herokuapp.com/
 
 
 ### others
